@@ -1,0 +1,4 @@
+./manager.go
+./speed.go
+./spinner.go
+./status.go

@@ -1,0 +1,18 @@
+exit code: 1
+----------------------------------- begin stderr -----------------------------------
++ echo 'sudo cat /var/log/azure/aks-node-controller.log'
++ chmod 0755 script_file_8f762d42-4b8b-48b4-b3b9-2d6f3a3e7561.sh
++ scp -i sshkey1022407 -o PasswordAuthentication=no -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -o ConnectTimeout=5 script_file_8f762d42-4b8b-48b4-b3b9-2d6f3a3e7561.sh azureuser@10.224.0.7:script_file_8f762d42-4b8b-48b4-b3b9-2d6f3a3e7561.sh
+Warning: Permanently added '10.224.0.7' (ED25519) to the list of known hosts.
+
+Authorized uses only. All activity may be monitored and reported.
++ ssh -i sshkey1022407 -o PasswordAuthentication=no -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -o ConnectTimeout=5 azureuser@10.224.0.7 bash script_file_8f762d42-4b8b-48b4-b3b9-2d6f3a3e7561.sh
+Warning: Permanently added '10.224.0.7' (ED25519) to the list of known hosts.
+
+Authorized uses only. All activity may be monitored and reported.
+cat: /var/log/azure/aks-node-controller.log: No such file or directory
+
+------------------------------------ end stderr ------------------------------------
+----------------------------------- begin stdout -----------------------------------,
+
+----------------------------------- end stdout ------------------------------------

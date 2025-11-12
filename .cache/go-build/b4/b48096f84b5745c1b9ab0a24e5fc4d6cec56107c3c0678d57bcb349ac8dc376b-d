@@ -1,0 +1,15 @@
+./attribute.go
+./build.go
+./builtin.go
+./builtinutil.go
+./context.go
+./cue.go
+./decode.go
+./errors.go
+./format.go
+./instance.go
+./marshal.go
+./op.go
+./path.go
+./query.go
+./types.go

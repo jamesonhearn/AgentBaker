@@ -1,0 +1,5 @@
+./doc.go
+./indent.go
+./num.go
+./quote.go
+./string.go

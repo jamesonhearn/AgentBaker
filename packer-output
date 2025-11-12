@@ -1,0 +1,114 @@
+make[1]: Entering directory '/home/jhearn/AgentBaker'
+Installing previous version of azcli in order to mitigate az compute bug
+Sourcing cse_helpers_distro.sh for Ubuntu
+Overriding azcli version to 2.77.0
+Enforcing az cli version to 2.77.0 for jammy
+Reading package lists...
+Building dependency tree...
+Reading state information...
+azure-cli is already the newest version (2.77.0-1~jammy).
+The following packages were automatically installed and are no longer required:
+  golang-1.18-go golang-1.18-src golang-src pkg-config
+Use 'sudo apt autoremove' to remove them.
+0 upgraded, 0 newly installed, 0 to remove and 63 not upgraded.
+Successfully installed az cli version 2.77.0
+POOL_NAME is set to packer-eastus-test
+VNET_RG_NAME set to: nodesig-test-westus2-packer-vnet-rg
+CAPTURED_SIG_VERSION set to: 1.1762757713.30099
+Subscription ID: 0660fddc-d191-4bad-b922-e69492903e0a
+Gallery Subscription ID: 0660fddc-d191-4bad-b922-e69492903e0a
+Using provided SIG_GALLERY_NAME: akse2esig
+Using provided SIG_IMAGE_NAME: aks-ubuntu-containerd-22.04-gen2
+Using finalized SIG_IMAGE_NAME: aks-ubuntu-containerd-22.04-gen2, SIG_GALLERY_NAME: akse2esig
+SIG existence checking for linuxVhdMode
+Gallery akse2esig exists in the resource group packer location eastus
+Gallery akse2esig is in a Succeeded state
+Image definition aks-ubuntu-containerd-22.04-gen2 existing in gallery akse2esig resource group packer
+UA_TOKEN not used for ubuntu 18.04, 20.04, and FIPS
+packer settings:
+make[1]: Leaving directory '/home/jhearn/AgentBaker'
+make[1]: Entering directory '/home/jhearn/AgentBaker'
+linuxVhdMode: Generating prefetch scripts
+~/AgentBaker/vhdbuilder/prefetch ~/AgentBaker
+generated container image prefetch script at ../packer/prefetch.sh:
+#!/usr/bin/env bash
+set -eux
+
+prefetch() {
+    local image=$1
+    local files=$2
+    
+    mount_dir=$(mktemp -d)
+    ctr -n k8s.io images mount "$image" "$mount_dir"
+
+    for f in $files; do
+        echo "prefetching $f in $image"
+        path="${mount_dir}${f}"
+        stat -c %s "$path"
+        cat "$path" > /dev/null
+    done
+
+    ctr -n k8s.io images unmount "$mount_dir"
+}
+prefetch "mcr.microsoft.com/containernetworking/azure-cni:v1.5.44" "/dropgz"
+prefetch "mcr.microsoft.com/containernetworking/azure-cni:v1.6.32" "/dropgz"
+prefetch "mcr.microsoft.com/containernetworking/azure-cni:v1.7.9-0" "/dropgz"
+prefetch "mcr.microsoft.com/containernetworking/azure-cns:v1.5.49" "/usr/local/bin/azure-cns"
+prefetch "mcr.microsoft.com/containernetworking/azure-cns:v1.6.33" "/usr/local/bin/azure-cns"
+prefetch "mcr.microsoft.com/containernetworking/azure-cns:v1.7.9-0" "/usr/local/bin/azure-cns"
+prefetch "mcr.microsoft.com/containernetworking/azure-ipam:v0.2.1" "/dropgz"
+~/AgentBaker
+Building aks-node-controller binaries
+~/AgentBaker/aks-node-controller ~/AgentBaker
+ok  	github.com/Azure/agentbaker/aks-node-controller	(cached)
+ok  	github.com/Azure/agentbaker/aks-node-controller/helpers	(cached)
+?   	github.com/Azure/agentbaker/aks-node-controller/pkg/gen/aksnodeconfig/v1	[no test files]
+ok  	github.com/Azure/agentbaker/aks-node-controller/parser	(cached)
+?   	github.com/Azure/agentbaker/aks-node-controller/utils	[no test files]
+ok  	github.com/Azure/agentbaker/aks-node-controller/pkg/nodeconfigutils	(cached)
+~/AgentBaker
+Building lister binary for amd64
+~/AgentBaker/vhdbuilder/lister ~/AgentBaker
+~/AgentBaker
+linuxVhdMode: Building with Hyper-v generation 2 x86_64 VM
+Using packer template file vhd-image-builder-base.json
+[1;32mazure-arm: output will be in this color.[0m
+
+[1;32m2025-11-09T22:55:20-08:00: ==> azure-arm: Running builder ...[0m
+[1;32m2025-11-09T22:55:20-08:00: ==> azure-arm: Creating Azure Resource Manager (ARM) client ...[0m
+[1;32m2025-11-09T22:55:21-08:00: ==> azure-arm: ARM Client successfully created[0m
+[1;32m2025-11-09T22:55:23-08:00: ==> azure-arm: Getting source image id for the deployment ...[0m
+[1;32m2025-11-09T22:55:23-08:00: ==> azure-arm:  -> SourceImageName: '/subscriptions/0660fddc-d191-4bad-b922-e69492903e0a/providers/Microsoft.Compute/locations/westus2/publishers/Canonical/ArtifactTypes/vmimage/offers/0001-com-ubuntu-server-jammy/skus/22_04-lts-gen2/versions/latest'[0m
+[1;32m2025-11-09T22:55:23-08:00: ==> azure-arm: Creating resource group ...[0m
+[1;32m2025-11-09T22:55:23-08:00: ==> azure-arm:  -> ResourceGroupName : 'pkr-Resource-Group-g7a5mbcptb'[0m
+[1;32m2025-11-09T22:55:23-08:00: ==> azure-arm:  -> Location          : 'westus2'[0m
+[1;32m2025-11-09T22:55:23-08:00: ==> azure-arm:  -> Tags              :[0m
+[1;32m2025-11-09T22:55:23-08:00: ==> azure-arm:  ->> image_sku : 22_04-lts-gen2[0m
+[1;32m2025-11-09T22:55:23-08:00: ==> azure-arm:  ->> branch :[0m
+[1;32m2025-11-09T22:55:23-08:00: ==> azure-arm:  ->> now : 1762757713[0m
+[1;32m2025-11-09T22:55:23-08:00: ==> azure-arm:  ->> buildDefinitionName : local[0m
+[1;32m2025-11-09T22:55:23-08:00: ==> azure-arm:  ->> os : Linux[0m
+[1;32m2025-11-09T22:55:23-08:00: ==> azure-arm:  ->> SkipLinuxAzSecPack : true[0m
+[1;32m2025-11-09T22:55:23-08:00: ==> azure-arm:  ->> buildId : 202511092255[0m
+[1;32m2025-11-09T22:55:23-08:00: ==> azure-arm:  ->> buildNumber : 202511092255[0m
+[1;32m2025-11-09T22:55:23-08:00: ==> azure-arm:  ->> createdBy : aks-vhd-pipeline[0m
+[1;32m2025-11-09T22:55:25-08:00: ==> azure-arm: Validating deployment template ...[0m
+[1;32m2025-11-09T22:55:25-08:00: ==> azure-arm:  -> ResourceGroupName : 'pkr-Resource-Group-g7a5mbcptb'[0m
+[1;32m2025-11-09T22:55:25-08:00: ==> azure-arm:  -> DeploymentName    : 'pkrdpg7a5mbcptb'[0m
+[1;32m2025-11-09T22:55:26-08:00: ==> azure-arm: Deploying deployment template ...[0m
+[1;32m2025-11-09T22:55:26-08:00: ==> azure-arm:  -> ResourceGroupName : 'pkr-Resource-Group-g7a5mbcptb'[0m
+[1;32m2025-11-09T22:55:26-08:00: ==> azure-arm:  -> DeploymentName    : 'pkrdpg7a5mbcptb'[0m
+[1;32m2025-11-09T22:55:48-08:00: ==> azure-arm: Getting the VM's IP address ...[0m
+[1;32m2025-11-09T22:55:48-08:00: ==> azure-arm:  -> ResourceGroupName   : 'pkr-Resource-Group-g7a5mbcptb'[0m
+[1;32m2025-11-09T22:55:48-08:00: ==> azure-arm:  -> PublicIPAddressName : 'pkripg7a5mbcptb'[0m
+[1;32m2025-11-09T22:55:48-08:00: ==> azure-arm:  -> NicName             : 'pkrnig7a5mbcptb'[0m
+[1;32m2025-11-09T22:55:48-08:00: ==> azure-arm:  -> Network Connection  : 'PrivateEndpoint'[0m
+[1;32m2025-11-09T22:55:48-08:00: ==> azure-arm:  -> IP Address          : '10.0.0.6'[0m
+[1;32m2025-11-09T22:55:48-08:00: ==> azure-arm: Querying the machine's properties ...[0m
+[1;32m2025-11-09T22:55:48-08:00: ==> azure-arm:  -> ResourceGroupName : 'pkr-Resource-Group-g7a5mbcptb'[0m
+[1;32m2025-11-09T22:55:48-08:00: ==> azure-arm:  -> ComputeName       : 'pkrvmg7a5mbcptb'[0m
+[1;32m2025-11-09T22:55:49-08:00: ==> azure-arm:  -> Managed OS Disk   : '/subscriptions/0660fddc-d191-4bad-b922-e69492903e0a/resourceGroups/pkr-Resource-Group-g7a5mbcptb/providers/Microsoft.Compute/disks/pkrosg7a5mbcptb'[0m
+[1;32m2025-11-09T22:55:49-08:00: ==> azure-arm: Querying the machine's additional disks properties ...[0m
+[1;32m2025-11-09T22:55:49-08:00: ==> azure-arm:  -> ResourceGroupName : 'pkr-Resource-Group-g7a5mbcptb'[0m
+[1;32m2025-11-09T22:55:49-08:00: ==> azure-arm:  -> ComputeName       : 'pkrvmg7a5mbcptb'[0m
+[1;32m2025-11-09T22:55:49-08:00: ==> azure-arm: Waiting for SSH to become available...[0m

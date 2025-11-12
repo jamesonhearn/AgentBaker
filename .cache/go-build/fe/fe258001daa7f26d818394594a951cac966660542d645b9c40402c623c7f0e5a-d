@@ -1,0 +1,5 @@
+./boostrap_templates.go
+./bootstrap_command.go
+./generate_command.go
+./generate_templates.go
+./generators_common.go

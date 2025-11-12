@@ -1,0 +1,6 @@
+./attach.go
+./discover.go
+./manifest_fetch.go
+./pull.go
+./push.go
+./template.go

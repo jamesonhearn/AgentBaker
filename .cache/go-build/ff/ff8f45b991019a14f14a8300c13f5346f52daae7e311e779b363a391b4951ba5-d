@@ -1,0 +1,11 @@
+./baker.go
+./bakerapi.go
+./const.go
+./params.go
+./utils.go
+./variables.go
+./agent_suite_test.go
+./baker_test.go
+./bakerapi_test.go
+./utils_test.go
+./variables_test.go

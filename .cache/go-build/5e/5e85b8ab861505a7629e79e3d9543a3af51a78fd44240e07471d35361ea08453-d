@@ -1,0 +1,18 @@
+# test log
+getenv GENERATE_TEST_DATA
+getenv GENERATE_TEST_DATA
+getenv GENERATE_TEST_DATA
+getenv GENERATE_TEST_DATA
+getenv GENERATE_TEST_DATA
+getenv GENERATE_TEST_DATA
+getenv GENERATE_TEST_DATA
+getenv GENERATE_TEST_DATA
+getenv GENERATE_TEST_DATA
+getenv GENERATE_TEST_DATA
+getenv GENERATE_TEST_DATA
+getenv GENERATE_TEST_DATA
+getenv GENERATE_TEST_DATA
+open ./testdata/test_aksnodeconfig.json
+open ./testdata/test_aksnodeconfig_fields_unexpected.json
+open ./testdata/test_aksnodeconfig_fields_missing.json
+open ./testdata/test_aksnodeconfig.json

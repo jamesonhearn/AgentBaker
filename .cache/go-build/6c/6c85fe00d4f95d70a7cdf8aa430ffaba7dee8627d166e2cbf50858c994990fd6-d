@@ -1,0 +1,10 @@
+./descriptor.pb.go
+./doc.go
+./event.pb.go
+./fieldpath.pb.go
+./introspection.pb.go
+./metrics.pb.go
+./mount.pb.go
+./platform.pb.go
+./platform_helpers.go
+./sandbox.pb.go

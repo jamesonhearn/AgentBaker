@@ -1,0 +1,7 @@
+./attach.go
+./descriptor.go
+./discover.go
+./fetched.go
+./pull.go
+./push.go
+./tag.go

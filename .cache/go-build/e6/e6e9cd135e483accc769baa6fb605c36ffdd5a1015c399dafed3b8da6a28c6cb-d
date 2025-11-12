@@ -1,0 +1,15 @@
+./azenvtypes.go
+./const.go
+./gpu_components.go
+./helper.go
+./mocks.go
+./osimageconfig.go
+./sig_config.go
+./types.go
+./versions.go
+./datamodel_suites_test.go
+./gpu_components_test.go
+./helper_test.go
+./sig_config_test.go
+./types_test.go
+./versions_test.go

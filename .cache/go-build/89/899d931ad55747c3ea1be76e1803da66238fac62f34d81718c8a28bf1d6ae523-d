@@ -1,0 +1,5 @@
+./constraints.go
+./decode.go
+./doc.go
+./jsonschema.go
+./ref.go

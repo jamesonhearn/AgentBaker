@@ -1,0 +1,4 @@
+./doc.go
+./namespace.pb.go
+./namespace_grpc.pb.go
+./namespace_ttrpc.pb.go

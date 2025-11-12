@@ -1,0 +1,5 @@
+./content.go
+./copy.go
+./extendedcopy.go
+./pack.go
+./target.go

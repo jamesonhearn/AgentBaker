@@ -1,0 +1,4 @@
+./client.go
+./doc.go
+./resource_identifier.go
+./resource_type.go

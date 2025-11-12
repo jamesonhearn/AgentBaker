@@ -1,0 +1,12 @@
+./build.go
+./client_factory.go
+./constants.go
+./federatedidentitycredentials_client.go
+./models.go
+./models_serde.go
+./operations_client.go
+./options.go
+./response_types.go
+./systemassignedidentities_client.go
+./time_rfc3339.go
+./userassignedidentities_client.go

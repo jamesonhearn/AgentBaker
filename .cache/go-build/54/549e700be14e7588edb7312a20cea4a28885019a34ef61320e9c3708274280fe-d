@@ -1,0 +1,4 @@
+./doc.go
+./introspection.pb.go
+./introspection_grpc.pb.go
+./introspection_ttrpc.pb.go

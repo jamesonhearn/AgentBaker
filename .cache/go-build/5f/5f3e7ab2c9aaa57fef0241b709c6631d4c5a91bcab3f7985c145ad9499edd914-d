@@ -1,0 +1,4 @@
+./dataurl.go
+./doc.go
+./lex.go
+./rfc2396.go

@@ -1,0 +1,1698 @@
++ cd /home/packer
++ installBcc
++ echo 'Installing BCC tools...'
+Installing BCC tools...
++ wait_for_apt_locks
++ fuser /var/lib/dpkg/lock /var/lib/apt/lists/lock /var/cache/apt/archives/lock /var/lib/dpkg/lock-frontend
++ apt_get_update
++ _apt_get_update 10 ''
++ local retries=10
++ local apt_opts=
++ local apt_update_output=/tmp/apt-get-update.out
+++ seq 1 10
++ for i in $(seq 1 $retries)
++ wait_for_apt_locks
++ fuser /var/lib/dpkg/lock /var/lib/apt/lists/lock /var/cache/apt/archives/lock /var/lib/dpkg/lock-frontend
++ export DEBIAN_FRONTEND=noninteractive
++ DEBIAN_FRONTEND=noninteractive
++ dpkg --configure -a --force-confdef
++ apt-get -f -y install
+Reading package lists...
+Building dependency tree...
+Reading state information...
+The following package was automatically installed and is no longer required:
+  libtraceevent1
+Use 'sudo apt autoremove' to remove it.
+0 upgraded, 0 newly installed, 0 to remove and 5 not upgraded.
++ apt-get update
++ grep -E '^([WE]:.*)|^([Ee][Rr][Rr][Oo][Rr].*)$'
++ tee /tmp/apt-get-update.out
++ cat /tmp/apt-get-update.out
+Hit:1 https://packages.microsoft.com/ubuntu/22.04/prod testing InRelease
+Hit:2 https://packages.microsoft.com/ubuntu/22.04/prod jammy InRelease
+Hit:3 https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64  InRelease
+Hit:4 http://azure.archive.ubuntu.com/ubuntu jammy InRelease
+Hit:5 http://azure.archive.ubuntu.com/ubuntu jammy-updates InRelease
+Hit:6 http://azure.archive.ubuntu.com/ubuntu jammy-backports InRelease
+Hit:7 http://azure.archive.ubuntu.com/ubuntu jammy-security InRelease
+Reading package lists...
++ break
++ echo Executed apt-get update 1 times
+Executed apt-get update 1 times
++ wait_for_apt_locks
++ fuser /var/lib/dpkg/lock /var/lib/apt/lists/lock /var/cache/apt/archives/lock /var/lib/dpkg/lock-frontend
+++ cut -f 2 -d =
+++ grep DISTRIB_RELEASE /etc/lsb-release /etc/os-release
++ VERSION=22.04
++ '[' 22.04 = 22.04 ']'
++ apt_get_install 120 5 300 build-essential git bison cmake flex libedit-dev libllvm14 llvm-14-dev libclang-14-dev python3 zlib1g-dev libelf-dev libfl-dev
++ retries=120
++ wait_sleep=5
++ timeout=300
++ shift
++ shift
++ shift
++ _apt_get_install 120 5 -y build-essential git bison cmake flex libedit-dev libllvm14 llvm-14-dev libclang-14-dev python3 zlib1g-dev libelf-dev libfl-dev
++ local retries=120
++ local wait_sleep=5
++ local apt_opts=-y
++ shift
++ shift
++ shift
+++ seq 1 120
++ for i in $(seq 1 $retries)
++ wait_for_apt_locks
++ fuser /var/lib/dpkg/lock /var/lib/apt/lists/lock /var/cache/apt/archives/lock /var/lib/dpkg/lock-frontend
++ export DEBIAN_FRONTEND=noninteractive
++ DEBIAN_FRONTEND=noninteractive
++ dpkg --configure -a --force-confdef
++ apt-get install -y -o Dpkg::Options::=--force-confold --no-install-recommends build-essential git bison cmake flex libedit-dev libllvm14 llvm-14-dev libclang-14-dev python3 zlib1g-dev libelf-dev libfl-dev
+Reading package lists...
+Building dependency tree...
+Reading state information...
+git is already the newest version (1:2.34.1-1ubuntu1.15).
+git set to manually installed.
+python3 is already the newest version (3.10.6-1~22.04.1).
+python3 set to manually installed.
+The following package was automatically installed and is no longer required:
+  libtraceevent1
+Use 'sudo apt autoremove' to remove it.
+The following additional packages will be installed:
+  cmake-data dh-elpa-helper emacsen-common g++ g++-11 icu-devtools lib32gcc-s1
+  lib32stdc++6 libbsd-dev libc-dev-bin libc6-dev libc6-i386
+  libclang-common-14-dev libclang-cpp14 libclang1-14 libcrypt-dev libffi-dev
+  libfl2 libgc1 libicu-dev libjsoncpp25 libmd-dev libncurses-dev libnsl-dev
+  libobjc-11-dev libobjc4 libpfm4 librhash0 libstdc++-11-dev libtirpc-dev
+  libxml2-dev libz3-4 libz3-dev linux-libc-dev llvm-14 llvm-14-linker-tools
+  llvm-14-runtime llvm-14-tools m4 python3-pygments rpcsvc-proto
+Suggested packages:
+  bison-doc cmake-doc ninja-build cmake-format flex-doc g++-multilib
+  g++-11-multilib gcc-11-doc glibc-doc manpages-dev icu-doc ncurses-doc
+  libstdc++-11-doc pkg-config llvm-14-doc m4-doc python-pygments-doc
+  ttf-bitstream-vera
+Recommended packages:
+  manpages-dev libc-devtools binfmt-support
+The following NEW packages will be installed:
+  bison build-essential cmake cmake-data dh-elpa-helper emacsen-common flex
+  g++ g++-11 icu-devtools lib32gcc-s1 lib32stdc++6 libbsd-dev libc-dev-bin
+  libc6-dev libc6-i386 libclang-14-dev libclang-common-14-dev libclang-cpp14
+  libclang1-14 libcrypt-dev libedit-dev libelf-dev libffi-dev libfl-dev libfl2
+  libgc1 libicu-dev libjsoncpp25 libllvm14 libmd-dev libncurses-dev libnsl-dev
+  libobjc-11-dev libobjc4 libpfm4 librhash0 libstdc++-11-dev libtirpc-dev
+  libxml2-dev libz3-4 libz3-dev linux-libc-dev llvm-14 llvm-14-dev
+  llvm-14-linker-tools llvm-14-runtime llvm-14-tools m4 python3-pygments
+  rpcsvc-proto zlib1g-dev
+0 upgraded, 52 newly installed, 0 to remove and 5 not upgraded.
+Need to get 177 MB of archives.
+After this operation, 1060 MB of additional disk space will be used.
+Get:1 http://azure.archive.ubuntu.com/ubuntu jammy/main amd64 m4 amd64 1.4.18-5ubuntu2 [199 kB]
+Get:2 http://azure.archive.ubuntu.com/ubuntu jammy/main amd64 flex amd64 2.6.4-8build2 [307 kB]
+Get:3 http://azure.archive.ubuntu.com/ubuntu jammy/main amd64 bison amd64 2:3.8.2+dfsg-1build1 [748 kB]
+Get:4 http://azure.archive.ubuntu.com/ubuntu jammy-updates/main amd64 libc-dev-bin amd64 2.35-0ubuntu3.11 [20.3 kB]
+Get:5 http://azure.archive.ubuntu.com/ubuntu jammy-updates/main amd64 linux-libc-dev amd64 5.15.0-161.171 [1307 kB]
+Get:6 http://azure.archive.ubuntu.com/ubuntu jammy/main amd64 libcrypt-dev amd64 1:4.4.27-1 [112 kB]
+Get:7 http://azure.archive.ubuntu.com/ubuntu jammy/main amd64 rpcsvc-proto amd64 1.4.2-0ubuntu6 [68.5 kB]
+Get:8 http://azure.archive.ubuntu.com/ubuntu jammy-updates/main amd64 libtirpc-dev amd64 1.3.2-2ubuntu0.1 [192 kB]
+Get:9 http://azure.archive.ubuntu.com/ubuntu jammy/main amd64 libnsl-dev amd64 1.3.0-2build2 [71.3 kB]
+Get:10 http://azure.archive.ubuntu.com/ubuntu jammy-updates/main amd64 libc6-dev amd64 2.35-0ubuntu3.11 [2100 kB]
+Get:11 http://azure.archive.ubuntu.com/ubuntu jammy-updates/main amd64 libstdc++-11-dev amd64 11.4.0-1ubuntu1~22.04.2 [2101 kB]
+Get:12 http://azure.archive.ubuntu.com/ubuntu jammy-updates/main amd64 g++-11 amd64 11.4.0-1ubuntu1~22.04.2 [11.4 MB]
+Get:13 http://azure.archive.ubuntu.com/ubuntu jammy/main amd64 g++ amd64 4:11.2.0-1ubuntu1 [1412 B]
+Get:14 http://azure.archive.ubuntu.com/ubuntu jammy/main amd64 build-essential amd64 12.9ubuntu3 [4744 B]
+Get:15 http://azure.archive.ubuntu.com/ubuntu jammy/main amd64 libjsoncpp25 amd64 1.9.5-3 [80.0 kB]
+Get:16 http://azure.archive.ubuntu.com/ubuntu jammy/main amd64 librhash0 amd64 1.4.2-1ubuntu1 [125 kB]
+Get:17 http://azure.archive.ubuntu.com/ubuntu jammy/main amd64 dh-elpa-helper all 2.0.9ubuntu1 [7610 B]
+Get:18 http://azure.archive.ubuntu.com/ubuntu jammy/main amd64 emacsen-common all 3.0.4 [14.9 kB]
+Get:19 http://azure.archive.ubuntu.com/ubuntu jammy-updates/main amd64 cmake-data all 3.22.1-1ubuntu1.22.04.2 [1913 kB]
+Get:20 http://azure.archive.ubuntu.com/ubuntu jammy-updates/main amd64 cmake amd64 3.22.1-1ubuntu1.22.04.2 [5010 kB]
+Get:21 http://azure.archive.ubuntu.com/ubuntu jammy/main amd64 icu-devtools amd64 70.1-2 [197 kB]
+Get:22 http://azure.archive.ubuntu.com/ubuntu jammy-updates/main amd64 libc6-i386 amd64 2.35-0ubuntu3.11 [2838 kB]
+Get:23 http://azure.archive.ubuntu.com/ubuntu jammy-updates/main amd64 lib32gcc-s1 amd64 12.3.0-1ubuntu1~22.04.2 [63.9 kB]
+Get:24 http://azure.archive.ubuntu.com/ubuntu jammy/main amd64 libmd-dev amd64 1.0.4-1build1 [40.0 kB]
+Get:25 http://azure.archive.ubuntu.com/ubuntu jammy/main amd64 libbsd-dev amd64 0.11.5-1 [168 kB]
+Get:26 http://azure.archive.ubuntu.com/ubuntu jammy/main amd64 libgc1 amd64 1:8.0.6-1.1build1 [96.8 kB]
+Get:27 http://azure.archive.ubuntu.com/ubuntu jammy-updates/universe amd64 libobjc4 amd64 12.3.0-1ubuntu1~22.04.2 [48.7 kB]
+Get:28 http://azure.archive.ubuntu.com/ubuntu jammy-updates/universe amd64 libobjc-11-dev amd64 11.4.0-1ubuntu1~22.04.2 [196 kB]
+Get:29 http://azure.archive.ubuntu.com/ubuntu jammy-updates/main amd64 libllvm14 amd64 1:14.0.0-1ubuntu1.1 [24.0 MB]
+Get:30 http://azure.archive.ubuntu.com/ubuntu jammy-updates/universe amd64 libclang1-14 amd64 1:14.0.0-1ubuntu1.1 [6792 kB]
+Get:31 http://azure.archive.ubuntu.com/ubuntu jammy-updates/main amd64 lib32stdc++6 amd64 12.3.0-1ubuntu1~22.04.2 [739 kB]
+Get:32 http://azure.archive.ubuntu.com/ubuntu jammy-updates/universe amd64 libclang-common-14-dev amd64 1:14.0.0-1ubuntu1.1 [5975 kB]
+Get:33 http://azure.archive.ubuntu.com/ubuntu jammy-updates/universe amd64 libclang-14-dev amd64 1:14.0.0-1ubuntu1.1 [25.2 MB]
+Get:34 http://azure.archive.ubuntu.com/ubuntu jammy-updates/universe amd64 libclang-cpp14 amd64 1:14.0.0-1ubuntu1.1 [12.1 MB]
+Get:35 http://azure.archive.ubuntu.com/ubuntu jammy-updates/main amd64 libncurses-dev amd64 6.3-2ubuntu0.1 [381 kB]
+Get:36 http://azure.archive.ubuntu.com/ubuntu jammy/main amd64 libedit-dev amd64 3.1-20210910-1build1 [118 kB]
+Get:37 http://azure.archive.ubuntu.com/ubuntu jammy-updates/main amd64 zlib1g-dev amd64 1:1.2.11.dfsg-2ubuntu9.2 [164 kB]
+Get:38 http://azure.archive.ubuntu.com/ubuntu jammy-updates/main amd64 libelf-dev amd64 0.186-1ubuntu0.1 [64.4 kB]
+Get:39 http://azure.archive.ubuntu.com/ubuntu jammy/main amd64 libfl2 amd64 2.6.4-8build2 [10.7 kB]
+Get:40 http://azure.archive.ubuntu.com/ubuntu jammy/main amd64 libfl-dev amd64 2.6.4-8build2 [6236 B]
+Get:41 http://azure.archive.ubuntu.com/ubuntu jammy/main amd64 libicu-dev amd64 70.1-2 [11.6 MB]
+Get:42 http://azure.archive.ubuntu.com/ubuntu jammy-updates/main amd64 libxml2-dev amd64 2.9.13+dfsg-1ubuntu0.10 [804 kB]
+Get:43 http://azure.archive.ubuntu.com/ubuntu jammy-updates/universe amd64 llvm-14-runtime amd64 1:14.0.0-1ubuntu1.1 [484 kB]
+Get:44 http://azure.archive.ubuntu.com/ubuntu jammy-updates/universe amd64 llvm-14-linker-tools amd64 1:14.0.0-1ubuntu1.1 [1355 kB]
+Get:45 http://azure.archive.ubuntu.com/ubuntu jammy-updates/main amd64 libpfm4 amd64 4.11.1+git32-gd0b85fb-1ubuntu0.1 [345 kB]
+Get:46 http://azure.archive.ubuntu.com/ubuntu jammy-updates/universe amd64 llvm-14 amd64 1:14.0.0-1ubuntu1.1 [12.7 MB]
+Get:47 http://azure.archive.ubuntu.com/ubuntu jammy/main amd64 libffi-dev amd64 3.4.2-4 [63.7 kB]
+Get:48 http://azure.archive.ubuntu.com/ubuntu jammy-updates/main amd64 python3-pygments all 2.11.2+dfsg-2ubuntu0.1 [750 kB]
+Get:49 http://azure.archive.ubuntu.com/ubuntu jammy-updates/universe amd64 llvm-14-tools amd64 1:14.0.0-1ubuntu1.1 [404 kB]
+Get:50 http://azure.archive.ubuntu.com/ubuntu jammy/universe amd64 libz3-4 amd64 4.8.12-1 [5766 kB]
+Get:51 http://azure.archive.ubuntu.com/ubuntu jammy/universe amd64 libz3-dev amd64 4.8.12-1 [72.2 kB]
+Get:52 http://azure.archive.ubuntu.com/ubuntu jammy-updates/universe amd64 llvm-14-dev amd64 1:14.0.0-1ubuntu1.1 [37.8 MB]
+Fetched 177 MB in 6s (31.0 MB/s)
+Selecting previously unselected package m4.
+(Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 65618 files and directories currently installed.)
+Preparing to unpack .../00-m4_1.4.18-5ubuntu2_amd64.deb ...
+Unpacking m4 (1.4.18-5ubuntu2) ...
+Selecting previously unselected package flex.
+Preparing to unpack .../01-flex_2.6.4-8build2_amd64.deb ...
+Unpacking flex (2.6.4-8build2) ...
+Selecting previously unselected package bison.
+Preparing to unpack .../02-bison_2%3a3.8.2+dfsg-1build1_amd64.deb ...
+Unpacking bison (2:3.8.2+dfsg-1build1) ...
+Selecting previously unselected package libc-dev-bin.
+Preparing to unpack .../03-libc-dev-bin_2.35-0ubuntu3.11_amd64.deb ...
+Unpacking libc-dev-bin (2.35-0ubuntu3.11) ...
+Selecting previously unselected package linux-libc-dev:amd64.
+Preparing to unpack .../04-linux-libc-dev_5.15.0-161.171_amd64.deb ...
+Unpacking linux-libc-dev:amd64 (5.15.0-161.171) ...
+Selecting previously unselected package libcrypt-dev:amd64.
+Preparing to unpack .../05-libcrypt-dev_1%3a4.4.27-1_amd64.deb ...
+Unpacking libcrypt-dev:amd64 (1:4.4.27-1) ...
+Selecting previously unselected package rpcsvc-proto.
+Preparing to unpack .../06-rpcsvc-proto_1.4.2-0ubuntu6_amd64.deb ...
+Unpacking rpcsvc-proto (1.4.2-0ubuntu6) ...
+Selecting previously unselected package libtirpc-dev:amd64.
+Preparing to unpack .../07-libtirpc-dev_1.3.2-2ubuntu0.1_amd64.deb ...
+Unpacking libtirpc-dev:amd64 (1.3.2-2ubuntu0.1) ...
+Selecting previously unselected package libnsl-dev:amd64.
+Preparing to unpack .../08-libnsl-dev_1.3.0-2build2_amd64.deb ...
+Unpacking libnsl-dev:amd64 (1.3.0-2build2) ...
+Selecting previously unselected package libc6-dev:amd64.
+Preparing to unpack .../09-libc6-dev_2.35-0ubuntu3.11_amd64.deb ...
+Unpacking libc6-dev:amd64 (2.35-0ubuntu3.11) ...
+Selecting previously unselected package libstdc++-11-dev:amd64.
+Preparing to unpack .../10-libstdc++-11-dev_11.4.0-1ubuntu1~22.04.2_amd64.deb ...
+Unpacking libstdc++-11-dev:amd64 (11.4.0-1ubuntu1~22.04.2) ...
+Selecting previously unselected package g++-11.
+Preparing to unpack .../11-g++-11_11.4.0-1ubuntu1~22.04.2_amd64.deb ...
+Unpacking g++-11 (11.4.0-1ubuntu1~22.04.2) ...
+Selecting previously unselected package g++.
+Preparing to unpack .../12-g++_4%3a11.2.0-1ubuntu1_amd64.deb ...
+Unpacking g++ (4:11.2.0-1ubuntu1) ...
+Selecting previously unselected package build-essential.
+Preparing to unpack .../13-build-essential_12.9ubuntu3_amd64.deb ...
+Unpacking build-essential (12.9ubuntu3) ...
+Selecting previously unselected package libjsoncpp25:amd64.
+Preparing to unpack .../14-libjsoncpp25_1.9.5-3_amd64.deb ...
+Unpacking libjsoncpp25:amd64 (1.9.5-3) ...
+Selecting previously unselected package librhash0:amd64.
+Preparing to unpack .../15-librhash0_1.4.2-1ubuntu1_amd64.deb ...
+Unpacking librhash0:amd64 (1.4.2-1ubuntu1) ...
+Selecting previously unselected package dh-elpa-helper.
+Preparing to unpack .../16-dh-elpa-helper_2.0.9ubuntu1_all.deb ...
+Unpacking dh-elpa-helper (2.0.9ubuntu1) ...
+Selecting previously unselected package emacsen-common.
+Preparing to unpack .../17-emacsen-common_3.0.4_all.deb ...
+Unpacking emacsen-common (3.0.4) ...
+Selecting previously unselected package cmake-data.
+Preparing to unpack .../18-cmake-data_3.22.1-1ubuntu1.22.04.2_all.deb ...
+Unpacking cmake-data (3.22.1-1ubuntu1.22.04.2) ...
+Selecting previously unselected package cmake.
+Preparing to unpack .../19-cmake_3.22.1-1ubuntu1.22.04.2_amd64.deb ...
+Unpacking cmake (3.22.1-1ubuntu1.22.04.2) ...
+Selecting previously unselected package icu-devtools.
+Preparing to unpack .../20-icu-devtools_70.1-2_amd64.deb ...
+Unpacking icu-devtools (70.1-2) ...
+Selecting previously unselected package libc6-i386.
+Preparing to unpack .../21-libc6-i386_2.35-0ubuntu3.11_amd64.deb ...
+Unpacking libc6-i386 (2.35-0ubuntu3.11) ...
+Selecting previously unselected package lib32gcc-s1.
+Preparing to unpack .../22-lib32gcc-s1_12.3.0-1ubuntu1~22.04.2_amd64.deb ...
+Unpacking lib32gcc-s1 (12.3.0-1ubuntu1~22.04.2) ...
+Selecting previously unselected package libmd-dev:amd64.
+Preparing to unpack .../23-libmd-dev_1.0.4-1build1_amd64.deb ...
+Unpacking libmd-dev:amd64 (1.0.4-1build1) ...
+Selecting previously unselected package libbsd-dev:amd64.
+Preparing to unpack .../24-libbsd-dev_0.11.5-1_amd64.deb ...
+Unpacking libbsd-dev:amd64 (0.11.5-1) ...
+Selecting previously unselected package libgc1:amd64.
+Preparing to unpack .../25-libgc1_1%3a8.0.6-1.1build1_amd64.deb ...
+Unpacking libgc1:amd64 (1:8.0.6-1.1build1) ...
+Selecting previously unselected package libobjc4:amd64.
+Preparing to unpack .../26-libobjc4_12.3.0-1ubuntu1~22.04.2_amd64.deb ...
+Unpacking libobjc4:amd64 (12.3.0-1ubuntu1~22.04.2) ...
+Selecting previously unselected package libobjc-11-dev:amd64.
+Preparing to unpack .../27-libobjc-11-dev_11.4.0-1ubuntu1~22.04.2_amd64.deb ...
+Unpacking libobjc-11-dev:amd64 (11.4.0-1ubuntu1~22.04.2) ...
+Selecting previously unselected package libllvm14:amd64.
+Preparing to unpack .../28-libllvm14_1%3a14.0.0-1ubuntu1.1_amd64.deb ...
+Unpacking libllvm14:amd64 (1:14.0.0-1ubuntu1.1) ...
+Selecting previously unselected package libclang1-14.
+Preparing to unpack .../29-libclang1-14_1%3a14.0.0-1ubuntu1.1_amd64.deb ...
+Unpacking libclang1-14 (1:14.0.0-1ubuntu1.1) ...
+Selecting previously unselected package lib32stdc++6.
+Preparing to unpack .../30-lib32stdc++6_12.3.0-1ubuntu1~22.04.2_amd64.deb ...
+Unpacking lib32stdc++6 (12.3.0-1ubuntu1~22.04.2) ...
+Selecting previously unselected package libclang-common-14-dev.
+Preparing to unpack .../31-libclang-common-14-dev_1%3a14.0.0-1ubuntu1.1_amd64.deb ...
+Unpacking libclang-common-14-dev (1:14.0.0-1ubuntu1.1) ...
+Selecting previously unselected package libclang-14-dev.
+Preparing to unpack .../32-libclang-14-dev_1%3a14.0.0-1ubuntu1.1_amd64.deb ...
+Unpacking libclang-14-dev (1:14.0.0-1ubuntu1.1) ...
+Selecting previously unselected package libclang-cpp14.
+Preparing to unpack .../33-libclang-cpp14_1%3a14.0.0-1ubuntu1.1_amd64.deb ...
+Unpacking libclang-cpp14 (1:14.0.0-1ubuntu1.1) ...
+Selecting previously unselected package libncurses-dev:amd64.
+Preparing to unpack .../34-libncurses-dev_6.3-2ubuntu0.1_amd64.deb ...
+Unpacking libncurses-dev:amd64 (6.3-2ubuntu0.1) ...
+Selecting previously unselected package libedit-dev:amd64.
+Preparing to unpack .../35-libedit-dev_3.1-20210910-1build1_amd64.deb ...
+Unpacking libedit-dev:amd64 (3.1-20210910-1build1) ...
+Selecting previously unselected package zlib1g-dev:amd64.
+Preparing to unpack .../36-zlib1g-dev_1%3a1.2.11.dfsg-2ubuntu9.2_amd64.deb ...
+Unpacking zlib1g-dev:amd64 (1:1.2.11.dfsg-2ubuntu9.2) ...
+Selecting previously unselected package libelf-dev:amd64.
+Preparing to unpack .../37-libelf-dev_0.186-1ubuntu0.1_amd64.deb ...
+Unpacking libelf-dev:amd64 (0.186-1ubuntu0.1) ...
+Selecting previously unselected package libfl2:amd64.
+Preparing to unpack .../38-libfl2_2.6.4-8build2_amd64.deb ...
+Unpacking libfl2:amd64 (2.6.4-8build2) ...
+Selecting previously unselected package libfl-dev:amd64.
+Preparing to unpack .../39-libfl-dev_2.6.4-8build2_amd64.deb ...
+Unpacking libfl-dev:amd64 (2.6.4-8build2) ...
+Selecting previously unselected package libicu-dev:amd64.
+Preparing to unpack .../40-libicu-dev_70.1-2_amd64.deb ...
+Unpacking libicu-dev:amd64 (70.1-2) ...
+Selecting previously unselected package libxml2-dev:amd64.
+Preparing to unpack .../41-libxml2-dev_2.9.13+dfsg-1ubuntu0.10_amd64.deb ...
+Unpacking libxml2-dev:amd64 (2.9.13+dfsg-1ubuntu0.10) ...
+Selecting previously unselected package llvm-14-runtime.
+Preparing to unpack .../42-llvm-14-runtime_1%3a14.0.0-1ubuntu1.1_amd64.deb ...
+Unpacking llvm-14-runtime (1:14.0.0-1ubuntu1.1) ...
+Selecting previously unselected package llvm-14-linker-tools.
+Preparing to unpack .../43-llvm-14-linker-tools_1%3a14.0.0-1ubuntu1.1_amd64.deb ...
+Unpacking llvm-14-linker-tools (1:14.0.0-1ubuntu1.1) ...
+Selecting previously unselected package libpfm4:amd64.
+Preparing to unpack .../44-libpfm4_4.11.1+git32-gd0b85fb-1ubuntu0.1_amd64.deb ...
+Unpacking libpfm4:amd64 (4.11.1+git32-gd0b85fb-1ubuntu0.1) ...
+Selecting previously unselected package llvm-14.
+Preparing to unpack .../45-llvm-14_1%3a14.0.0-1ubuntu1.1_amd64.deb ...
+Unpacking llvm-14 (1:14.0.0-1ubuntu1.1) ...
+Selecting previously unselected package libffi-dev:amd64.
+Preparing to unpack .../46-libffi-dev_3.4.2-4_amd64.deb ...
+Unpacking libffi-dev:amd64 (3.4.2-4) ...
+Selecting previously unselected package python3-pygments.
+Preparing to unpack .../47-python3-pygments_2.11.2+dfsg-2ubuntu0.1_all.deb ...
+Unpacking python3-pygments (2.11.2+dfsg-2ubuntu0.1) ...
+Selecting previously unselected package llvm-14-tools.
+Preparing to unpack .../48-llvm-14-tools_1%3a14.0.0-1ubuntu1.1_amd64.deb ...
+Unpacking llvm-14-tools (1:14.0.0-1ubuntu1.1) ...
+Selecting previously unselected package libz3-4:amd64.
+Preparing to unpack .../49-libz3-4_4.8.12-1_amd64.deb ...
+Unpacking libz3-4:amd64 (4.8.12-1) ...
+Selecting previously unselected package libz3-dev:amd64.
+Preparing to unpack .../50-libz3-dev_4.8.12-1_amd64.deb ...
+Unpacking libz3-dev:amd64 (4.8.12-1) ...
+Selecting previously unselected package llvm-14-dev.
+Preparing to unpack .../51-llvm-14-dev_1%3a14.0.0-1ubuntu1.1_amd64.deb ...
+Unpacking llvm-14-dev (1:14.0.0-1ubuntu1.1) ...
+Setting up linux-libc-dev:amd64 (5.15.0-161.171) ...
+Setting up m4 (1.4.18-5ubuntu2) ...
+Setting up libffi-dev:amd64 (3.4.2-4) ...
+Setting up python3-pygments (2.11.2+dfsg-2ubuntu0.1) ...
+Setting up libz3-4:amd64 (4.8.12-1) ...
+Setting up libtirpc-dev:amd64 (1.3.2-2ubuntu0.1) ...
+Setting up libpfm4:amd64 (4.11.1+git32-gd0b85fb-1ubuntu0.1) ...
+Setting up rpcsvc-proto (1.4.2-0ubuntu6) ...
+Setting up emacsen-common (3.0.4) ...
+Setting up dh-elpa-helper (2.0.9ubuntu1) ...
+Setting up libjsoncpp25:amd64 (1.9.5-3) ...
+Setting up icu-devtools (70.1-2) ...
+Setting up libfl2:amd64 (2.6.4-8build2) ...
+Setting up libgc1:amd64 (1:8.0.6-1.1build1) ...
+Setting up libllvm14:amd64 (1:14.0.0-1ubuntu1.1) ...
+Setting up libnsl-dev:amd64 (1.3.0-2build2) ...
+Setting up librhash0:amd64 (1.4.2-1ubuntu1) ...
+Setting up libcrypt-dev:amd64 (1:4.4.27-1) ...
+Setting up libmd-dev:amd64 (1.0.4-1build1) ...
+Setting up bison (2:3.8.2+dfsg-1build1) ...
+update-alternatives: using /usr/bin/bison.yacc to provide /usr/bin/yacc (yacc) in auto mode
+Setting up libc6-i386 (2.35-0ubuntu3.11) ...
+Setting up cmake-data (3.22.1-1ubuntu1.22.04.2) ...
+Setting up libc-dev-bin (2.35-0ubuntu3.11) ...
+Setting up llvm-14-linker-tools (1:14.0.0-1ubuntu1.1) ...
+Setting up libbsd-dev:amd64 (0.11.5-1) ...
+Setting up llvm-14-tools (1:14.0.0-1ubuntu1.1) ...
+Setting up libz3-dev:amd64 (4.8.12-1) ...
+Setting up flex (2.6.4-8build2) ...
+Setting up libclang1-14 (1:14.0.0-1ubuntu1.1) ...
+Setting up libobjc4:amd64 (12.3.0-1ubuntu1~22.04.2) ...
+Setting up libfl-dev:amd64 (2.6.4-8build2) ...
+Setting up llvm-14-runtime (1:14.0.0-1ubuntu1.1) ...
+Setting up lib32gcc-s1 (12.3.0-1ubuntu1~22.04.2) ...
+Setting up lib32stdc++6 (12.3.0-1ubuntu1~22.04.2) ...
+Setting up libclang-common-14-dev (1:14.0.0-1ubuntu1.1) ...
+Setting up libclang-cpp14 (1:14.0.0-1ubuntu1.1) ...
+Setting up cmake (3.22.1-1ubuntu1.22.04.2) ...
+Setting up libc6-dev:amd64 (2.35-0ubuntu3.11) ...
+Setting up libicu-dev:amd64 (70.1-2) ...
+Setting up llvm-14 (1:14.0.0-1ubuntu1.1) ...
+Setting up libncurses-dev:amd64 (6.3-2ubuntu0.1) ...
+Setting up libobjc-11-dev:amd64 (11.4.0-1ubuntu1~22.04.2) ...
+Setting up libxml2-dev:amd64 (2.9.13+dfsg-1ubuntu0.10) ...
+Setting up libedit-dev:amd64 (3.1-20210910-1build1) ...
+Setting up libstdc++-11-dev:amd64 (11.4.0-1ubuntu1~22.04.2) ...
+Setting up zlib1g-dev:amd64 (1:1.2.11.dfsg-2ubuntu9.2) ...
+Setting up libclang-14-dev (1:14.0.0-1ubuntu1.1) ...
+Setting up llvm-14-dev (1:14.0.0-1ubuntu1.1) ...
+Setting up g++-11 (11.4.0-1ubuntu1~22.04.2) ...
+Setting up libelf-dev:amd64 (0.186-1ubuntu0.1) ...
+Setting up g++ (4:11.2.0-1ubuntu1) ...
+update-alternatives: using /usr/bin/g++ to provide /usr/bin/c++ (c++) in auto mode
+Setting up build-essential (12.9ubuntu3) ...
+Processing triggers for libc-bin (2.35-0ubuntu3.11) ...
+Processing triggers for man-db (2.10.2-1) ...
+Processing triggers for install-info (6.8-4build1) ...
+
+Running kernel seems to be up-to-date.
+
+No services need to be restarted.
+
+No containers need to be restarted.
+
+No user sessions are running outdated binaries.
+
+No VM guests are running outdated hypervisor (qemu) binaries on this host.
++ echo 'Executed apt-get install "{"name":"windows scripts","windowsDownloadLocation":"c:\\akse-cache\\","downloadURIs":{"windows":{"default":{"versionsV2":[{"renovateTag":"<DO_NOT_UPDATE>","latestVersion":"0.0.52"}],"downloadURL":"https://packages.aks.azure.com/aks/windows/cse/aks-windows-cse-scripts-v${version}.zip"}}}}
+{"name":"windows-gmsa-ccgakvplugin","windowsDownloadLocation":"c:\\akse-cache\\","downloadURIs":{"windows":{"default":{"versionsV2":[{"renovateTag":"<DO_NOT_UPDATE>","latestVersion":"1.1.5"}],"downloadURL":"https://packages.aks.azure.com/ccgakvplugin/v1.1.5/binaries/windows-gmsa-ccgakvplugin-v${version}.zip"}}}}
+{"name":"windows csi proxy","windowsDownloadLocation":"c:\\akse-cache\\csi-proxy\\","downloadURIs":{"windows":{"default":{"versionsV2":[{"renovateTag":"<DO_NOT_UPDATE>","latestVersion":"1.1.2-hotfix.20230807"}],"downloadURL":"https://packages.aks.azure.com/csi-proxy/v${version}/binaries/csi-proxy-v${version}.tar.gz"}}}}
+{"name":"windows credential provider","windowsDownloadLocation":"c:\\akse-cache\\credential-provider\\","downloadURIs":{"windows":{"default":{"versionsV2":[{"renovateTag":"<DO_NOT_UPDATE>","latestVersion":"1.30.10"},{"renovateTag":"<DO_NOT_UPDATE>","latestVersion":"1.31.4"},{"renovateTag":"<DO_NOT_UPDATE>","latestVersion":"1.32.3"},{"renovateTag":"<DO_NOT_UPDATE>","latestVersion":"1.33.2"}],"downloadURL":"https://packages.aks.azure.com/cloud-provider-azure/v${version}/binaries/azure-acr-credential-provider-windows-amd64-v${version}.tar.gz"}}}}
+{"name":"windows calico","windowsDownloadLocation":"c:\\akse-cache\\calico\\","downloadURIs":{"windows":{"default":{"versionsV2":[{"renovateTag":"<DO_NOT_UPDATE>","latestVersion":"3.24.0"}],"downloadURL":"https://packages.aks.azure.com/calico-node/v${version}/binaries/calico-windows-v${version}.zip"}}}}
+{"name":"azure-vnet-cni-windows","windowsDownloadLocation":"c:\\akse-cache\\win-vnet-cni\\","downloadURIs":{"windows":{"default":{"versionsV2":[{"renovateTag":"<DO_NOT_UPDATE>","latestVersion":"1.5.38"},{"renovateTag":"<DO_NOT_UPDATE>","latestVersion":"1.6.21"}],"downloadURL":"https://packages.aks.azure.com/azure-cni/v${version}/binaries/azure-vnet-cni-windows-amd64-v${version}.zip"}}}}
+{"name":"oras","downloadLocation":"/usr/local/bin","downloadURIs":{"default":{"current":{"versionsV2":[{"renovateTag":"<DO_NOT_UPDATE>","latestVersion":"1.2.2"}],"downloadURL":"https://github.com/oras-project/oras/releases/download/v${version}/oras_${version}_linux_${CPU_ARCH}.tar.gz"}}}}
+{"name":"aks-secure-tls-bootstrap-client","downloadLocation":"/usr/local/bin","windowsDownloadLocation":"c:\\akse-cache\\aks-secure-tls-bootstrap-client\\","downloadURIs":{"default":{"current":{"versionsV2":[{"renovateTag":"<DO_NOT_UPDATE>","latestVersion":"1.0.1"}],"downloadURL":"https://github.com/Azure/aks-secure-tls-bootstrap/releases/download/client/v${version}/linux-${CPU_ARCH}.tar.gz"}},"windows":{"default":{"versionsV2":[{"renovateTag":"<DO_NOT_UPDATE>","latestVersion":"1.0.1"}],"downloadURL":"https://github.com/Azure/aks-secure-tls-bootstrap/releases/download/client/v${version}/windows-amd64.zip"}}}}
+{"name":"runc","downloadLocation":"/opt/runc/downloads","downloadURIs":{"windows":{"default":{"versionsV2":[]}},"ubuntu":{"r2004":{"versionsV2":[{"renovateTag":"name=moby-runc, repository=production, os=ubuntu, release=20.04","latestVersion":"1.3.3-ubuntu20.04u1"}]},"r2204":{"versionsV2":[{"renovateTag":"name=moby-runc, repository=production, os=ubuntu, release=22.04","latestVersion":"1.3.3-ubuntu22.04u1"}]},"r2404":{"versionsV2":[{"renovateTag":"name=moby-runc, repository=production, os=ubuntu, release=24.04","latestVersion":"1.3.3-ubuntu24.04u1"}]}}}}
+{"name":"containerd","downloadLocation":"/opt/containerd/downloads","windowsDownloadLocation":"c:\\akse-cache\\containerd\\","downloadURIs":{"ubuntu":{"r2404":{"versionsV2":[{"renovateTag":"name=moby-containerd, repository=test, os=ubuntu, release=24.04","latestVersion":"2.1.4-ubuntu24.04u1"}]},"r2204":{"versionsV2":[{"renovateTag":"name=moby-containerd, repository=production, os=ubuntu, release=22.04","latestVersion":"1.7.28-ubuntu22.04u1"}]},"r2004":{"versionsV2":[{"renovateTag":"name=moby-containerd, repository=production, os=ubuntu, release=20.04","latestVersion":"1.7.28-ubuntu20.04u1"}]}},"mariner":{"current":{"versionsV2":[{"renovateTag":"RPM_registry=https://packages.microsoft.com/cbl-mariner/2.0/prod/base/x86_64/repodata, name=moby-containerd, os=mariner, release=2.0","latestVersion":"1.6.26-12.cm2"}]}},"marinerkata":{"current":{"versionsV2":[{"renovateTag":"<DO_NOT_UPDATE>","latestVersion":"<SKIP>"}]}},"azurelinux":{"v3.0":{"versionsV2":[{"renovateTag":"RPM_registry=https://packages.microsoft.com/azurelinux/3.0/prod/base/x86_64/repodata, name=containerd2, os=azurelinux, release=3.0","latestVersion":"2.0.0-14.azl3"}]}},"azurelinuxkata":{"v3.0":{"versionsV2":[{"renovateTag":"<DO_NOT_UPDATE>","latestVersion":"<SKIP>"}]}},"windows":{"ws2019":{"versionsV2":[{"renovateTag":"<DO_NOT_UPDATE>","latestVersion":"v1.6.35-azure.1"},{"renovateTag":"<DO_NOT_UPDATE>","latestVersion":"v1.7.20-azure.1","previousLatestVersion":"v1.7.17-azure.1"}],"downloadURL":"https://packages.aks.azure.com/containerd/windows/${version}/binaries/containerd-${version}-windows-amd64.tar.gz"},"ws2022":{"versionsV2":[{"renovateTag":"<DO_NOT_UPDATE>","latestVersion":"v1.6.35-azure.1"},{"renovateTag":"<DO_NOT_UPDATE>","latestVersion":"v1.7.20-azure.1","previousLatestVersion":"v1.7.17-azure.1"},{"renovateTag":"<DO_NOT_UPDATE>","latestVersion":"v2.0.4-azure.1"}],"downloadURL":"https://packages.aks.azure.com/containerd/windows/${version}/binaries/containerd-${version}-windows-amd64.tar.gz"},"ws2025":{"versionsV2":[{"renovateTag":"<DO_NOT_UPDATE>","latestVersion":"v2.0.4-azure.1"}],"downloadURL":"https://packages.aks.azure.com/containerd/windows/${version}/binaries/containerd-${version}-windows-amd64.tar.gz"},"default":{"versionsV2":[{"renovateTag":"<DO_NOT_UPDATE>","latestVersion":"v1.7.20-azure.1","previousLatestVersion":"v1.7.17-azure.1"}],"downloadURL":"https://packages.aks.azure.com/containerd/windows/${version}/binaries/containerd-${version}-windows-amd64.tar.gz"}},"default":{"current":{"versionsV2":[{"renovateTag":"<DO_NOT_UPDATE>","latestVersion":"1.7.20"}]}}}}
+{"name":"cni-plugins","downloadLocation":"/opt/cni/downloads","downloadURIs":{"windows":{"default":{"versionsV2":[]}},"default":{"current":{"versionsV2":[{"renovateTag":"<DO_NOT_UPDATE>","latestVersion":"1.6.2"}],"downloadURL":"https://packages.aks.azure.com/cni-plugins/v${version}/binaries/cni-plugins-linux-${CPU_ARCH}-v${version}.tgz"}}}}
+{"name":"azure-cni","downloadLocation":"/opt/cni/downloads","downloadURIs":{"windows":{"default":{"versionsV2":[]}},"default":{"current":{"versionsV2":[{"renovateTag":"<DO_NOT_UPDATE>","latestVersion":"1.5.38"},{"renovateTag":"<DO_NOT_UPDATE>","latestVersion":"1.6.21"}],"downloadURL":"https://packages.aks.azure.com/azure-cni/v${version}/binaries/azure-vnet-cni-linux-${CPU_ARCH}-v${version}.tgz"}}}}
+{"name":"kubernetes-cri-tools","downloadLocation":"/opt/crictl/downloads","downloadURIs":{"windows":{"default":{"versionsV2":[]}},"ubuntu":{"r2004":{"versionsV2":[{"renovateTag":"name=kubernetes-cri-tools, repository=production, os=ubuntu, release=20.04","latestVersion":"1.32.0-ubuntu20.04u3"}]},"r2204":{"versionsV2":[{"renovateTag":"name=kubernetes-cri-tools, repository=production, os=ubuntu, release=22.04","latestVersion":"1.32.0-ubuntu22.04u3"}]},"r2404":{"versionsV2":[{"renovateTag":"name=kubernetes-cri-tools, repository=production, os=ubuntu, release=24.04","latestVersion":"1.32.0-ubuntu24.04u3"}]}},"mariner":{"current":{"versionsV2":[{"renovateTag":"RPM_registry=https://packages.microsoft.com/cbl-mariner/2.0/prod/cloud-native/x86_64/repodata, name=kubernetes-cri-tools, os=mariner, release=2.0","latestVersion":"1.32.0-3.cm2"}]}},"marinerkata":{"current":{"versionsV2":[{"renovateTag":"RPM_registry=https://packages.microsoft.com/cbl-mariner/2.0/prod/cloud-native/x86_64/repodata, name=kubernetes-cri-tools, os=mariner, release=2.0","latestVersion":"1.32.0-3.cm2"}]}},"azurelinux":{"v3.0":{"versionsV2":[{"renovateTag":"RPM_registry=https://packages.microsoft.com/azurelinux/3.0/prod/cloud-native/x86_64/repodata, name=kubernetes-cri-tools, os=azurelinux, release=3.0","latestVersion":"1.32.0-3.azl3"}]}},"azurelinuxkata":{"v3.0":{"versionsV2":[{"renovateTag":"RPM_registry=https://packages.microsoft.com/azurelinux/3.0/prod/cloud-native/x86_64/repodata, name=kubernetes-cri-tools, os=azurelinux, release=3.0","latestVersion":"1.32.0-3.azl3"}]}}}}
+{"name":"kubelet","downloadLocation":"/opt/kubelet/downloads","windowsDownloadLocation":"c:\\akse-cache\\kubelet\\","downloadURIs":{"ubuntu":{"r2404":{"versionsV2":[{"k8sVersion":"1.34","renovateTag":"name=kubelet, repository=production, os=ubuntu, release=24.04","latestVersion":"1.34.1-ubuntu24.04u4","previousLatestVersion":"1.34.0-ubuntu24.04u5"}]},"r2204":{"versionsV2":[{"k8sVersion":"1.34","renovateTag":"name=kubelet, repository=production, os=ubuntu, release=22.04","latestVersion":"1.34.1-ubuntu22.04u4","previousLatestVersion":"1.34.0-ubuntu22.04u5"}]},"r2004":{"versionsV2":[{"k8sVersion":"1.34","renovateTag":"name=kubelet, repository=production, os=ubuntu, release=20.04","latestVersion":"1.34.1-ubuntu20.04u4","previousLatestVersion":"1.34.0-ubuntu20.04u5"}]}},"azurelinux":{"v3.0":{"versionsV2":[{"k8sVersion":"1.34","renovateTag":"name=kubelet, os=azurelinux, release=3.0","latestVersion":"1.34.1-4.azl3","previousLatestVersion":"1.34.0-5.azl3"}]}}}}
+{"name":"kubectl","downloadLocation":"/opt/kubectl/downloads","windowsDownloadLocation":"c:\\akse-cache\\kubectl\\","downloadURIs":{"ubuntu":{"r2404":{"versionsV2":[{"k8sVersion":"1.34","renovateTag":"name=kubectl, repository=production, os=ubuntu, release=24.04","latestVersion":"1.34.1-ubuntu24.04u4","previousLatestVersion":"1.34.0-ubuntu24.04u5"}]},"r2204":{"versionsV2":[{"k8sVersion":"1.34","renovateTag":"name=kubectl, repository=production, os=ubuntu, release=22.04","latestVersion":"1.34.1-ubuntu22.04u4","previousLatestVersion":"1.34.0-ubuntu22.04u5"}]},"r2004":{"versionsV2":[{"k8sVersion":"1.34","renovateTag":"name=kubectl, repository=production, os=ubuntu, release=20.04","latestVersion":"1.34.1-ubuntu20.04u4","previousLatestVersion":"1.34.0-ubuntu20.04u5"}]}},"azurelinux":{"v3.0":{"versionsV2":[{"k8sVersion":"1.34","renovateTag":"name=kubectl, os=azurelinux, release=3.0","latestVersion":"1.34.1-4.azl3","previousLatestVersion":"1.34.0-5.azl3"}]}}}}
+{"name":"kubernetes-binaries","downloadLocation":"/opt/kubernetes/downloads","windowsDownloadLocation":"c:\\akse-cache\\win-k8s\\","downloadURIs":{"default":{"current":{"versionsV2":[{"k8sVersion":"1.28","renovateTag":"OCI_registry=https://mcr.microsoft.com, name=oss/binaries/kubernetes/kubernetes-node","latestVersion":"v1.28.102-akslts","previousLatestVersion":"v1.28.101-akslts"},{"k8sVersion":"1.29","renovateTag":"OCI_registry=https://mcr.microsoft.com, name=oss/binaries/kubernetes/kubernetes-node","latestVersion":"v1.29.100-akslts","previousLatestVersion":"v1.29.100-akslts"},{"k8sVersion":"1.30","renovateTag":"OCI_registry=https://mcr.microsoft.com, name=oss/binaries/kubernetes/kubernetes-node","latestVersion":"v1.30.100-akslts","previousLatestVersion":"v1.30.100-akslts"},{"k8sVersion":"1.29","renovateTag":"OCI_registry=https://mcr.microsoft.com, name=oss/binaries/kubernetes/kubernetes-node","latestVersion":"v1.29.15","previousLatestVersion":"v1.29.14"},{"k8sVersion":"1.30","renovateTag":"OCI_registry=https://mcr.microsoft.com, name=oss/binaries/kubernetes/kubernetes-node","latestVersion":"v1.30.14","previousLatestVersion":"v1.30.13"},{"k8sVersion":"1.31","renovateTag":"OCI_registry=https://mcr.microsoft.com, name=oss/binaries/kubernetes/kubernetes-node","latestVersion":"v1.31.13","previousLatestVersion":"v1.31.11"},{"k8sVersion":"1.32","renovateTag":"OCI_registry=https://mcr.microsoft.com, name=oss/binaries/kubernetes/kubernetes-node","latestVersion":"v1.32.9","previousLatestVersion":"v1.32.7"},{"k8sVersion":"1.33","renovateTag":"OCI_registry=https://mcr.microsoft.com, name=oss/binaries/kubernetes/kubernetes-node","latestVersion":"v1.33.5","previousLatestVersion":"v1.33.4"},{"k8sVersion":"1.34","renovateTag":"OCI_registry=https://mcr.microsoft.com, name=oss/binaries/kubernetes/kubernetes-node","latestVersion":"v1.34.1","previousLatestVersion":"v1.34.0"}],"downloadURL":"mcr.microsoft.com/oss/binaries/kubernetes/kubernetes-node:${version}-linux-${CPU_ARCH}","windowsDownloadURL":"https://packages.aks.azure.com/kubernetes/${version}/windowszip/${version}-1int.zip"}}}}
+{"name":"azure-acr-credential-provider","downloadLocation":"/opt/credentialprovider/downloads","downloadURIs":{"windows":{"default":{"versionsV2":[]}},"default":{"current":{"versionsV2":[{"k8sVersion":"1.30","renovateTag":"OCI_registry=https://mcr.microsoft.com, name=oss/binaries/kubernetes/azure-acr-credential-provider","latestVersion":"v1.30.15"},{"k8sVersion":"1.31","renovateTag":"OCI_registry=https://mcr.microsoft.com, name=oss/binaries/kubernetes/azure-acr-credential-provider","latestVersion":"v1.31.9"},{"k8sVersion":"1.32","renovateTag":"OCI_registry=https://mcr.microsoft.com, name=oss/binaries/kubernetes/azure-acr-credential-provider","latestVersion":"v1.32.8"},{"k8sVersion":"1.33","renovateTag":"OCI_registry=https://mcr.microsoft.com, name=oss/binaries/kubernetes/azure-acr-credential-provider","latestVersion":"v1.33.3"}],"downloadURL":"mcr.microsoft.com/oss/binaries/kubernetes/azure-acr-credential-provider:${version}-linux-${CPU_ARCH}"}},"flatcar":{"current":{"versionsV2":[{"k8sVersion":"1.30","renovateTag":"OCI_registry=https://mcr.microsoft.com, name=oss/binaries/kubernetes/azure-acr-credential-provider","latestVersion":"v1.30.15"},{"k8sVersion":"1.31","renovateTag":"OCI_registry=https://mcr.microsoft.com, name=oss/binaries/kubernetes/azure-acr-credential-provider","latestVersion":"v1.31.9"},{"k8sVersion":"1.32","renovateTag":"OCI_registry=https://mcr.microsoft.com, name=oss/binaries/kubernetes/azure-acr-credential-provider","latestVersion":"v1.32.8"},{"k8sVersion":"1.33","renovateTag":"OCI_registry=https://mcr.microsoft.com, name=oss/binaries/kubernetes/azure-acr-credential-provider","latestVersion":"v1.33.3"},{"k8sVersion":"1.34","renovateTag":"OCI_registry=https://mcr.microsoft.com, name=oss/binaries/kubernetes/azure-acr-credential-provider","latestVersion":"v1.34.1"}],"downloadURL":"mcr.microsoft.com/oss/binaries/kubernetes/azure-acr-credential-provider:${version}-linux-${CPU_ARCH}"}}}}
+{"name":"azure-acr-credential-provider-pmc","downloadLocation":"/opt/credentialprovider/downloads","windowsDownloadLocation":"c:\\akse-cache\\azure-acr-credential-provider\\","downloadURIs":{"ubuntu":{"r2404":{"versionsV2":[{"k8sVersion":"1.34","renovateTag":"name=azure-acr-credential-provider, repository=production, os=ubuntu, release=24.04","latestVersion":"1.34.1-ubuntu24.04u3","previousLatestVersion":"1.34.0-ubuntu24.04u2"}]},"r2204":{"versionsV2":[{"k8sVersion":"1.34","renovateTag":"name=azure-acr-credential-provider, repository=production, os=ubuntu, release=22.04","latestVersion":"1.34.1-ubuntu22.04u3","previousLatestVersion":"1.34.0-ubuntu22.04u2"}]},"r2004":{"versionsV2":[{"k8sVersion":"1.34","renovateTag":"name=azure-acr-credential-provider, repository=production, os=ubuntu, release=20.04","latestVersion":"1.34.1-ubuntu20.04u3","previousLatestVersion":"1.34.0-ubuntu20.04u2"}]}},"azurelinux":{"v3.0":{"versionsV2":[{"k8sVersion":"1.34","renovateTag":"name=azure-acr-credential-provider, repository=production, os=azurelinux, release=3.0","latestVersion":"1.34.1-1.azl3","previousLatestVersion":"1.34.0-2.azl3"}]}}}}
+{"name":"nvidia-container-toolkit","downloadLocation":"/usr/local/bin","downloadURIs":{"windows":{"default":{"versionsV2":[]}},"azurelinux":{"current":{"versionsV2":[{"renovateTag":"<DO_NOT_UPDATE>","latestVersion":"1.17.3"}],"downloadURL":""}}}}
+{"name":"nvidia-device-plugin","downloadLocation":"/opt/nvidia-device-plugin/downloads","downloadURIs":{"ubuntu":{"r2404":{"versionsV2":[{"renovateTag":"name=nvidia-device-plugin, repository=production, os=ubuntu, release=24.04","latestVersion":"0.18.0-ubuntu24.04u2"}]},"r2204":{"versionsV2":[{"renovateTag":"name=nvidia-device-plugin, repository=production, os=ubuntu, release=22.04","latestVersion":"0.18.0-ubuntu22.04u2"}]}},"azurelinux":{"v3.0":{"versionsV2":[{"renovateTag":"RPM_registry=https://packages.microsoft.com/azurelinux/3.0/prod/cloud-native/x86_64/repodata, name=nvidia-device-plugin, os=azurelinux, release=3.0","latestVersion":"0.18.0-2.azl3"}]}}}}
+{"name":"datacenter-gpu-manager-4-core","downloadLocation":"/opt/datacenter-gpu-manager-4-core/downloads","downloadURIs":{"ubuntu":{"r2404":{"versionsV2":[{"renovateTag":"name=datacenter-gpu-manager-4-core, repository=nvidia, os=ubuntu, release=24.04","latestVersion":"1:4.4.1-1"}]},"r2204":{"versionsV2":[{"renovateTag":"name=datacenter-gpu-manager-4-core, repository=nvidia, os=ubuntu, release=22.04","latestVersion":"1:4.4.1-1"}]}},"azurelinux":{"v3.0":{"versionsV2":[{"renovateTag":"RPM_registry=https://developer.download.nvidia.com/compute/cuda/repos/azl3/x86_64/repodata, name=datacenter-gpu-manager-4-core, repository=nvidia, os=azurelinux, release=3.0","latestVersion":"1:4.4.1-1"}]}}}}
+{"name":"datacenter-gpu-manager-4-proprietary","downloadLocation":"/opt/datacenter-gpu-manager-4-proprietary/downloads","downloadURIs":{"ubuntu":{"r2404":{"versionsV2":[{"renovateTag":"name=datacenter-gpu-manager-4-proprietary, repository=nvidia, os=ubuntu, release=24.04","latestVersion":"1:4.4.1-1"}]},"r2204":{"versionsV2":[{"renovateTag":"name=datacenter-gpu-manager-4-proprietary, repository=nvidia, os=ubuntu, release=22.04","latestVersion":"1:4.4.1-1"}]}},"azurelinux":{"v3.0":{"versionsV2":[{"renovateTag":"RPM_registry=https://developer.download.nvidia.com/compute/cuda/repos/azl3/x86_64/repodata, name=datacenter-gpu-manager-4-proprietary, repository=nvidia, os=azurelinux, release=3.0","latestVersion":"1:4.4.1-1"}]}}}}
+{"name":"datacenter-gpu-manager-exporter","downloadLocation":"/opt/datacenter-gpu-manager-exporter/downloads","downloadURIs":{"ubuntu":{"r2404":{"versionsV2":[{"renovateTag":"name=datacenter-gpu-manager-exporter, repository=nvidia, os=ubuntu, release=24.04","latestVersion":"4.6.0-1"}]},"r2204":{"versionsV2":[{"renovateTag":"name=datacenter-gpu-manager-exporter, repository=nvidia, os=ubuntu, release=22.04","latestVersion":"4.6.0-1"}]}}}}
+{"name":"dcgm-exporter","downloadLocation":"/opt/dcgm-exporter/downloads","downloadURIs":{"azurelinux":{"v3.0":{"versionsV2":[{"renovateTag":"RPM_registry=https://packages.microsoft.com/azurelinux/3.0/prod/cloud-native/x86_64/repodata, name=dcgm-exporter, os=azurelinux, release=3.0","latestVersion":"4.6.0-1.azl3"}]}}}}" 1 times'
+Executed apt-get install "{"name":"windows scripts","windowsDownloadLocation":"c:\\akse-cache\\","downloadURIs":{"windows":{"default":{"versionsV2":[{"renovateTag":"<DO_NOT_UPDATE>","latestVersion":"0.0.52"}],"downloadURL":"https://packages.aks.azure.com/aks/windows/cse/aks-windows-cse-scripts-v${version}.zip"}}}}
+{"name":"windows-gmsa-ccgakvplugin","windowsDownloadLocation":"c:\\akse-cache\\","downloadURIs":{"windows":{"default":{"versionsV2":[{"renovateTag":"<DO_NOT_UPDATE>","latestVersion":"1.1.5"}],"downloadURL":"https://packages.aks.azure.com/ccgakvplugin/v1.1.5/binaries/windows-gmsa-ccgakvplugin-v${version}.zip"}}}}
+{"name":"windows csi proxy","windowsDownloadLocation":"c:\\akse-cache\\csi-proxy\\","downloadURIs":{"windows":{"default":{"versionsV2":[{"renovateTag":"<DO_NOT_UPDATE>","latestVersion":"1.1.2-hotfix.20230807"}],"downloadURL":"https://packages.aks.azure.com/csi-proxy/v${version}/binaries/csi-proxy-v${version}.tar.gz"}}}}
+{"name":"windows credential provider","windowsDownloadLocation":"c:\\akse-cache\\credential-provider\\","downloadURIs":{"windows":{"default":{"versionsV2":[{"renovateTag":"<DO_NOT_UPDATE>","latestVersion":"1.30.10"},{"renovateTag":"<DO_NOT_UPDATE>","latestVersion":"1.31.4"},{"renovateTag":"<DO_NOT_UPDATE>","latestVersion":"1.32.3"},{"renovateTag":"<DO_NOT_UPDATE>","latestVersion":"1.33.2"}],"downloadURL":"https://packages.aks.azure.com/cloud-provider-azure/v${version}/binaries/azure-acr-credential-provider-windows-amd64-v${version}.tar.gz"}}}}
+{"name":"windows calico","windowsDownloadLocation":"c:\\akse-cache\\calico\\","downloadURIs":{"windows":{"default":{"versionsV2":[{"renovateTag":"<DO_NOT_UPDATE>","latestVersion":"3.24.0"}],"downloadURL":"https://packages.aks.azure.com/calico-node/v${version}/binaries/calico-windows-v${version}.zip"}}}}
+{"name":"azure-vnet-cni-windows","windowsDownloadLocation":"c:\\akse-cache\\win-vnet-cni\\","downloadURIs":{"windows":{"default":{"versionsV2":[{"renovateTag":"<DO_NOT_UPDATE>","latestVersion":"1.5.38"},{"renovateTag":"<DO_NOT_UPDATE>","latestVersion":"1.6.21"}],"downloadURL":"https://packages.aks.azure.com/azure-cni/v${version}/binaries/azure-vnet-cni-windows-amd64-v${version}.zip"}}}}
+{"name":"oras","downloadLocation":"/usr/local/bin","downloadURIs":{"default":{"current":{"versionsV2":[{"renovateTag":"<DO_NOT_UPDATE>","latestVersion":"1.2.2"}],"downloadURL":"https://github.com/oras-project/oras/releases/download/v${version}/oras_${version}_linux_${CPU_ARCH}.tar.gz"}}}}
+{"name":"aks-secure-tls-bootstrap-client","downloadLocation":"/usr/local/bin","windowsDownloadLocation":"c:\\akse-cache\\aks-secure-tls-bootstrap-client\\","downloadURIs":{"default":{"current":{"versionsV2":[{"renovateTag":"<DO_NOT_UPDATE>","latestVersion":"1.0.1"}],"downloadURL":"https://github.com/Azure/aks-secure-tls-bootstrap/releases/download/client/v${version}/linux-${CPU_ARCH}.tar.gz"}},"windows":{"default":{"versionsV2":[{"renovateTag":"<DO_NOT_UPDATE>","latestVersion":"1.0.1"}],"downloadURL":"https://github.com/Azure/aks-secure-tls-bootstrap/releases/download/client/v${version}/windows-amd64.zip"}}}}
+{"name":"runc","downloadLocation":"/opt/runc/downloads","downloadURIs":{"windows":{"default":{"versionsV2":[]}},"ubuntu":{"r2004":{"versionsV2":[{"renovateTag":"name=moby-runc, repository=production, os=ubuntu, release=20.04","latestVersion":"1.3.3-ubuntu20.04u1"}]},"r2204":{"versionsV2":[{"renovateTag":"name=moby-runc, repository=production, os=ubuntu, release=22.04","latestVersion":"1.3.3-ubuntu22.04u1"}]},"r2404":{"versionsV2":[{"renovateTag":"name=moby-runc, repository=production, os=ubuntu, release=24.04","latestVersion":"1.3.3-ubuntu24.04u1"}]}}}}
+{"name":"containerd","downloadLocation":"/opt/containerd/downloads","windowsDownloadLocation":"c:\\akse-cache\\containerd\\","downloadURIs":{"ubuntu":{"r2404":{"versionsV2":[{"renovateTag":"name=moby-containerd, repository=test, os=ubuntu, release=24.04","latestVersion":"2.1.4-ubuntu24.04u1"}]},"r2204":{"versionsV2":[{"renovateTag":"name=moby-containerd, repository=production, os=ubuntu, release=22.04","latestVersion":"1.7.28-ubuntu22.04u1"}]},"r2004":{"versionsV2":[{"renovateTag":"name=moby-containerd, repository=production, os=ubuntu, release=20.04","latestVersion":"1.7.28-ubuntu20.04u1"}]}},"mariner":{"current":{"versionsV2":[{"renovateTag":"RPM_registry=https://packages.microsoft.com/cbl-mariner/2.0/prod/base/x86_64/repodata, name=moby-containerd, os=mariner, release=2.0","latestVersion":"1.6.26-12.cm2"}]}},"marinerkata":{"current":{"versionsV2":[{"renovateTag":"<DO_NOT_UPDATE>","latestVersion":"<SKIP>"}]}},"azurelinux":{"v3.0":{"versionsV2":[{"renovateTag":"RPM_registry=https://packages.microsoft.com/azurelinux/3.0/prod/base/x86_64/repodata, name=containerd2, os=azurelinux, release=3.0","latestVersion":"2.0.0-14.azl3"}]}},"azurelinuxkata":{"v3.0":{"versionsV2":[{"renovateTag":"<DO_NOT_UPDATE>","latestVersion":"<SKIP>"}]}},"windows":{"ws2019":{"versionsV2":[{"renovateTag":"<DO_NOT_UPDATE>","latestVersion":"v1.6.35-azure.1"},{"renovateTag":"<DO_NOT_UPDATE>","latestVersion":"v1.7.20-azure.1","previousLatestVersion":"v1.7.17-azure.1"}],"downloadURL":"https://packages.aks.azure.com/containerd/windows/${version}/binaries/containerd-${version}-windows-amd64.tar.gz"},"ws2022":{"versionsV2":[{"renovateTag":"<DO_NOT_UPDATE>","latestVersion":"v1.6.35-azure.1"},{"renovateTag":"<DO_NOT_UPDATE>","latestVersion":"v1.7.20-azure.1","previousLatestVersion":"v1.7.17-azure.1"},{"renovateTag":"<DO_NOT_UPDATE>","latestVersion":"v2.0.4-azure.1"}],"downloadURL":"https://packages.aks.azure.com/containerd/windows/${version}/binaries/containerd-${version}-windows-amd64.tar.gz"},"ws2025":{"versionsV2":[{"renovateTag":"<DO_NOT_UPDATE>","latestVersion":"v2.0.4-azure.1"}],"downloadURL":"https://packages.aks.azure.com/containerd/windows/${version}/binaries/containerd-${version}-windows-amd64.tar.gz"},"default":{"versionsV2":[{"renovateTag":"<DO_NOT_UPDATE>","latestVersion":"v1.7.20-azure.1","previousLatestVersion":"v1.7.17-azure.1"}],"downloadURL":"https://packages.aks.azure.com/containerd/windows/${version}/binaries/containerd-${version}-windows-amd64.tar.gz"}},"default":{"current":{"versionsV2":[{"renovateTag":"<DO_NOT_UPDATE>","latestVersion":"1.7.20"}]}}}}
+{"name":"cni-plugins","downloadLocation":"/opt/cni/downloads","downloadURIs":{"windows":{"default":{"versionsV2":[]}},"default":{"current":{"versionsV2":[{"renovateTag":"<DO_NOT_UPDATE>","latestVersion":"1.6.2"}],"downloadURL":"https://packages.aks.azure.com/cni-plugins/v${version}/binaries/cni-plugins-linux-${CPU_ARCH}-v${version}.tgz"}}}}
+{"name":"azure-cni","downloadLocation":"/opt/cni/downloads","downloadURIs":{"windows":{"default":{"versionsV2":[]}},"default":{"current":{"versionsV2":[{"renovateTag":"<DO_NOT_UPDATE>","latestVersion":"1.5.38"},{"renovateTag":"<DO_NOT_UPDATE>","latestVersion":"1.6.21"}],"downloadURL":"https://packages.aks.azure.com/azure-cni/v${version}/binaries/azure-vnet-cni-linux-${CPU_ARCH}-v${version}.tgz"}}}}
+{"name":"kubernetes-cri-tools","downloadLocation":"/opt/crictl/downloads","downloadURIs":{"windows":{"default":{"versionsV2":[]}},"ubuntu":{"r2004":{"versionsV2":[{"renovateTag":"name=kubernetes-cri-tools, repository=production, os=ubuntu, release=20.04","latestVersion":"1.32.0-ubuntu20.04u3"}]},"r2204":{"versionsV2":[{"renovateTag":"name=kubernetes-cri-tools, repository=production, os=ubuntu, release=22.04","latestVersion":"1.32.0-ubuntu22.04u3"}]},"r2404":{"versionsV2":[{"renovateTag":"name=kubernetes-cri-tools, repository=production, os=ubuntu, release=24.04","latestVersion":"1.32.0-ubuntu24.04u3"}]}},"mariner":{"current":{"versionsV2":[{"renovateTag":"RPM_registry=https://packages.microsoft.com/cbl-mariner/2.0/prod/cloud-native/x86_64/repodata, name=kubernetes-cri-tools, os=mariner, release=2.0","latestVersion":"1.32.0-3.cm2"}]}},"marinerkata":{"current":{"versionsV2":[{"renovateTag":"RPM_registry=https://packages.microsoft.com/cbl-mariner/2.0/prod/cloud-native/x86_64/repodata, name=kubernetes-cri-tools, os=mariner, release=2.0","latestVersion":"1.32.0-3.cm2"}]}},"azurelinux":{"v3.0":{"versionsV2":[{"renovateTag":"RPM_registry=https://packages.microsoft.com/azurelinux/3.0/prod/cloud-native/x86_64/repodata, name=kubernetes-cri-tools, os=azurelinux, release=3.0","latestVersion":"1.32.0-3.azl3"}]}},"azurelinuxkata":{"v3.0":{"versionsV2":[{"renovateTag":"RPM_registry=https://packages.microsoft.com/azurelinux/3.0/prod/cloud-native/x86_64/repodata, name=kubernetes-cri-tools, os=azurelinux, release=3.0","latestVersion":"1.32.0-3.azl3"}]}}}}
+{"name":"kubelet","downloadLocation":"/opt/kubelet/downloads","windowsDownloadLocation":"c:\\akse-cache\\kubelet\\","downloadURIs":{"ubuntu":{"r2404":{"versionsV2":[{"k8sVersion":"1.34","renovateTag":"name=kubelet, repository=production, os=ubuntu, release=24.04","latestVersion":"1.34.1-ubuntu24.04u4","previousLatestVersion":"1.34.0-ubuntu24.04u5"}]},"r2204":{"versionsV2":[{"k8sVersion":"1.34","renovateTag":"name=kubelet, repository=production, os=ubuntu, release=22.04","latestVersion":"1.34.1-ubuntu22.04u4","previousLatestVersion":"1.34.0-ubuntu22.04u5"}]},"r2004":{"versionsV2":[{"k8sVersion":"1.34","renovateTag":"name=kubelet, repository=production, os=ubuntu, release=20.04","latestVersion":"1.34.1-ubuntu20.04u4","previousLatestVersion":"1.34.0-ubuntu20.04u5"}]}},"azurelinux":{"v3.0":{"versionsV2":[{"k8sVersion":"1.34","renovateTag":"name=kubelet, os=azurelinux, release=3.0","latestVersion":"1.34.1-4.azl3","previousLatestVersion":"1.34.0-5.azl3"}]}}}}
+{"name":"kubectl","downloadLocation":"/opt/kubectl/downloads","windowsDownloadLocation":"c:\\akse-cache\\kubectl\\","downloadURIs":{"ubuntu":{"r2404":{"versionsV2":[{"k8sVersion":"1.34","renovateTag":"name=kubectl, repository=production, os=ubuntu, release=24.04","latestVersion":"1.34.1-ubuntu24.04u4","previousLatestVersion":"1.34.0-ubuntu24.04u5"}]},"r2204":{"versionsV2":[{"k8sVersion":"1.34","renovateTag":"name=kubectl, repository=production, os=ubuntu, release=22.04","latestVersion":"1.34.1-ubuntu22.04u4","previousLatestVersion":"1.34.0-ubuntu22.04u5"}]},"r2004":{"versionsV2":[{"k8sVersion":"1.34","renovateTag":"name=kubectl, repository=production, os=ubuntu, release=20.04","latestVersion":"1.34.1-ubuntu20.04u4","previousLatestVersion":"1.34.0-ubuntu20.04u5"}]}},"azurelinux":{"v3.0":{"versionsV2":[{"k8sVersion":"1.34","renovateTag":"name=kubectl, os=azurelinux, release=3.0","latestVersion":"1.34.1-4.azl3","previousLatestVersion":"1.34.0-5.azl3"}]}}}}
+{"name":"kubernetes-binaries","downloadLocation":"/opt/kubernetes/downloads","windowsDownloadLocation":"c:\\akse-cache\\win-k8s\\","downloadURIs":{"default":{"current":{"versionsV2":[{"k8sVersion":"1.28","renovateTag":"OCI_registry=https://mcr.microsoft.com, name=oss/binaries/kubernetes/kubernetes-node","latestVersion":"v1.28.102-akslts","previousLatestVersion":"v1.28.101-akslts"},{"k8sVersion":"1.29","renovateTag":"OCI_registry=https://mcr.microsoft.com, name=oss/binaries/kubernetes/kubernetes-node","latestVersion":"v1.29.100-akslts","previousLatestVersion":"v1.29.100-akslts"},{"k8sVersion":"1.30","renovateTag":"OCI_registry=https://mcr.microsoft.com, name=oss/binaries/kubernetes/kubernetes-node","latestVersion":"v1.30.100-akslts","previousLatestVersion":"v1.30.100-akslts"},{"k8sVersion":"1.29","renovateTag":"OCI_registry=https://mcr.microsoft.com, name=oss/binaries/kubernetes/kubernetes-node","latestVersion":"v1.29.15","previousLatestVersion":"v1.29.14"},{"k8sVersion":"1.30","renovateTag":"OCI_registry=https://mcr.microsoft.com, name=oss/binaries/kubernetes/kubernetes-node","latestVersion":"v1.30.14","previousLatestVersion":"v1.30.13"},{"k8sVersion":"1.31","renovateTag":"OCI_registry=https://mcr.microsoft.com, name=oss/binaries/kubernetes/kubernetes-node","latestVersion":"v1.31.13","previousLatestVersion":"v1.31.11"},{"k8sVersion":"1.32","renovateTag":"OCI_registry=https://mcr.microsoft.com, name=oss/binaries/kubernetes/kubernetes-node","latestVersion":"v1.32.9","previousLatestVersion":"v1.32.7"},{"k8sVersion":"1.33","renovateTag":"OCI_registry=https://mcr.microsoft.com, name=oss/binaries/kubernetes/kubernetes-node","latestVersion":"v1.33.5","previousLatestVersion":"v1.33.4"},{"k8sVersion":"1.34","renovateTag":"OCI_registry=https://mcr.microsoft.com, name=oss/binaries/kubernetes/kubernetes-node","latestVersion":"v1.34.1","previousLatestVersion":"v1.34.0"}],"downloadURL":"mcr.microsoft.com/oss/binaries/kubernetes/kubernetes-node:${version}-linux-${CPU_ARCH}","windowsDownloadURL":"https://packages.aks.azure.com/kubernetes/${version}/windowszip/${version}-1int.zip"}}}}
+{"name":"azure-acr-credential-provider","downloadLocation":"/opt/credentialprovider/downloads","downloadURIs":{"windows":{"default":{"versionsV2":[]}},"default":{"current":{"versionsV2":[{"k8sVersion":"1.30","renovateTag":"OCI_registry=https://mcr.microsoft.com, name=oss/binaries/kubernetes/azure-acr-credential-provider","latestVersion":"v1.30.15"},{"k8sVersion":"1.31","renovateTag":"OCI_registry=https://mcr.microsoft.com, name=oss/binaries/kubernetes/azure-acr-credential-provider","latestVersion":"v1.31.9"},{"k8sVersion":"1.32","renovateTag":"OCI_registry=https://mcr.microsoft.com, name=oss/binaries/kubernetes/azure-acr-credential-provider","latestVersion":"v1.32.8"},{"k8sVersion":"1.33","renovateTag":"OCI_registry=https://mcr.microsoft.com, name=oss/binaries/kubernetes/azure-acr-credential-provider","latestVersion":"v1.33.3"}],"downloadURL":"mcr.microsoft.com/oss/binaries/kubernetes/azure-acr-credential-provider:${version}-linux-${CPU_ARCH}"}},"flatcar":{"current":{"versionsV2":[{"k8sVersion":"1.30","renovateTag":"OCI_registry=https://mcr.microsoft.com, name=oss/binaries/kubernetes/azure-acr-credential-provider","latestVersion":"v1.30.15"},{"k8sVersion":"1.31","renovateTag":"OCI_registry=https://mcr.microsoft.com, name=oss/binaries/kubernetes/azure-acr-credential-provider","latestVersion":"v1.31.9"},{"k8sVersion":"1.32","renovateTag":"OCI_registry=https://mcr.microsoft.com, name=oss/binaries/kubernetes/azure-acr-credential-provider","latestVersion":"v1.32.8"},{"k8sVersion":"1.33","renovateTag":"OCI_registry=https://mcr.microsoft.com, name=oss/binaries/kubernetes/azure-acr-credential-provider","latestVersion":"v1.33.3"},{"k8sVersion":"1.34","renovateTag":"OCI_registry=https://mcr.microsoft.com, name=oss/binaries/kubernetes/azure-acr-credential-provider","latestVersion":"v1.34.1"}],"downloadURL":"mcr.microsoft.com/oss/binaries/kubernetes/azure-acr-credential-provider:${version}-linux-${CPU_ARCH}"}}}}
+{"name":"azure-acr-credential-provider-pmc","downloadLocation":"/opt/credentialprovider/downloads","windowsDownloadLocation":"c:\\akse-cache\\azure-acr-credential-provider\\","downloadURIs":{"ubuntu":{"r2404":{"versionsV2":[{"k8sVersion":"1.34","renovateTag":"name=azure-acr-credential-provider, repository=production, os=ubuntu, release=24.04","latestVersion":"1.34.1-ubuntu24.04u3","previousLatestVersion":"1.34.0-ubuntu24.04u2"}]},"r2204":{"versionsV2":[{"k8sVersion":"1.34","renovateTag":"name=azure-acr-credential-provider, repository=production, os=ubuntu, release=22.04","latestVersion":"1.34.1-ubuntu22.04u3","previousLatestVersion":"1.34.0-ubuntu22.04u2"}]},"r2004":{"versionsV2":[{"k8sVersion":"1.34","renovateTag":"name=azure-acr-credential-provider, repository=production, os=ubuntu, release=20.04","latestVersion":"1.34.1-ubuntu20.04u3","previousLatestVersion":"1.34.0-ubuntu20.04u2"}]}},"azurelinux":{"v3.0":{"versionsV2":[{"k8sVersion":"1.34","renovateTag":"name=azure-acr-credential-provider, repository=production, os=azurelinux, release=3.0","latestVersion":"1.34.1-1.azl3","previousLatestVersion":"1.34.0-2.azl3"}]}}}}
+{"name":"nvidia-container-toolkit","downloadLocation":"/usr/local/bin","downloadURIs":{"windows":{"default":{"versionsV2":[]}},"azurelinux":{"current":{"versionsV2":[{"renovateTag":"<DO_NOT_UPDATE>","latestVersion":"1.17.3"}],"downloadURL":""}}}}
+{"name":"nvidia-device-plugin","downloadLocation":"/opt/nvidia-device-plugin/downloads","downloadURIs":{"ubuntu":{"r2404":{"versionsV2":[{"renovateTag":"name=nvidia-device-plugin, repository=production, os=ubuntu, release=24.04","latestVersion":"0.18.0-ubuntu24.04u2"}]},"r2204":{"versionsV2":[{"renovateTag":"name=nvidia-device-plugin, repository=production, os=ubuntu, release=22.04","latestVersion":"0.18.0-ubuntu22.04u2"}]}},"azurelinux":{"v3.0":{"versionsV2":[{"renovateTag":"RPM_registry=https://packages.microsoft.com/azurelinux/3.0/prod/cloud-native/x86_64/repodata, name=nvidia-device-plugin, os=azurelinux, release=3.0","latestVersion":"0.18.0-2.azl3"}]}}}}
+{"name":"datacenter-gpu-manager-4-core","downloadLocation":"/opt/datacenter-gpu-manager-4-core/downloads","downloadURIs":{"ubuntu":{"r2404":{"versionsV2":[{"renovateTag":"name=datacenter-gpu-manager-4-core, repository=nvidia, os=ubuntu, release=24.04","latestVersion":"1:4.4.1-1"}]},"r2204":{"versionsV2":[{"renovateTag":"name=datacenter-gpu-manager-4-core, repository=nvidia, os=ubuntu, release=22.04","latestVersion":"1:4.4.1-1"}]}},"azurelinux":{"v3.0":{"versionsV2":[{"renovateTag":"RPM_registry=https://developer.download.nvidia.com/compute/cuda/repos/azl3/x86_64/repodata, name=datacenter-gpu-manager-4-core, repository=nvidia, os=azurelinux, release=3.0","latestVersion":"1:4.4.1-1"}]}}}}
+{"name":"datacenter-gpu-manager-4-proprietary","downloadLocation":"/opt/datacenter-gpu-manager-4-proprietary/downloads","downloadURIs":{"ubuntu":{"r2404":{"versionsV2":[{"renovateTag":"name=datacenter-gpu-manager-4-proprietary, repository=nvidia, os=ubuntu, release=24.04","latestVersion":"1:4.4.1-1"}]},"r2204":{"versionsV2":[{"renovateTag":"name=datacenter-gpu-manager-4-proprietary, repository=nvidia, os=ubuntu, release=22.04","latestVersion":"1:4.4.1-1"}]}},"azurelinux":{"v3.0":{"versionsV2":[{"renovateTag":"RPM_registry=https://developer.download.nvidia.com/compute/cuda/repos/azl3/x86_64/repodata, name=datacenter-gpu-manager-4-proprietary, repository=nvidia, os=azurelinux, release=3.0","latestVersion":"1:4.4.1-1"}]}}}}
+{"name":"datacenter-gpu-manager-exporter","downloadLocation":"/opt/datacenter-gpu-manager-exporter/downloads","downloadURIs":{"ubuntu":{"r2404":{"versionsV2":[{"renovateTag":"name=datacenter-gpu-manager-exporter, repository=nvidia, os=ubuntu, release=24.04","latestVersion":"4.6.0-1"}]},"r2204":{"versionsV2":[{"renovateTag":"name=datacenter-gpu-manager-exporter, repository=nvidia, os=ubuntu, release=22.04","latestVersion":"4.6.0-1"}]}}}}
+{"name":"dcgm-exporter","downloadLocation":"/opt/dcgm-exporter/downloads","downloadURIs":{"azurelinux":{"v3.0":{"versionsV2":[{"renovateTag":"RPM_registry=https://packages.microsoft.com/azurelinux/3.0/prod/cloud-native/x86_64/repodata, name=dcgm-exporter, os=azurelinux, release=3.0","latestVersion":"4.6.0-1.azl3"}]}}}}" 1 times
++ wait_for_apt_locks
++ fuser /var/lib/dpkg/lock /var/lib/apt/lists/lock /var/cache/apt/archives/lock /var/lib/dpkg/lock-frontend
++ return 0
++ '[' 22.04 = 22.04 ']'
++ apt_get_install 120 5 300 python3-distutils
++ retries=120
++ wait_sleep=5
++ timeout=300
++ shift
++ shift
++ shift
++ _apt_get_install 120 5 -y python3-distutils
++ local retries=120
++ local wait_sleep=5
++ local apt_opts=-y
++ shift
++ shift
++ shift
+++ seq 1 120
++ for i in $(seq 1 $retries)
++ wait_for_apt_locks
++ fuser /var/lib/dpkg/lock /var/lib/apt/lists/lock /var/cache/apt/archives/lock /var/lib/dpkg/lock-frontend
++ export DEBIAN_FRONTEND=noninteractive
++ DEBIAN_FRONTEND=noninteractive
++ dpkg --configure -a --force-confdef
++ apt-get install -y -o Dpkg::Options::=--force-confold --no-install-recommends python3-distutils
+Reading package lists...
+Building dependency tree...
+Reading state information...
+python3-distutils is already the newest version (3.10.8-1~22.04).
+The following package was automatically installed and is no longer required:
+  libtraceevent1
+Use 'sudo apt autoremove' to remove it.
+0 upgraded, 0 newly installed, 0 to remove and 5 not upgraded.
++ echo 'Executed apt-get install "{"name":"windows scripts","windowsDownloadLocation":"c:\\akse-cache\\","downloadURIs":{"windows":{"default":{"versionsV2":[{"renovateTag":"<DO_NOT_UPDATE>","latestVersion":"0.0.52"}],"downloadURL":"https://packages.aks.azure.com/aks/windows/cse/aks-windows-cse-scripts-v${version}.zip"}}}}
+{"name":"windows-gmsa-ccgakvplugin","windowsDownloadLocation":"c:\\akse-cache\\","downloadURIs":{"windows":{"default":{"versionsV2":[{"renovateTag":"<DO_NOT_UPDATE>","latestVersion":"1.1.5"}],"downloadURL":"https://packages.aks.azure.com/ccgakvplugin/v1.1.5/binaries/windows-gmsa-ccgakvplugin-v${version}.zip"}}}}
+{"name":"windows csi proxy","windowsDownloadLocation":"c:\\akse-cache\\csi-proxy\\","downloadURIs":{"windows":{"default":{"versionsV2":[{"renovateTag":"<DO_NOT_UPDATE>","latestVersion":"1.1.2-hotfix.20230807"}],"downloadURL":"https://packages.aks.azure.com/csi-proxy/v${version}/binaries/csi-proxy-v${version}.tar.gz"}}}}
+{"name":"windows credential provider","windowsDownloadLocation":"c:\\akse-cache\\credential-provider\\","downloadURIs":{"windows":{"default":{"versionsV2":[{"renovateTag":"<DO_NOT_UPDATE>","latestVersion":"1.30.10"},{"renovateTag":"<DO_NOT_UPDATE>","latestVersion":"1.31.4"},{"renovateTag":"<DO_NOT_UPDATE>","latestVersion":"1.32.3"},{"renovateTag":"<DO_NOT_UPDATE>","latestVersion":"1.33.2"}],"downloadURL":"https://packages.aks.azure.com/cloud-provider-azure/v${version}/binaries/azure-acr-credential-provider-windows-amd64-v${version}.tar.gz"}}}}
+{"name":"windows calico","windowsDownloadLocation":"c:\\akse-cache\\calico\\","downloadURIs":{"windows":{"default":{"versionsV2":[{"renovateTag":"<DO_NOT_UPDATE>","latestVersion":"3.24.0"}],"downloadURL":"https://packages.aks.azure.com/calico-node/v${version}/binaries/calico-windows-v${version}.zip"}}}}
+{"name":"azure-vnet-cni-windows","windowsDownloadLocation":"c:\\akse-cache\\win-vnet-cni\\","downloadURIs":{"windows":{"default":{"versionsV2":[{"renovateTag":"<DO_NOT_UPDATE>","latestVersion":"1.5.38"},{"renovateTag":"<DO_NOT_UPDATE>","latestVersion":"1.6.21"}],"downloadURL":"https://packages.aks.azure.com/azure-cni/v${version}/binaries/azure-vnet-cni-windows-amd64-v${version}.zip"}}}}
+{"name":"oras","downloadLocation":"/usr/local/bin","downloadURIs":{"default":{"current":{"versionsV2":[{"renovateTag":"<DO_NOT_UPDATE>","latestVersion":"1.2.2"}],"downloadURL":"https://github.com/oras-project/oras/releases/download/v${version}/oras_${version}_linux_${CPU_ARCH}.tar.gz"}}}}
+{"name":"aks-secure-tls-bootstrap-client","downloadLocation":"/usr/local/bin","windowsDownloadLocation":"c:\\akse-cache\\aks-secure-tls-bootstrap-client\\","downloadURIs":{"default":{"current":{"versionsV2":[{"renovateTag":"<DO_NOT_UPDATE>","latestVersion":"1.0.1"}],"downloadURL":"https://github.com/Azure/aks-secure-tls-bootstrap/releases/download/client/v${version}/linux-${CPU_ARCH}.tar.gz"}},"windows":{"default":{"versionsV2":[{"renovateTag":"<DO_NOT_UPDATE>","latestVersion":"1.0.1"}],"downloadURL":"https://github.com/Azure/aks-secure-tls-bootstrap/releases/download/client/v${version}/windows-amd64.zip"}}}}
+{"name":"runc","downloadLocation":"/opt/runc/downloads","downloadURIs":{"windows":{"default":{"versionsV2":[]}},"ubuntu":{"r2004":{"versionsV2":[{"renovateTag":"name=moby-runc, repository=production, os=ubuntu, release=20.04","latestVersion":"1.3.3-ubuntu20.04u1"}]},"r2204":{"versionsV2":[{"renovateTag":"name=moby-runc, repository=production, os=ubuntu, release=22.04","latestVersion":"1.3.3-ubuntu22.04u1"}]},"r2404":{"versionsV2":[{"renovateTag":"name=moby-runc, repository=production, os=ubuntu, release=24.04","latestVersion":"1.3.3-ubuntu24.04u1"}]}}}}
+{"name":"containerd","downloadLocation":"/opt/containerd/downloads","windowsDownloadLocation":"c:\\akse-cache\\containerd\\","downloadURIs":{"ubuntu":{"r2404":{"versionsV2":[{"renovateTag":"name=moby-containerd, repository=test, os=ubuntu, release=24.04","latestVersion":"2.1.4-ubuntu24.04u1"}]},"r2204":{"versionsV2":[{"renovateTag":"name=moby-containerd, repository=production, os=ubuntu, release=22.04","latestVersion":"1.7.28-ubuntu22.04u1"}]},"r2004":{"versionsV2":[{"renovateTag":"name=moby-containerd, repository=production, os=ubuntu, release=20.04","latestVersion":"1.7.28-ubuntu20.04u1"}]}},"mariner":{"current":{"versionsV2":[{"renovateTag":"RPM_registry=https://packages.microsoft.com/cbl-mariner/2.0/prod/base/x86_64/repodata, name=moby-containerd, os=mariner, release=2.0","latestVersion":"1.6.26-12.cm2"}]}},"marinerkata":{"current":{"versionsV2":[{"renovateTag":"<DO_NOT_UPDATE>","latestVersion":"<SKIP>"}]}},"azurelinux":{"v3.0":{"versionsV2":[{"renovateTag":"RPM_registry=https://packages.microsoft.com/azurelinux/3.0/prod/base/x86_64/repodata, name=containerd2, os=azurelinux, release=3.0","latestVersion":"2.0.0-14.azl3"}]}},"azurelinuxkata":{"v3.0":{"versionsV2":[{"renovateTag":"<DO_NOT_UPDATE>","latestVersion":"<SKIP>"}]}},"windows":{"ws2019":{"versionsV2":[{"renovateTag":"<DO_NOT_UPDATE>","latestVersion":"v1.6.35-azure.1"},{"renovateTag":"<DO_NOT_UPDATE>","latestVersion":"v1.7.20-azure.1","previousLatestVersion":"v1.7.17-azure.1"}],"downloadURL":"https://packages.aks.azure.com/containerd/windows/${version}/binaries/containerd-${version}-windows-amd64.tar.gz"},"ws2022":{"versionsV2":[{"renovateTag":"<DO_NOT_UPDATE>","latestVersion":"v1.6.35-azure.1"},{"renovateTag":"<DO_NOT_UPDATE>","latestVersion":"v1.7.20-azure.1","previousLatestVersion":"v1.7.17-azure.1"},{"renovateTag":"<DO_NOT_UPDATE>","latestVersion":"v2.0.4-azure.1"}],"downloadURL":"https://packages.aks.azure.com/containerd/windows/${version}/binaries/containerd-${version}-windows-amd64.tar.gz"},"ws2025":{"versionsV2":[{"renovateTag":"<DO_NOT_UPDATE>","latestVersion":"v2.0.4-azure.1"}],"downloadURL":"https://packages.aks.azure.com/containerd/windows/${version}/binaries/containerd-${version}-windows-amd64.tar.gz"},"default":{"versionsV2":[{"renovateTag":"<DO_NOT_UPDATE>","latestVersion":"v1.7.20-azure.1","previousLatestVersion":"v1.7.17-azure.1"}],"downloadURL":"https://packages.aks.azure.com/containerd/windows/${version}/binaries/containerd-${version}-windows-amd64.tar.gz"}},"default":{"current":{"versionsV2":[{"renovateTag":"<DO_NOT_UPDATE>","latestVersion":"1.7.20"}]}}}}
+{"name":"cni-plugins","downloadLocation":"/opt/cni/downloads","downloadURIs":{"windows":{"default":{"versionsV2":[]}},"default":{"current":{"versionsV2":[{"renovateTag":"<DO_NOT_UPDATE>","latestVersion":"1.6.2"}],"downloadURL":"https://packages.aks.azure.com/cni-plugins/v${version}/binaries/cni-plugins-linux-${CPU_ARCH}-v${version}.tgz"}}}}
+{"name":"azure-cni","downloadLocation":"/opt/cni/downloads","downloadURIs":{"windows":{"default":{"versionsV2":[]}},"default":{"current":{"versionsV2":[{"renovateTag":"<DO_NOT_UPDATE>","latestVersion":"1.5.38"},{"renovateTag":"<DO_NOT_UPDATE>","latestVersion":"1.6.21"}],"downloadURL":"https://packages.aks.azure.com/azure-cni/v${version}/binaries/azure-vnet-cni-linux-${CPU_ARCH}-v${version}.tgz"}}}}
+{"name":"kubernetes-cri-tools","downloadLocation":"/opt/crictl/downloads","downloadURIs":{"windows":{"default":{"versionsV2":[]}},"ubuntu":{"r2004":{"versionsV2":[{"renovateTag":"name=kubernetes-cri-tools, repository=production, os=ubuntu, release=20.04","latestVersion":"1.32.0-ubuntu20.04u3"}]},"r2204":{"versionsV2":[{"renovateTag":"name=kubernetes-cri-tools, repository=production, os=ubuntu, release=22.04","latestVersion":"1.32.0-ubuntu22.04u3"}]},"r2404":{"versionsV2":[{"renovateTag":"name=kubernetes-cri-tools, repository=production, os=ubuntu, release=24.04","latestVersion":"1.32.0-ubuntu24.04u3"}]}},"mariner":{"current":{"versionsV2":[{"renovateTag":"RPM_registry=https://packages.microsoft.com/cbl-mariner/2.0/prod/cloud-native/x86_64/repodata, name=kubernetes-cri-tools, os=mariner, release=2.0","latestVersion":"1.32.0-3.cm2"}]}},"marinerkata":{"current":{"versionsV2":[{"renovateTag":"RPM_registry=https://packages.microsoft.com/cbl-mariner/2.0/prod/cloud-native/x86_64/repodata, name=kubernetes-cri-tools, os=mariner, release=2.0","latestVersion":"1.32.0-3.cm2"}]}},"azurelinux":{"v3.0":{"versionsV2":[{"renovateTag":"RPM_registry=https://packages.microsoft.com/azurelinux/3.0/prod/cloud-native/x86_64/repodata, name=kubernetes-cri-tools, os=azurelinux, release=3.0","latestVersion":"1.32.0-3.azl3"}]}},"azurelinuxkata":{"v3.0":{"versionsV2":[{"renovateTag":"RPM_registry=https://packages.microsoft.com/azurelinux/3.0/prod/cloud-native/x86_64/repodata, name=kubernetes-cri-tools, os=azurelinux, release=3.0","latestVersion":"1.32.0-3.azl3"}]}}}}
+{"name":"kubelet","downloadLocation":"/opt/kubelet/downloads","windowsDownloadLocation":"c:\\akse-cache\\kubelet\\","downloadURIs":{"ubuntu":{"r2404":{"versionsV2":[{"k8sVersion":"1.34","renovateTag":"name=kubelet, repository=production, os=ubuntu, release=24.04","latestVersion":"1.34.1-ubuntu24.04u4","previousLatestVersion":"1.34.0-ubuntu24.04u5"}]},"r2204":{"versionsV2":[{"k8sVersion":"1.34","renovateTag":"name=kubelet, repository=production, os=ubuntu, release=22.04","latestVersion":"1.34.1-ubuntu22.04u4","previousLatestVersion":"1.34.0-ubuntu22.04u5"}]},"r2004":{"versionsV2":[{"k8sVersion":"1.34","renovateTag":"name=kubelet, repository=production, os=ubuntu, release=20.04","latestVersion":"1.34.1-ubuntu20.04u4","previousLatestVersion":"1.34.0-ubuntu20.04u5"}]}},"azurelinux":{"v3.0":{"versionsV2":[{"k8sVersion":"1.34","renovateTag":"name=kubelet, os=azurelinux, release=3.0","latestVersion":"1.34.1-4.azl3","previousLatestVersion":"1.34.0-5.azl3"}]}}}}
+{"name":"kubectl","downloadLocation":"/opt/kubectl/downloads","windowsDownloadLocation":"c:\\akse-cache\\kubectl\\","downloadURIs":{"ubuntu":{"r2404":{"versionsV2":[{"k8sVersion":"1.34","renovateTag":"name=kubectl, repository=production, os=ubuntu, release=24.04","latestVersion":"1.34.1-ubuntu24.04u4","previousLatestVersion":"1.34.0-ubuntu24.04u5"}]},"r2204":{"versionsV2":[{"k8sVersion":"1.34","renovateTag":"name=kubectl, repository=production, os=ubuntu, release=22.04","latestVersion":"1.34.1-ubuntu22.04u4","previousLatestVersion":"1.34.0-ubuntu22.04u5"}]},"r2004":{"versionsV2":[{"k8sVersion":"1.34","renovateTag":"name=kubectl, repository=production, os=ubuntu, release=20.04","latestVersion":"1.34.1-ubuntu20.04u4","previousLatestVersion":"1.34.0-ubuntu20.04u5"}]}},"azurelinux":{"v3.0":{"versionsV2":[{"k8sVersion":"1.34","renovateTag":"name=kubectl, os=azurelinux, release=3.0","latestVersion":"1.34.1-4.azl3","previousLatestVersion":"1.34.0-5.azl3"}]}}}}
+{"name":"kubernetes-binaries","downloadLocation":"/opt/kubernetes/downloads","windowsDownloadLocation":"c:\\akse-cache\\win-k8s\\","downloadURIs":{"default":{"current":{"versionsV2":[{"k8sVersion":"1.28","renovateTag":"OCI_registry=https://mcr.microsoft.com, name=oss/binaries/kubernetes/kubernetes-node","latestVersion":"v1.28.102-akslts","previousLatestVersion":"v1.28.101-akslts"},{"k8sVersion":"1.29","renovateTag":"OCI_registry=https://mcr.microsoft.com, name=oss/binaries/kubernetes/kubernetes-node","latestVersion":"v1.29.100-akslts","previousLatestVersion":"v1.29.100-akslts"},{"k8sVersion":"1.30","renovateTag":"OCI_registry=https://mcr.microsoft.com, name=oss/binaries/kubernetes/kubernetes-node","latestVersion":"v1.30.100-akslts","previousLatestVersion":"v1.30.100-akslts"},{"k8sVersion":"1.29","renovateTag":"OCI_registry=https://mcr.microsoft.com, name=oss/binaries/kubernetes/kubernetes-node","latestVersion":"v1.29.15","previousLatestVersion":"v1.29.14"},{"k8sVersion":"1.30","renovateTag":"OCI_registry=https://mcr.microsoft.com, name=oss/binaries/kubernetes/kubernetes-node","latestVersion":"v1.30.14","previousLatestVersion":"v1.30.13"},{"k8sVersion":"1.31","renovateTag":"OCI_registry=https://mcr.microsoft.com, name=oss/binaries/kubernetes/kubernetes-node","latestVersion":"v1.31.13","previousLatestVersion":"v1.31.11"},{"k8sVersion":"1.32","renovateTag":"OCI_registry=https://mcr.microsoft.com, name=oss/binaries/kubernetes/kubernetes-node","latestVersion":"v1.32.9","previousLatestVersion":"v1.32.7"},{"k8sVersion":"1.33","renovateTag":"OCI_registry=https://mcr.microsoft.com, name=oss/binaries/kubernetes/kubernetes-node","latestVersion":"v1.33.5","previousLatestVersion":"v1.33.4"},{"k8sVersion":"1.34","renovateTag":"OCI_registry=https://mcr.microsoft.com, name=oss/binaries/kubernetes/kubernetes-node","latestVersion":"v1.34.1","previousLatestVersion":"v1.34.0"}],"downloadURL":"mcr.microsoft.com/oss/binaries/kubernetes/kubernetes-node:${version}-linux-${CPU_ARCH}","windowsDownloadURL":"https://packages.aks.azure.com/kubernetes/${version}/windowszip/${version}-1int.zip"}}}}
+{"name":"azure-acr-credential-provider","downloadLocation":"/opt/credentialprovider/downloads","downloadURIs":{"windows":{"default":{"versionsV2":[]}},"default":{"current":{"versionsV2":[{"k8sVersion":"1.30","renovateTag":"OCI_registry=https://mcr.microsoft.com, name=oss/binaries/kubernetes/azure-acr-credential-provider","latestVersion":"v1.30.15"},{"k8sVersion":"1.31","renovateTag":"OCI_registry=https://mcr.microsoft.com, name=oss/binaries/kubernetes/azure-acr-credential-provider","latestVersion":"v1.31.9"},{"k8sVersion":"1.32","renovateTag":"OCI_registry=https://mcr.microsoft.com, name=oss/binaries/kubernetes/azure-acr-credential-provider","latestVersion":"v1.32.8"},{"k8sVersion":"1.33","renovateTag":"OCI_registry=https://mcr.microsoft.com, name=oss/binaries/kubernetes/azure-acr-credential-provider","latestVersion":"v1.33.3"}],"downloadURL":"mcr.microsoft.com/oss/binaries/kubernetes/azure-acr-credential-provider:${version}-linux-${CPU_ARCH}"}},"flatcar":{"current":{"versionsV2":[{"k8sVersion":"1.30","renovateTag":"OCI_registry=https://mcr.microsoft.com, name=oss/binaries/kubernetes/azure-acr-credential-provider","latestVersion":"v1.30.15"},{"k8sVersion":"1.31","renovateTag":"OCI_registry=https://mcr.microsoft.com, name=oss/binaries/kubernetes/azure-acr-credential-provider","latestVersion":"v1.31.9"},{"k8sVersion":"1.32","renovateTag":"OCI_registry=https://mcr.microsoft.com, name=oss/binaries/kubernetes/azure-acr-credential-provider","latestVersion":"v1.32.8"},{"k8sVersion":"1.33","renovateTag":"OCI_registry=https://mcr.microsoft.com, name=oss/binaries/kubernetes/azure-acr-credential-provider","latestVersion":"v1.33.3"},{"k8sVersion":"1.34","renovateTag":"OCI_registry=https://mcr.microsoft.com, name=oss/binaries/kubernetes/azure-acr-credential-provider","latestVersion":"v1.34.1"}],"downloadURL":"mcr.microsoft.com/oss/binaries/kubernetes/azure-acr-credential-provider:${version}-linux-${CPU_ARCH}"}}}}
+{"name":"azure-acr-credential-provider-pmc","downloadLocation":"/opt/credentialprovider/downloads","windowsDownloadLocation":"c:\\akse-cache\\azure-acr-credential-provider\\","downloadURIs":{"ubuntu":{"r2404":{"versionsV2":[{"k8sVersion":"1.34","renovateTag":"name=azure-acr-credential-provider, repository=production, os=ubuntu, release=24.04","latestVersion":"1.34.1-ubuntu24.04u3","previousLatestVersion":"1.34.0-ubuntu24.04u2"}]},"r2204":{"versionsV2":[{"k8sVersion":"1.34","renovateTag":"name=azure-acr-credential-provider, repository=production, os=ubuntu, release=22.04","latestVersion":"1.34.1-ubuntu22.04u3","previousLatestVersion":"1.34.0-ubuntu22.04u2"}]},"r2004":{"versionsV2":[{"k8sVersion":"1.34","renovateTag":"name=azure-acr-credential-provider, repository=production, os=ubuntu, release=20.04","latestVersion":"1.34.1-ubuntu20.04u3","previousLatestVersion":"1.34.0-ubuntu20.04u2"}]}},"azurelinux":{"v3.0":{"versionsV2":[{"k8sVersion":"1.34","renovateTag":"name=azure-acr-credential-provider, repository=production, os=azurelinux, release=3.0","latestVersion":"1.34.1-1.azl3","previousLatestVersion":"1.34.0-2.azl3"}]}}}}
+{"name":"nvidia-container-toolkit","downloadLocation":"/usr/local/bin","downloadURIs":{"windows":{"default":{"versionsV2":[]}},"azurelinux":{"current":{"versionsV2":[{"renovateTag":"<DO_NOT_UPDATE>","latestVersion":"1.17.3"}],"downloadURL":""}}}}
+{"name":"nvidia-device-plugin","downloadLocation":"/opt/nvidia-device-plugin/downloads","downloadURIs":{"ubuntu":{"r2404":{"versionsV2":[{"renovateTag":"name=nvidia-device-plugin, repository=production, os=ubuntu, release=24.04","latestVersion":"0.18.0-ubuntu24.04u2"}]},"r2204":{"versionsV2":[{"renovateTag":"name=nvidia-device-plugin, repository=production, os=ubuntu, release=22.04","latestVersion":"0.18.0-ubuntu22.04u2"}]}},"azurelinux":{"v3.0":{"versionsV2":[{"renovateTag":"RPM_registry=https://packages.microsoft.com/azurelinux/3.0/prod/cloud-native/x86_64/repodata, name=nvidia-device-plugin, os=azurelinux, release=3.0","latestVersion":"0.18.0-2.azl3"}]}}}}
+{"name":"datacenter-gpu-manager-4-core","downloadLocation":"/opt/datacenter-gpu-manager-4-core/downloads","downloadURIs":{"ubuntu":{"r2404":{"versionsV2":[{"renovateTag":"name=datacenter-gpu-manager-4-core, repository=nvidia, os=ubuntu, release=24.04","latestVersion":"1:4.4.1-1"}]},"r2204":{"versionsV2":[{"renovateTag":"name=datacenter-gpu-manager-4-core, repository=nvidia, os=ubuntu, release=22.04","latestVersion":"1:4.4.1-1"}]}},"azurelinux":{"v3.0":{"versionsV2":[{"renovateTag":"RPM_registry=https://developer.download.nvidia.com/compute/cuda/repos/azl3/x86_64/repodata, name=datacenter-gpu-manager-4-core, repository=nvidia, os=azurelinux, release=3.0","latestVersion":"1:4.4.1-1"}]}}}}
+{"name":"datacenter-gpu-manager-4-proprietary","downloadLocation":"/opt/datacenter-gpu-manager-4-proprietary/downloads","downloadURIs":{"ubuntu":{"r2404":{"versionsV2":[{"renovateTag":"name=datacenter-gpu-manager-4-proprietary, repository=nvidia, os=ubuntu, release=24.04","latestVersion":"1:4.4.1-1"}]},"r2204":{"versionsV2":[{"renovateTag":"name=datacenter-gpu-manager-4-proprietary, repository=nvidia, os=ubuntu, release=22.04","latestVersion":"1:4.4.1-1"}]}},"azurelinux":{"v3.0":{"versionsV2":[{"renovateTag":"RPM_registry=https://developer.download.nvidia.com/compute/cuda/repos/azl3/x86_64/repodata, name=datacenter-gpu-manager-4-proprietary, repository=nvidia, os=azurelinux, release=3.0","latestVersion":"1:4.4.1-1"}]}}}}
+{"name":"datacenter-gpu-manager-exporter","downloadLocation":"/opt/datacenter-gpu-manager-exporter/downloads","downloadURIs":{"ubuntu":{"r2404":{"versionsV2":[{"renovateTag":"name=datacenter-gpu-manager-exporter, repository=nvidia, os=ubuntu, release=24.04","latestVersion":"4.6.0-1"}]},"r2204":{"versionsV2":[{"renovateTag":"name=datacenter-gpu-manager-exporter, repository=nvidia, os=ubuntu, release=22.04","latestVersion":"4.6.0-1"}]}}}}
+{"name":"dcgm-exporter","downloadLocation":"/opt/dcgm-exporter/downloads","downloadURIs":{"azurelinux":{"v3.0":{"versionsV2":[{"renovateTag":"RPM_registry=https://packages.microsoft.com/azurelinux/3.0/prod/cloud-native/x86_64/repodata, name=dcgm-exporter, os=azurelinux, release=3.0","latestVersion":"4.6.0-1.azl3"}]}}}}" 1 times'
+Executed apt-get install "{"name":"windows scripts","windowsDownloadLocation":"c:\\akse-cache\\","downloadURIs":{"windows":{"default":{"versionsV2":[{"renovateTag":"<DO_NOT_UPDATE>","latestVersion":"0.0.52"}],"downloadURL":"https://packages.aks.azure.com/aks/windows/cse/aks-windows-cse-scripts-v${version}.zip"}}}}
+{"name":"windows-gmsa-ccgakvplugin","windowsDownloadLocation":"c:\\akse-cache\\","downloadURIs":{"windows":{"default":{"versionsV2":[{"renovateTag":"<DO_NOT_UPDATE>","latestVersion":"1.1.5"}],"downloadURL":"https://packages.aks.azure.com/ccgakvplugin/v1.1.5/binaries/windows-gmsa-ccgakvplugin-v${version}.zip"}}}}
+{"name":"windows csi proxy","windowsDownloadLocation":"c:\\akse-cache\\csi-proxy\\","downloadURIs":{"windows":{"default":{"versionsV2":[{"renovateTag":"<DO_NOT_UPDATE>","latestVersion":"1.1.2-hotfix.20230807"}],"downloadURL":"https://packages.aks.azure.com/csi-proxy/v${version}/binaries/csi-proxy-v${version}.tar.gz"}}}}
+{"name":"windows credential provider","windowsDownloadLocation":"c:\\akse-cache\\credential-provider\\","downloadURIs":{"windows":{"default":{"versionsV2":[{"renovateTag":"<DO_NOT_UPDATE>","latestVersion":"1.30.10"},{"renovateTag":"<DO_NOT_UPDATE>","latestVersion":"1.31.4"},{"renovateTag":"<DO_NOT_UPDATE>","latestVersion":"1.32.3"},{"renovateTag":"<DO_NOT_UPDATE>","latestVersion":"1.33.2"}],"downloadURL":"https://packages.aks.azure.com/cloud-provider-azure/v${version}/binaries/azure-acr-credential-provider-windows-amd64-v${version}.tar.gz"}}}}
+{"name":"windows calico","windowsDownloadLocation":"c:\\akse-cache\\calico\\","downloadURIs":{"windows":{"default":{"versionsV2":[{"renovateTag":"<DO_NOT_UPDATE>","latestVersion":"3.24.0"}],"downloadURL":"https://packages.aks.azure.com/calico-node/v${version}/binaries/calico-windows-v${version}.zip"}}}}
+{"name":"azure-vnet-cni-windows","windowsDownloadLocation":"c:\\akse-cache\\win-vnet-cni\\","downloadURIs":{"windows":{"default":{"versionsV2":[{"renovateTag":"<DO_NOT_UPDATE>","latestVersion":"1.5.38"},{"renovateTag":"<DO_NOT_UPDATE>","latestVersion":"1.6.21"}],"downloadURL":"https://packages.aks.azure.com/azure-cni/v${version}/binaries/azure-vnet-cni-windows-amd64-v${version}.zip"}}}}
+{"name":"oras","downloadLocation":"/usr/local/bin","downloadURIs":{"default":{"current":{"versionsV2":[{"renovateTag":"<DO_NOT_UPDATE>","latestVersion":"1.2.2"}],"downloadURL":"https://github.com/oras-project/oras/releases/download/v${version}/oras_${version}_linux_${CPU_ARCH}.tar.gz"}}}}
+{"name":"aks-secure-tls-bootstrap-client","downloadLocation":"/usr/local/bin","windowsDownloadLocation":"c:\\akse-cache\\aks-secure-tls-bootstrap-client\\","downloadURIs":{"default":{"current":{"versionsV2":[{"renovateTag":"<DO_NOT_UPDATE>","latestVersion":"1.0.1"}],"downloadURL":"https://github.com/Azure/aks-secure-tls-bootstrap/releases/download/client/v${version}/linux-${CPU_ARCH}.tar.gz"}},"windows":{"default":{"versionsV2":[{"renovateTag":"<DO_NOT_UPDATE>","latestVersion":"1.0.1"}],"downloadURL":"https://github.com/Azure/aks-secure-tls-bootstrap/releases/download/client/v${version}/windows-amd64.zip"}}}}
+{"name":"runc","downloadLocation":"/opt/runc/downloads","downloadURIs":{"windows":{"default":{"versionsV2":[]}},"ubuntu":{"r2004":{"versionsV2":[{"renovateTag":"name=moby-runc, repository=production, os=ubuntu, release=20.04","latestVersion":"1.3.3-ubuntu20.04u1"}]},"r2204":{"versionsV2":[{"renovateTag":"name=moby-runc, repository=production, os=ubuntu, release=22.04","latestVersion":"1.3.3-ubuntu22.04u1"}]},"r2404":{"versionsV2":[{"renovateTag":"name=moby-runc, repository=production, os=ubuntu, release=24.04","latestVersion":"1.3.3-ubuntu24.04u1"}]}}}}
+{"name":"containerd","downloadLocation":"/opt/containerd/downloads","windowsDownloadLocation":"c:\\akse-cache\\containerd\\","downloadURIs":{"ubuntu":{"r2404":{"versionsV2":[{"renovateTag":"name=moby-containerd, repository=test, os=ubuntu, release=24.04","latestVersion":"2.1.4-ubuntu24.04u1"}]},"r2204":{"versionsV2":[{"renovateTag":"name=moby-containerd, repository=production, os=ubuntu, release=22.04","latestVersion":"1.7.28-ubuntu22.04u1"}]},"r2004":{"versionsV2":[{"renovateTag":"name=moby-containerd, repository=production, os=ubuntu, release=20.04","latestVersion":"1.7.28-ubuntu20.04u1"}]}},"mariner":{"current":{"versionsV2":[{"renovateTag":"RPM_registry=https://packages.microsoft.com/cbl-mariner/2.0/prod/base/x86_64/repodata, name=moby-containerd, os=mariner, release=2.0","latestVersion":"1.6.26-12.cm2"}]}},"marinerkata":{"current":{"versionsV2":[{"renovateTag":"<DO_NOT_UPDATE>","latestVersion":"<SKIP>"}]}},"azurelinux":{"v3.0":{"versionsV2":[{"renovateTag":"RPM_registry=https://packages.microsoft.com/azurelinux/3.0/prod/base/x86_64/repodata, name=containerd2, os=azurelinux, release=3.0","latestVersion":"2.0.0-14.azl3"}]}},"azurelinuxkata":{"v3.0":{"versionsV2":[{"renovateTag":"<DO_NOT_UPDATE>","latestVersion":"<SKIP>"}]}},"windows":{"ws2019":{"versionsV2":[{"renovateTag":"<DO_NOT_UPDATE>","latestVersion":"v1.6.35-azure.1"},{"renovateTag":"<DO_NOT_UPDATE>","latestVersion":"v1.7.20-azure.1","previousLatestVersion":"v1.7.17-azure.1"}],"downloadURL":"https://packages.aks.azure.com/containerd/windows/${version}/binaries/containerd-${version}-windows-amd64.tar.gz"},"ws2022":{"versionsV2":[{"renovateTag":"<DO_NOT_UPDATE>","latestVersion":"v1.6.35-azure.1"},{"renovateTag":"<DO_NOT_UPDATE>","latestVersion":"v1.7.20-azure.1","previousLatestVersion":"v1.7.17-azure.1"},{"renovateTag":"<DO_NOT_UPDATE>","latestVersion":"v2.0.4-azure.1"}],"downloadURL":"https://packages.aks.azure.com/containerd/windows/${version}/binaries/containerd-${version}-windows-amd64.tar.gz"},"ws2025":{"versionsV2":[{"renovateTag":"<DO_NOT_UPDATE>","latestVersion":"v2.0.4-azure.1"}],"downloadURL":"https://packages.aks.azure.com/containerd/windows/${version}/binaries/containerd-${version}-windows-amd64.tar.gz"},"default":{"versionsV2":[{"renovateTag":"<DO_NOT_UPDATE>","latestVersion":"v1.7.20-azure.1","previousLatestVersion":"v1.7.17-azure.1"}],"downloadURL":"https://packages.aks.azure.com/containerd/windows/${version}/binaries/containerd-${version}-windows-amd64.tar.gz"}},"default":{"current":{"versionsV2":[{"renovateTag":"<DO_NOT_UPDATE>","latestVersion":"1.7.20"}]}}}}
+{"name":"cni-plugins","downloadLocation":"/opt/cni/downloads","downloadURIs":{"windows":{"default":{"versionsV2":[]}},"default":{"current":{"versionsV2":[{"renovateTag":"<DO_NOT_UPDATE>","latestVersion":"1.6.2"}],"downloadURL":"https://packages.aks.azure.com/cni-plugins/v${version}/binaries/cni-plugins-linux-${CPU_ARCH}-v${version}.tgz"}}}}
+{"name":"azure-cni","downloadLocation":"/opt/cni/downloads","downloadURIs":{"windows":{"default":{"versionsV2":[]}},"default":{"current":{"versionsV2":[{"renovateTag":"<DO_NOT_UPDATE>","latestVersion":"1.5.38"},{"renovateTag":"<DO_NOT_UPDATE>","latestVersion":"1.6.21"}],"downloadURL":"https://packages.aks.azure.com/azure-cni/v${version}/binaries/azure-vnet-cni-linux-${CPU_ARCH}-v${version}.tgz"}}}}
+{"name":"kubernetes-cri-tools","downloadLocation":"/opt/crictl/downloads","downloadURIs":{"windows":{"default":{"versionsV2":[]}},"ubuntu":{"r2004":{"versionsV2":[{"renovateTag":"name=kubernetes-cri-tools, repository=production, os=ubuntu, release=20.04","latestVersion":"1.32.0-ubuntu20.04u3"}]},"r2204":{"versionsV2":[{"renovateTag":"name=kubernetes-cri-tools, repository=production, os=ubuntu, release=22.04","latestVersion":"1.32.0-ubuntu22.04u3"}]},"r2404":{"versionsV2":[{"renovateTag":"name=kubernetes-cri-tools, repository=production, os=ubuntu, release=24.04","latestVersion":"1.32.0-ubuntu24.04u3"}]}},"mariner":{"current":{"versionsV2":[{"renovateTag":"RPM_registry=https://packages.microsoft.com/cbl-mariner/2.0/prod/cloud-native/x86_64/repodata, name=kubernetes-cri-tools, os=mariner, release=2.0","latestVersion":"1.32.0-3.cm2"}]}},"marinerkata":{"current":{"versionsV2":[{"renovateTag":"RPM_registry=https://packages.microsoft.com/cbl-mariner/2.0/prod/cloud-native/x86_64/repodata, name=kubernetes-cri-tools, os=mariner, release=2.0","latestVersion":"1.32.0-3.cm2"}]}},"azurelinux":{"v3.0":{"versionsV2":[{"renovateTag":"RPM_registry=https://packages.microsoft.com/azurelinux/3.0/prod/cloud-native/x86_64/repodata, name=kubernetes-cri-tools, os=azurelinux, release=3.0","latestVersion":"1.32.0-3.azl3"}]}},"azurelinuxkata":{"v3.0":{"versionsV2":[{"renovateTag":"RPM_registry=https://packages.microsoft.com/azurelinux/3.0/prod/cloud-native/x86_64/repodata, name=kubernetes-cri-tools, os=azurelinux, release=3.0","latestVersion":"1.32.0-3.azl3"}]}}}}
+{"name":"kubelet","downloadLocation":"/opt/kubelet/downloads","windowsDownloadLocation":"c:\\akse-cache\\kubelet\\","downloadURIs":{"ubuntu":{"r2404":{"versionsV2":[{"k8sVersion":"1.34","renovateTag":"name=kubelet, repository=production, os=ubuntu, release=24.04","latestVersion":"1.34.1-ubuntu24.04u4","previousLatestVersion":"1.34.0-ubuntu24.04u5"}]},"r2204":{"versionsV2":[{"k8sVersion":"1.34","renovateTag":"name=kubelet, repository=production, os=ubuntu, release=22.04","latestVersion":"1.34.1-ubuntu22.04u4","previousLatestVersion":"1.34.0-ubuntu22.04u5"}]},"r2004":{"versionsV2":[{"k8sVersion":"1.34","renovateTag":"name=kubelet, repository=production, os=ubuntu, release=20.04","latestVersion":"1.34.1-ubuntu20.04u4","previousLatestVersion":"1.34.0-ubuntu20.04u5"}]}},"azurelinux":{"v3.0":{"versionsV2":[{"k8sVersion":"1.34","renovateTag":"name=kubelet, os=azurelinux, release=3.0","latestVersion":"1.34.1-4.azl3","previousLatestVersion":"1.34.0-5.azl3"}]}}}}
+{"name":"kubectl","downloadLocation":"/opt/kubectl/downloads","windowsDownloadLocation":"c:\\akse-cache\\kubectl\\","downloadURIs":{"ubuntu":{"r2404":{"versionsV2":[{"k8sVersion":"1.34","renovateTag":"name=kubectl, repository=production, os=ubuntu, release=24.04","latestVersion":"1.34.1-ubuntu24.04u4","previousLatestVersion":"1.34.0-ubuntu24.04u5"}]},"r2204":{"versionsV2":[{"k8sVersion":"1.34","renovateTag":"name=kubectl, repository=production, os=ubuntu, release=22.04","latestVersion":"1.34.1-ubuntu22.04u4","previousLatestVersion":"1.34.0-ubuntu22.04u5"}]},"r2004":{"versionsV2":[{"k8sVersion":"1.34","renovateTag":"name=kubectl, repository=production, os=ubuntu, release=20.04","latestVersion":"1.34.1-ubuntu20.04u4","previousLatestVersion":"1.34.0-ubuntu20.04u5"}]}},"azurelinux":{"v3.0":{"versionsV2":[{"k8sVersion":"1.34","renovateTag":"name=kubectl, os=azurelinux, release=3.0","latestVersion":"1.34.1-4.azl3","previousLatestVersion":"1.34.0-5.azl3"}]}}}}
+{"name":"kubernetes-binaries","downloadLocation":"/opt/kubernetes/downloads","windowsDownloadLocation":"c:\\akse-cache\\win-k8s\\","downloadURIs":{"default":{"current":{"versionsV2":[{"k8sVersion":"1.28","renovateTag":"OCI_registry=https://mcr.microsoft.com, name=oss/binaries/kubernetes/kubernetes-node","latestVersion":"v1.28.102-akslts","previousLatestVersion":"v1.28.101-akslts"},{"k8sVersion":"1.29","renovateTag":"OCI_registry=https://mcr.microsoft.com, name=oss/binaries/kubernetes/kubernetes-node","latestVersion":"v1.29.100-akslts","previousLatestVersion":"v1.29.100-akslts"},{"k8sVersion":"1.30","renovateTag":"OCI_registry=https://mcr.microsoft.com, name=oss/binaries/kubernetes/kubernetes-node","latestVersion":"v1.30.100-akslts","previousLatestVersion":"v1.30.100-akslts"},{"k8sVersion":"1.29","renovateTag":"OCI_registry=https://mcr.microsoft.com, name=oss/binaries/kubernetes/kubernetes-node","latestVersion":"v1.29.15","previousLatestVersion":"v1.29.14"},{"k8sVersion":"1.30","renovateTag":"OCI_registry=https://mcr.microsoft.com, name=oss/binaries/kubernetes/kubernetes-node","latestVersion":"v1.30.14","previousLatestVersion":"v1.30.13"},{"k8sVersion":"1.31","renovateTag":"OCI_registry=https://mcr.microsoft.com, name=oss/binaries/kubernetes/kubernetes-node","latestVersion":"v1.31.13","previousLatestVersion":"v1.31.11"},{"k8sVersion":"1.32","renovateTag":"OCI_registry=https://mcr.microsoft.com, name=oss/binaries/kubernetes/kubernetes-node","latestVersion":"v1.32.9","previousLatestVersion":"v1.32.7"},{"k8sVersion":"1.33","renovateTag":"OCI_registry=https://mcr.microsoft.com, name=oss/binaries/kubernetes/kubernetes-node","latestVersion":"v1.33.5","previousLatestVersion":"v1.33.4"},{"k8sVersion":"1.34","renovateTag":"OCI_registry=https://mcr.microsoft.com, name=oss/binaries/kubernetes/kubernetes-node","latestVersion":"v1.34.1","previousLatestVersion":"v1.34.0"}],"downloadURL":"mcr.microsoft.com/oss/binaries/kubernetes/kubernetes-node:${version}-linux-${CPU_ARCH}","windowsDownloadURL":"https://packages.aks.azure.com/kubernetes/${version}/windowszip/${version}-1int.zip"}}}}
+{"name":"azure-acr-credential-provider","downloadLocation":"/opt/credentialprovider/downloads","downloadURIs":{"windows":{"default":{"versionsV2":[]}},"default":{"current":{"versionsV2":[{"k8sVersion":"1.30","renovateTag":"OCI_registry=https://mcr.microsoft.com, name=oss/binaries/kubernetes/azure-acr-credential-provider","latestVersion":"v1.30.15"},{"k8sVersion":"1.31","renovateTag":"OCI_registry=https://mcr.microsoft.com, name=oss/binaries/kubernetes/azure-acr-credential-provider","latestVersion":"v1.31.9"},{"k8sVersion":"1.32","renovateTag":"OCI_registry=https://mcr.microsoft.com, name=oss/binaries/kubernetes/azure-acr-credential-provider","latestVersion":"v1.32.8"},{"k8sVersion":"1.33","renovateTag":"OCI_registry=https://mcr.microsoft.com, name=oss/binaries/kubernetes/azure-acr-credential-provider","latestVersion":"v1.33.3"}],"downloadURL":"mcr.microsoft.com/oss/binaries/kubernetes/azure-acr-credential-provider:${version}-linux-${CPU_ARCH}"}},"flatcar":{"current":{"versionsV2":[{"k8sVersion":"1.30","renovateTag":"OCI_registry=https://mcr.microsoft.com, name=oss/binaries/kubernetes/azure-acr-credential-provider","latestVersion":"v1.30.15"},{"k8sVersion":"1.31","renovateTag":"OCI_registry=https://mcr.microsoft.com, name=oss/binaries/kubernetes/azure-acr-credential-provider","latestVersion":"v1.31.9"},{"k8sVersion":"1.32","renovateTag":"OCI_registry=https://mcr.microsoft.com, name=oss/binaries/kubernetes/azure-acr-credential-provider","latestVersion":"v1.32.8"},{"k8sVersion":"1.33","renovateTag":"OCI_registry=https://mcr.microsoft.com, name=oss/binaries/kubernetes/azure-acr-credential-provider","latestVersion":"v1.33.3"},{"k8sVersion":"1.34","renovateTag":"OCI_registry=https://mcr.microsoft.com, name=oss/binaries/kubernetes/azure-acr-credential-provider","latestVersion":"v1.34.1"}],"downloadURL":"mcr.microsoft.com/oss/binaries/kubernetes/azure-acr-credential-provider:${version}-linux-${CPU_ARCH}"}}}}
+{"name":"azure-acr-credential-provider-pmc","downloadLocation":"/opt/credentialprovider/downloads","windowsDownloadLocation":"c:\\akse-cache\\azure-acr-credential-provider\\","downloadURIs":{"ubuntu":{"r2404":{"versionsV2":[{"k8sVersion":"1.34","renovateTag":"name=azure-acr-credential-provider, repository=production, os=ubuntu, release=24.04","latestVersion":"1.34.1-ubuntu24.04u3","previousLatestVersion":"1.34.0-ubuntu24.04u2"}]},"r2204":{"versionsV2":[{"k8sVersion":"1.34","renovateTag":"name=azure-acr-credential-provider, repository=production, os=ubuntu, release=22.04","latestVersion":"1.34.1-ubuntu22.04u3","previousLatestVersion":"1.34.0-ubuntu22.04u2"}]},"r2004":{"versionsV2":[{"k8sVersion":"1.34","renovateTag":"name=azure-acr-credential-provider, repository=production, os=ubuntu, release=20.04","latestVersion":"1.34.1-ubuntu20.04u3","previousLatestVersion":"1.34.0-ubuntu20.04u2"}]}},"azurelinux":{"v3.0":{"versionsV2":[{"k8sVersion":"1.34","renovateTag":"name=azure-acr-credential-provider, repository=production, os=azurelinux, release=3.0","latestVersion":"1.34.1-1.azl3","previousLatestVersion":"1.34.0-2.azl3"}]}}}}
+{"name":"nvidia-container-toolkit","downloadLocation":"/usr/local/bin","downloadURIs":{"windows":{"default":{"versionsV2":[]}},"azurelinux":{"current":{"versionsV2":[{"renovateTag":"<DO_NOT_UPDATE>","latestVersion":"1.17.3"}],"downloadURL":""}}}}
+{"name":"nvidia-device-plugin","downloadLocation":"/opt/nvidia-device-plugin/downloads","downloadURIs":{"ubuntu":{"r2404":{"versionsV2":[{"renovateTag":"name=nvidia-device-plugin, repository=production, os=ubuntu, release=24.04","latestVersion":"0.18.0-ubuntu24.04u2"}]},"r2204":{"versionsV2":[{"renovateTag":"name=nvidia-device-plugin, repository=production, os=ubuntu, release=22.04","latestVersion":"0.18.0-ubuntu22.04u2"}]}},"azurelinux":{"v3.0":{"versionsV2":[{"renovateTag":"RPM_registry=https://packages.microsoft.com/azurelinux/3.0/prod/cloud-native/x86_64/repodata, name=nvidia-device-plugin, os=azurelinux, release=3.0","latestVersion":"0.18.0-2.azl3"}]}}}}
+{"name":"datacenter-gpu-manager-4-core","downloadLocation":"/opt/datacenter-gpu-manager-4-core/downloads","downloadURIs":{"ubuntu":{"r2404":{"versionsV2":[{"renovateTag":"name=datacenter-gpu-manager-4-core, repository=nvidia, os=ubuntu, release=24.04","latestVersion":"1:4.4.1-1"}]},"r2204":{"versionsV2":[{"renovateTag":"name=datacenter-gpu-manager-4-core, repository=nvidia, os=ubuntu, release=22.04","latestVersion":"1:4.4.1-1"}]}},"azurelinux":{"v3.0":{"versionsV2":[{"renovateTag":"RPM_registry=https://developer.download.nvidia.com/compute/cuda/repos/azl3/x86_64/repodata, name=datacenter-gpu-manager-4-core, repository=nvidia, os=azurelinux, release=3.0","latestVersion":"1:4.4.1-1"}]}}}}
+{"name":"datacenter-gpu-manager-4-proprietary","downloadLocation":"/opt/datacenter-gpu-manager-4-proprietary/downloads","downloadURIs":{"ubuntu":{"r2404":{"versionsV2":[{"renovateTag":"name=datacenter-gpu-manager-4-proprietary, repository=nvidia, os=ubuntu, release=24.04","latestVersion":"1:4.4.1-1"}]},"r2204":{"versionsV2":[{"renovateTag":"name=datacenter-gpu-manager-4-proprietary, repository=nvidia, os=ubuntu, release=22.04","latestVersion":"1:4.4.1-1"}]}},"azurelinux":{"v3.0":{"versionsV2":[{"renovateTag":"RPM_registry=https://developer.download.nvidia.com/compute/cuda/repos/azl3/x86_64/repodata, name=datacenter-gpu-manager-4-proprietary, repository=nvidia, os=azurelinux, release=3.0","latestVersion":"1:4.4.1-1"}]}}}}
+{"name":"datacenter-gpu-manager-exporter","downloadLocation":"/opt/datacenter-gpu-manager-exporter/downloads","downloadURIs":{"ubuntu":{"r2404":{"versionsV2":[{"renovateTag":"name=datacenter-gpu-manager-exporter, repository=nvidia, os=ubuntu, release=24.04","latestVersion":"4.6.0-1"}]},"r2204":{"versionsV2":[{"renovateTag":"name=datacenter-gpu-manager-exporter, repository=nvidia, os=ubuntu, release=22.04","latestVersion":"4.6.0-1"}]}}}}
+{"name":"dcgm-exporter","downloadLocation":"/opt/dcgm-exporter/downloads","downloadURIs":{"azurelinux":{"v3.0":{"versionsV2":[{"renovateTag":"RPM_registry=https://packages.microsoft.com/azurelinux/3.0/prod/cloud-native/x86_64/repodata, name=dcgm-exporter, os=azurelinux, release=3.0","latestVersion":"4.6.0-1.azl3"}]}}}}" 1 times
++ wait_for_apt_locks
++ fuser /var/lib/dpkg/lock /var/lib/apt/lists/lock /var/cache/apt/archives/lock /var/lib/dpkg/lock-frontend
++ return 0
++ '[' 22.04 = 24.04 ']'
++ mkdir -p /tmp/bcc
++ pushd /tmp/bcc
+/tmp/bcc /home/packer
++ git clone https://github.com/iovisor/bcc.git
+Cloning into 'bcc'...
++ mkdir bcc/build
++ cd bcc/build
++ '[' 22.04 = 18.04 ']'
++ git checkout v0.29.0
+Note: switching to 'v0.29.0'.
+
+You are in 'detached HEAD' state. You can look around, make experimental
+changes and commit them, and you can discard any commits you make in this
+state without impacting any branches by switching back to a branch.
+
+If you want to create a new branch to retain commits you create, you may
+do so (now or later) by using -c with the switch command. Example:
+
+  git switch -c <new-branch-name>
+
+Or undo this operation with:
+
+  git switch -
+
+Turn off this advice by setting config variable advice.detachedHead to false
+
+HEAD is now at 0f5c2648 readme: remove colons after subtitles
++ cmake -DENABLE_EXAMPLES=off ..
+-- The C compiler identification is GNU 11.4.0
+-- The CXX compiler identification is GNU 11.4.0
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: /usr/bin/cc - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+Submodule 'libbpf-tools/blazesym' (https://github.com/libbpf/blazesym) registered for path 'libbpf-tools/blazesym'
+Cloning into '/tmp/bcc/bcc/libbpf-tools/blazesym'...
+Submodule path 'libbpf-tools/blazesym': checked out 'd954f73867527dc75025802160c759d0b6a0641f'
+Submodule 'libbpf-tools/bpftool' (https://github.com/libbpf/bpftool) registered for path 'libbpf-tools/bpftool'
+Submodule 'src/cc/libbpf' (https://github.com/libbpf/libbpf.git) registered for path 'src/cc/libbpf'
+Cloning into '/tmp/bcc/bcc/libbpf-tools/bpftool'...
+Cloning into '/tmp/bcc/bcc/src/cc/libbpf'...
+Submodule path 'libbpf-tools/bpftool': checked out '6eb3e20583da834da18ea3011dcefd08b3493f8d'
+Submodule 'libbpf' (https://github.com/libbpf/libbpf.git) registered for path 'libbpf-tools/bpftool/libbpf'
+Cloning into '/tmp/bcc/bcc/libbpf-tools/bpftool/libbpf'...
+Submodule path 'libbpf-tools/bpftool/libbpf': checked out '7984737fbf3b2a14a86321387bb62abb16cfc4ed'
+Submodule path 'src/cc/libbpf': checked out '44b0bc9ad70a73cddc3528f12da48cc3520ad060'
+-- Latest recognized Git tag is v0.29.0
+-- Git HEAD is 0f5c26489d2aaf72c8890d27791efda40028c132
+-- Revision is 0.29.0+0f5c2648 (major 0, minor 29, patch 0)
+-- Performing Test HAVE_NO_PIE_FLAG
+-- Performing Test HAVE_NO_PIE_FLAG - Success
+-- Performing Test HAVE_REALLOCARRAY_SUPPORT
+-- Performing Test HAVE_REALLOCARRAY_SUPPORT - Success
+-- Kernel release: 5.15.0-1098-azure
+-- Kernel headers: /usr/src/linux-headers-5.15.0-1098-azure
+-- Performing Test HAVE_FFI_CALL
+-- Performing Test HAVE_FFI_CALL - Success
+-- Found FFI: /usr/lib/x86_64-linux-gnu/libffi.so  
+-- Performing Test Terminfo_LINKABLE
+-- Performing Test Terminfo_LINKABLE - Success
+-- Found Terminfo: /usr/lib/x86_64-linux-gnu/libtinfo.so  
+-- Found ZLIB: /usr/lib/x86_64-linux-gnu/libz.so (found version "1.2.11") 
+-- Found LibXml2: /usr/lib/x86_64-linux-gnu/libxml2.so (found version "2.9.13") 
+-- Found LLVM: /usr/lib/llvm-14/include 14.0.0 (Use LLVM_ROOT envronment variable for another version of LLVM)
+-- Found BISON: /usr/bin/bison (found version "3.8.2") 
+-- Found FLEX: /usr/bin/flex (found version "2.6.4") 
+-- Found LibElf: /usr/lib/x86_64-linux-gnu/libelf.so  
+-- Performing Test ELF_GETSHDRSTRNDX
+-- Performing Test ELF_GETSHDRSTRNDX - Success
+-- Could NOT find LibDebuginfod (missing: LIBDEBUGINFOD_LIBRARIES LIBDEBUGINFOD_INCLUDE_DIRS) 
+-- Could NOT find LibLzma (missing: LIBLZMA_LIBRARIES LIBLZMA_INCLUDE_DIRS) 
+-- Using static-libstdc++
+-- Could NOT find LuaJIT (missing: LUAJIT_LIBRARIES LUAJIT_INCLUDE_DIR) 
+CMake Warning at tests/python/CMakeLists.txt:6 (message):
+  Recommended test program 'arping' not found
+
+
+CMake Warning at tests/python/CMakeLists.txt:10 (message):
+  Recommended test program 'netperf' not found
+
+
+CMake Warning at tests/python/CMakeLists.txt:16 (message):
+  Recommended test program 'iperf' or 'iperf3' not found
+
+
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /tmp/bcc/bcc/build
++ make
+[  1%] Building CXX object src/cc/frontends/clang/CMakeFiles/clang_frontend-objects.dir/loader.cc.o
+[  1%] Building CXX object src/cc/frontends/clang/CMakeFiles/clang_frontend-objects.dir/b_frontend_action.cc.o
+[  1%] Building CXX object src/cc/frontends/clang/CMakeFiles/clang_frontend-objects.dir/tp_frontend_action.cc.o
+[  2%] Building CXX object src/cc/frontends/clang/CMakeFiles/clang_frontend-objects.dir/kbuild_helper.cc.o
+/tmp/bcc/bcc/src/cc/frontends/clang/kbuild_helper.cc:84:3: warning: multi-line comment [-Wcomment]
+   84 |   // USERINCLUDE    := \
+      |   ^
+/tmp/bcc/bcc/src/cc/frontends/clang/kbuild_helper.cc:93:3: warning: multi-line comment [-Wcomment]
+   93 |   // LINUXINCLUDE    := \
+      |   ^
+[  2%] Built target clang_frontend-objects
+[  2%] Linking CXX static library libclang_frontend.a
+[  2%] Built target clang_frontend
+[  2%] Building C object src/cc/CMakeFiles/bpf-static.dir/libbpf.c.o
+[  3%] Building C object src/cc/CMakeFiles/bpf-static.dir/perf_reader.c.o
+[  3%] Building C object src/cc/CMakeFiles/bpf-static.dir/libbpf/src/bpf.c.o
+[  4%] Building C object src/cc/CMakeFiles/bpf-static.dir/libbpf/src/bpf_prog_linfo.c.o
+[  4%] Building C object src/cc/CMakeFiles/bpf-static.dir/libbpf/src/btf.c.o
+[  4%] Building C object src/cc/CMakeFiles/bpf-static.dir/libbpf/src/btf_dump.c.o
+[  5%] Building C object src/cc/CMakeFiles/bpf-static.dir/libbpf/src/gen_loader.c.o
+[  5%] Building C object src/cc/CMakeFiles/bpf-static.dir/libbpf/src/hashmap.c.o
+[  5%] Building C object src/cc/CMakeFiles/bpf-static.dir/libbpf/src/libbpf.c.o
+[  6%] Building C object src/cc/CMakeFiles/bpf-static.dir/libbpf/src/libbpf_errno.c.o
+[  6%] Building C object src/cc/CMakeFiles/bpf-static.dir/libbpf/src/libbpf_probes.c.o
+[  6%] Building C object src/cc/CMakeFiles/bpf-static.dir/libbpf/src/linker.c.o
+[  7%] Building C object src/cc/CMakeFiles/bpf-static.dir/libbpf/src/netlink.c.o
+[  7%] Building C object src/cc/CMakeFiles/bpf-static.dir/libbpf/src/nlattr.c.o
+[  7%] Building C object src/cc/CMakeFiles/bpf-static.dir/libbpf/src/relo_core.c.o
+[  8%] Building C object src/cc/CMakeFiles/bpf-static.dir/libbpf/src/ringbuf.c.o
+[  8%] Building C object src/cc/CMakeFiles/bpf-static.dir/libbpf/src/str_error.c.o
+[  8%] Building C object src/cc/CMakeFiles/bpf-static.dir/libbpf/src/strset.c.o
+[  9%] Building C object src/cc/CMakeFiles/bpf-static.dir/libbpf/src/usdt.c.o
+[  9%] Building C object src/cc/CMakeFiles/bpf-static.dir/libbpf/src/zip.c.o
+[  9%] Building CXX object src/cc/CMakeFiles/bpf-static.dir/bcc_syms.cc.o
+[ 10%] Building C object src/cc/CMakeFiles/bpf-static.dir/bcc_elf.c.o
+[ 10%] Building C object src/cc/CMakeFiles/bpf-static.dir/bcc_perf_map.c.o
+[ 11%] Building C object src/cc/CMakeFiles/bpf-static.dir/bcc_proc.c.o
+[ 11%] Building C object src/cc/CMakeFiles/bpf-static.dir/bcc_zip.c.o
+[ 11%] Building CXX object src/cc/CMakeFiles/bpf-static.dir/common.cc.o
+[ 12%] Building CXX object src/cc/CMakeFiles/bpf-static.dir/usdt/usdt.cc.o
+[ 12%] Building CXX object src/cc/CMakeFiles/bpf-static.dir/usdt/usdt_args.cc.o
+[ 12%] Linking CXX static library libbcc_bpf.a
+[ 12%] Built target bpf-static
+[ 13%] Building CXX object src/cc/api/CMakeFiles/api-static.dir/BPF.cc.o
+[ 13%] Building CXX object src/cc/api/CMakeFiles/api-static.dir/BPFTable.cc.o
+[ 13%] Linking CXX static library libapi-static.a
+[ 13%] Built target api-static
+[ 13%] Building CXX object src/cc/usdt/CMakeFiles/usdt-static.dir/usdt_args.cc.o
+[ 14%] Building CXX object src/cc/usdt/CMakeFiles/usdt-static.dir/usdt.cc.o
+[ 14%] Linking CXX static library libusdt-static.a
+[ 14%] Built target usdt-static
+[ 14%] Building CXX object src/cc/CMakeFiles/bcc-shared.dir/link_all.cc.o
+[ 14%] Building CXX object src/cc/CMakeFiles/bcc-shared.dir/bcc_common.cc.o
+[ 15%] Building CXX object src/cc/CMakeFiles/bcc-shared.dir/bpf_module.cc.o
+[ 15%] Building CXX object src/cc/CMakeFiles/bcc-shared.dir/bcc_btf.cc.o
+[ 15%] Building CXX object src/cc/CMakeFiles/bcc-shared.dir/exported_files.cc.o
+[ 16%] Building CXX object src/cc/CMakeFiles/bcc-shared.dir/bcc_debug.cc.o
+[ 16%] Building CXX object src/cc/CMakeFiles/bcc-shared.dir/bpf_module_rw_engine.cc.o
+[ 16%] Building CXX object src/cc/CMakeFiles/bcc-shared.dir/table_storage.cc.o
+[ 17%] Building CXX object src/cc/CMakeFiles/bcc-shared.dir/shared_table.cc.o
+[ 17%] Building CXX object src/cc/CMakeFiles/bcc-shared.dir/bpffs_table.cc.o
+[ 18%] Building CXX object src/cc/CMakeFiles/bcc-shared.dir/json_map_decl_visitor.cc.o
+[ 18%] Building CXX object src/cc/CMakeFiles/bcc-shared.dir/bcc_syms.cc.o
+[ 18%] Building C object src/cc/CMakeFiles/bcc-shared.dir/bcc_elf.c.o
+[ 19%] Building C object src/cc/CMakeFiles/bcc-shared.dir/bcc_perf_map.c.o
+[ 19%] Building C object src/cc/CMakeFiles/bcc-shared.dir/bcc_proc.c.o
+[ 19%] Building C object src/cc/CMakeFiles/bcc-shared.dir/bcc_zip.c.o
+[ 20%] Building CXX object src/cc/CMakeFiles/bcc-shared.dir/common.cc.o
+[ 20%] Linking CXX shared library libbcc.so
+[ 20%] Built target bcc-shared
+[ 21%] Building CXX object src/cc/CMakeFiles/bcc-loader-static.dir/bcc_syms.cc.o
+[ 21%] Building C object src/cc/CMakeFiles/bcc-loader-static.dir/bcc_elf.c.o
+[ 21%] Building C object src/cc/CMakeFiles/bcc-loader-static.dir/bcc_perf_map.c.o
+[ 22%] Building C object src/cc/CMakeFiles/bcc-loader-static.dir/bcc_proc.c.o
+[ 22%] Building C object src/cc/CMakeFiles/bcc-loader-static.dir/bcc_zip.c.o
+[ 22%] Building CXX object src/cc/CMakeFiles/bcc-loader-static.dir/common.cc.o
+[ 23%] Linking CXX static library libbcc-loader-static.a
+[ 23%] Built target bcc-loader-static
+[ 23%] Building CXX object src/cc/api/CMakeFiles/api-objects.dir/BPF.cc.o
+[ 23%] Building CXX object src/cc/api/CMakeFiles/api-objects.dir/BPFTable.cc.o
+[ 23%] Built target api-objects
+[ 23%] Building CXX object src/cc/CMakeFiles/bcc-static.dir/bcc_common.cc.o
+[ 24%] Building CXX object src/cc/CMakeFiles/bcc-static.dir/bpf_module.cc.o
+[ 24%] Building CXX object src/cc/CMakeFiles/bcc-static.dir/bcc_btf.cc.o
+[ 24%] Building CXX object src/cc/CMakeFiles/bcc-static.dir/exported_files.cc.o
+[ 25%] Building CXX object src/cc/CMakeFiles/bcc-static.dir/bcc_debug.cc.o
+[ 25%] Building CXX object src/cc/CMakeFiles/bcc-static.dir/bpf_module_rw_engine.cc.o
+[ 25%] Building CXX object src/cc/CMakeFiles/bcc-static.dir/table_storage.cc.o
+[ 26%] Building CXX object src/cc/CMakeFiles/bcc-static.dir/shared_table.cc.o
+[ 26%] Building CXX object src/cc/CMakeFiles/bcc-static.dir/bpffs_table.cc.o
+[ 26%] Building CXX object src/cc/CMakeFiles/bcc-static.dir/json_map_decl_visitor.cc.o
+[ 27%] Building CXX object src/cc/CMakeFiles/bcc-static.dir/common.cc.o
+[ 27%] Building CXX object src/cc/CMakeFiles/bcc-static.dir/usdt/usdt.cc.o
+[ 28%] Building CXX object src/cc/CMakeFiles/bcc-static.dir/usdt/usdt_args.cc.o
+[ 28%] Building CXX object src/cc/CMakeFiles/bcc-static.dir/bcc_syms.cc.o
+[ 28%] Building C object src/cc/CMakeFiles/bcc-static.dir/bcc_elf.c.o
+[ 29%] Building C object src/cc/CMakeFiles/bcc-static.dir/bcc_perf_map.c.o
+[ 29%] Building C object src/cc/CMakeFiles/bcc-static.dir/bcc_proc.c.o
+[ 29%] Building C object src/cc/CMakeFiles/bcc-static.dir/bcc_zip.c.o
+[ 30%] Linking CXX static library libbcc.a
+[ 30%] Built target bcc-static
+[ 30%] Building C object src/cc/CMakeFiles/bpf-shared.dir/libbpf.c.o
+[ 31%] Building C object src/cc/CMakeFiles/bpf-shared.dir/perf_reader.c.o
+[ 31%] Building C object src/cc/CMakeFiles/bpf-shared.dir/libbpf/src/bpf.c.o
+[ 31%] Building C object src/cc/CMakeFiles/bpf-shared.dir/libbpf/src/bpf_prog_linfo.c.o
+[ 32%] Building C object src/cc/CMakeFiles/bpf-shared.dir/libbpf/src/btf.c.o
+[ 32%] Building C object src/cc/CMakeFiles/bpf-shared.dir/libbpf/src/btf_dump.c.o
+[ 32%] Building C object src/cc/CMakeFiles/bpf-shared.dir/libbpf/src/gen_loader.c.o
+[ 33%] Building C object src/cc/CMakeFiles/bpf-shared.dir/libbpf/src/hashmap.c.o
+[ 33%] Building C object src/cc/CMakeFiles/bpf-shared.dir/libbpf/src/libbpf.c.o
+[ 33%] Building C object src/cc/CMakeFiles/bpf-shared.dir/libbpf/src/libbpf_errno.c.o
+[ 34%] Building C object src/cc/CMakeFiles/bpf-shared.dir/libbpf/src/libbpf_probes.c.o
+[ 34%] Building C object src/cc/CMakeFiles/bpf-shared.dir/libbpf/src/linker.c.o
+[ 35%] Building C object src/cc/CMakeFiles/bpf-shared.dir/libbpf/src/netlink.c.o
+[ 35%] Building C object src/cc/CMakeFiles/bpf-shared.dir/libbpf/src/nlattr.c.o
+[ 35%] Building C object src/cc/CMakeFiles/bpf-shared.dir/libbpf/src/relo_core.c.o
+[ 36%] Building C object src/cc/CMakeFiles/bpf-shared.dir/libbpf/src/ringbuf.c.o
+[ 36%] Building C object src/cc/CMakeFiles/bpf-shared.dir/libbpf/src/str_error.c.o
+[ 36%] Building C object src/cc/CMakeFiles/bpf-shared.dir/libbpf/src/strset.c.o
+[ 37%] Building C object src/cc/CMakeFiles/bpf-shared.dir/libbpf/src/usdt.c.o
+[ 37%] Building C object src/cc/CMakeFiles/bpf-shared.dir/libbpf/src/zip.c.o
+[ 37%] Building CXX object src/cc/CMakeFiles/bpf-shared.dir/bcc_syms.cc.o
+[ 38%] Building C object src/cc/CMakeFiles/bpf-shared.dir/bcc_elf.c.o
+[ 38%] Building C object src/cc/CMakeFiles/bpf-shared.dir/bcc_perf_map.c.o
+[ 38%] Building C object src/cc/CMakeFiles/bpf-shared.dir/bcc_proc.c.o
+[ 39%] Building C object src/cc/CMakeFiles/bpf-shared.dir/bcc_zip.c.o
+[ 39%] Building CXX object src/cc/CMakeFiles/bpf-shared.dir/common.cc.o
+[ 39%] Building CXX object src/cc/CMakeFiles/bpf-shared.dir/usdt/usdt.cc.o
+[ 40%] Building CXX object src/cc/CMakeFiles/bpf-shared.dir/usdt/usdt_args.cc.o
+[ 40%] Linking CXX shared library libbcc_bpf.so
+[ 40%] Built target bpf-shared
+[ 40%] Building sdist for python3
+running sdist
+running egg_info
+creating bcc.egg-info
+writing bcc.egg-info/PKG-INFO
+writing dependency_links to bcc.egg-info/dependency_links.txt
+writing top-level names to bcc.egg-info/top_level.txt
+writing manifest file 'bcc.egg-info/SOURCES.txt'
+reading manifest file 'bcc.egg-info/SOURCES.txt'
+writing manifest file 'bcc.egg-info/SOURCES.txt'
+warning: sdist: standard file not found: should have one of README, README.rst, README.txt, README.md
+
+running check
+creating bcc-0.29.0+0f5c2648
+creating bcc-0.29.0+0f5c2648/bcc
+creating bcc-0.29.0+0f5c2648/bcc.egg-info
+copying files to bcc-0.29.0+0f5c2648...
+copying setup.py -> bcc-0.29.0+0f5c2648
+copying bcc/__init__.py -> bcc-0.29.0+0f5c2648/bcc
+copying bcc/containers.py -> bcc-0.29.0+0f5c2648/bcc
+copying bcc/disassembler.py -> bcc-0.29.0+0f5c2648/bcc
+copying bcc/libbcc.py -> bcc-0.29.0+0f5c2648/bcc
+copying bcc/perf.py -> bcc-0.29.0+0f5c2648/bcc
+copying bcc/syscall.py -> bcc-0.29.0+0f5c2648/bcc
+copying bcc/table.py -> bcc-0.29.0+0f5c2648/bcc
+copying bcc/tcp.py -> bcc-0.29.0+0f5c2648/bcc
+copying bcc/usdt.py -> bcc-0.29.0+0f5c2648/bcc
+copying bcc/utils.py -> bcc-0.29.0+0f5c2648/bcc
+copying bcc/version.py -> bcc-0.29.0+0f5c2648/bcc
+copying bcc.egg-info/PKG-INFO -> bcc-0.29.0+0f5c2648/bcc.egg-info
+copying bcc.egg-info/SOURCES.txt -> bcc-0.29.0+0f5c2648/bcc.egg-info
+copying bcc.egg-info/dependency_links.txt -> bcc-0.29.0+0f5c2648/bcc.egg-info
+copying bcc.egg-info/top_level.txt -> bcc-0.29.0+0f5c2648/bcc.egg-info
+Writing bcc-0.29.0+0f5c2648/setup.cfg
+creating dist
+Creating tar archive
+removing 'bcc-0.29.0+0f5c2648' (and everything under it)
+[ 40%] Built target bcc_py_python3
+[ 41%] Building C object introspection/CMakeFiles/bps.dir/bps.c.o
+[ 41%] Linking CXX executable bps
+[ 41%] Built target bps
+[ 41%] Generating argdist.8.gz
+[ 41%] Generating bashreadline.8.gz
+[ 42%] Generating bindsnoop.8.gz
+[ 42%] Generating biolatency.8.gz
+[ 43%] Generating biolatpcts.8.gz
+[ 43%] Generating biopattern.8.gz
+[ 43%] Generating biosnoop.8.gz
+[ 44%] Generating biotop.8.gz
+[ 44%] Generating bitesize.8.gz
+[ 44%] Generating bpflist.8.gz
+[ 45%] Generating bps.8.gz
+[ 45%] Generating btrfsdist.8.gz
+[ 45%] Generating btrfsslower.8.gz
+[ 46%] Generating cachestat.8.gz
+[ 46%] Generating cachetop.8.gz
+[ 46%] Generating capable.8.gz
+[ 47%] Generating cobjnew.8.gz
+[ 47%] Generating compactsnoop.8.gz
+[ 47%] Generating cpudist.8.gz
+[ 48%] Generating cpuunclaimed.8.gz
+[ 48%] Generating criticalstat.8.gz
+[ 48%] Generating cthreads.8.gz
+[ 49%] Generating dbslower.8.gz
+[ 49%] Generating dbstat.8.gz
+[ 50%] Generating dcsnoop.8.gz
+[ 50%] Generating dcstat.8.gz
+[ 50%] Generating deadlock.8.gz
+[ 51%] Generating dirtop.8.gz
+[ 51%] Generating drsnoop.8.gz
+[ 51%] Generating execsnoop.8.gz
+[ 52%] Generating exitsnoop.8.gz
+[ 52%] Generating ext4dist.8.gz
+[ 52%] Generating ext4slower.8.gz
+[ 53%] Generating filegone.8.gz
+[ 53%] Generating filelife.8.gz
+[ 53%] Generating fileslower.8.gz
+[ 54%] Generating filetop.8.gz
+[ 54%] Generating funccount.8.gz
+[ 54%] Generating funcinterval.8.gz
+[ 55%] Generating funclatency.8.gz
+[ 55%] Generating funcslower.8.gz
+[ 55%] Generating gethostlatency.8.gz
+[ 56%] Generating hardirqs.8.gz
+[ 56%] Generating inject.8.gz
+[ 56%] Generating javacalls.8.gz
+[ 57%] Generating javaflow.8.gz
+[ 57%] Generating javagc.8.gz
+[ 58%] Generating javaobjnew.8.gz
+[ 58%] Generating javastat.8.gz
+[ 58%] Generating javathreads.8.gz
+[ 59%] Generating killsnoop.8.gz
+[ 59%] Generating klockstat.8.gz
+[ 59%] Generating ksnoop.8.gz
+[ 60%] Generating kvmexit.8.gz
+[ 60%] Generating llcstat.8.gz
+[ 60%] Generating mdflush.8.gz
+[ 61%] Generating memleak.8.gz
+[ 61%] Generating mountsnoop.8.gz
+[ 61%] Generating mysqld_qslower.8.gz
+[ 62%] Generating netqtop.8.gz
+[ 62%] Generating nfsdist.8.gz
+[ 62%] Generating nfsslower.8.gz
+[ 63%] Generating nodegc.8.gz
+[ 63%] Generating nodestat.8.gz
+[ 63%] Generating offcputime.8.gz
+[ 64%] Generating offwaketime.8.gz
+[ 64%] Generating oomkill.8.gz
+[ 65%] Generating opensnoop.8.gz
+[ 65%] Generating perlcalls.8.gz
+[ 65%] Generating perlflow.8.gz
+[ 66%] Generating perlstat.8.gz
+[ 66%] Generating phpcalls.8.gz
+[ 66%] Generating phpflow.8.gz
+[ 67%] Generating phpstat.8.gz
+[ 67%] Generating pidpersec.8.gz
+[ 67%] Generating ppchcalls.8.gz
+[ 68%] Generating profile.8.gz
+[ 68%] Generating pythoncalls.8.gz
+[ 68%] Generating pythonflow.8.gz
+[ 69%] Generating pythongc.8.gz
+[ 69%] Generating pythonstat.8.gz
+[ 69%] Generating rdmaucma.8.gz
+[ 70%] Generating readahead.8.gz
+[ 70%] Generating reset-trace.8.gz
+[ 70%] Generating rubycalls.8.gz
+[ 71%] Generating rubyflow.8.gz
+[ 71%] Generating rubygc.8.gz
+[ 72%] Generating rubyobjnew.8.gz
+[ 72%] Generating rubystat.8.gz
+[ 72%] Generating runqlat.8.gz
+[ 73%] Generating runqlen.8.gz
+[ 73%] Generating runqslower.8.gz
+[ 73%] Generating shmsnoop.8.gz
+[ 74%] Generating slabratetop.8.gz
+[ 74%] Generating sofdsnoop.8.gz
+[ 74%] Generating softirqs.8.gz
+[ 75%] Generating solisten.8.gz
+[ 75%] Generating spfdsnoop.8.gz
+[ 75%] Generating sslsniff.8.gz
+[ 76%] Generating stackcount.8.gz
+[ 76%] Generating statsnoop.8.gz
+[ 76%] Generating swapin.8.gz
+[ 77%] Generating syncsnoop.8.gz
+[ 77%] Generating syscount.8.gz
+[ 77%] Generating tclcalls.8.gz
+[ 78%] Generating tclflow.8.gz
+[ 78%] Generating tclobjnew.8.gz
+[ 79%] Generating tclstat.8.gz
+[ 79%] Generating tcpaccept.8.gz
+[ 79%] Generating tcpcong.8.gz
+[ 80%] Generating tcpconnect.8.gz
+[ 80%] Generating tcpconnlat.8.gz
+[ 80%] Generating tcpdrop.8.gz
+[ 81%] Generating tcplife.8.gz
+[ 81%] Generating tcpretrans.8.gz
+[ 81%] Generating tcprtt.8.gz
+[ 82%] Generating tcpstates.8.gz
+[ 82%] Generating tcpsubnet.8.gz
+[ 82%] Generating tcpsynbl.8.gz
+[ 83%] Generating tcptop.8.gz
+[ 83%] Generating tcptracer.8.gz
+[ 83%] Generating threadsnoop.8.gz
+[ 84%] Generating tplist.8.gz
+[ 84%] Generating trace.8.gz
+[ 84%] Generating ttysnoop.8.gz
+[ 85%] Generating ucalls.8.gz
+[ 85%] Generating uflow.8.gz
+[ 86%] Generating ugc.8.gz
+[ 86%] Generating uobjnew.8.gz
+[ 86%] Generating ustat.8.gz
+[ 87%] Generating uthreads.8.gz
+[ 87%] Generating vfscount.8.gz
+[ 87%] Generating vfsstat.8.gz
+[ 88%] Generating virtiostat.8.gz
+[ 88%] Generating wakeuptime.8.gz
+[ 88%] Generating xfsdist.8.gz
+[ 89%] Generating xfsslower.8.gz
+[ 89%] Generating zfsdist.8.gz
+[ 89%] Generating zfsslower.8.gz
+[ 89%] Built target man
+[ 90%] Building C object tests/cc/CMakeFiles/test_static.dir/test_static.c.o
+[ 90%] Linking CXX executable test_static
+[ 90%] Built target test_static
+[ 90%] Building CXX object tests/cc/CMakeFiles/usdt_test_lib.dir/usdt_test_lib.cc.o
+[ 91%] Linking CXX shared library libusdt_test_lib.so
+[ 91%] Built target usdt_test_lib
+[ 91%] Building CXX object tests/cc/CMakeFiles/debuginfo_test_lib.dir/debuginfo_test_lib.cc.o
+[ 92%] Linking CXX shared library libdebuginfo_test_lib.so
+[ 92%] Built target debuginfo_test_lib
+[ 93%] Generating archive.zip
+  adding: libdebuginfo_test_lib.so (stored 0%)
+  adding: zip_subdir/file.txt (stored 0%)
+[ 93%] Built target zip_archive
+[ 93%] Generating debuginfo.so
+[ 93%] Built target debuginfo
+[ 93%] Generating with_gnu_debuglink.so
+[ 93%] Built target with_gnu_debuglink
+[ 94%] Building CXX object tests/cc/CMakeFiles/test_libbcc.dir/test_libbcc.cc.o
+[ 94%] Building CXX object tests/cc/CMakeFiles/test_libbcc.dir/test_c_api.cc.o
+[ 94%] Building CXX object tests/cc/CMakeFiles/test_libbcc.dir/test_array_table.cc.o
+[ 95%] Building CXX object tests/cc/CMakeFiles/test_libbcc.dir/test_bpf_table.cc.o
+[ 95%] Building CXX object tests/cc/CMakeFiles/test_libbcc.dir/test_cg_storage.cc.o
+[ 95%] Building CXX object tests/cc/CMakeFiles/test_libbcc.dir/test_hash_table.cc.o
+[ 96%] Building CXX object tests/cc/CMakeFiles/test_libbcc.dir/test_map_in_map.cc.o
+[ 96%] Building CXX object tests/cc/CMakeFiles/test_libbcc.dir/test_perf_event.cc.o
+[ 97%] Building CXX object tests/cc/CMakeFiles/test_libbcc.dir/test_pinned_table.cc.o
+[ 97%] Building CXX object tests/cc/CMakeFiles/test_libbcc.dir/test_prog_table.cc.o
+[ 97%] Building CXX object tests/cc/CMakeFiles/test_libbcc.dir/test_queuestack_table.cc.o
+[ 98%] Building CXX object tests/cc/CMakeFiles/test_libbcc.dir/test_shared_table.cc.o
+[ 98%] Building CXX object tests/cc/CMakeFiles/test_libbcc.dir/test_sk_storage.cc.o
+[ 98%] Building CXX object tests/cc/CMakeFiles/test_libbcc.dir/test_sock_table.cc.o
+[ 99%] Building CXX object tests/cc/CMakeFiles/test_libbcc.dir/test_usdt_args.cc.o
+[ 99%] Building CXX object tests/cc/CMakeFiles/test_libbcc.dir/test_usdt_probes.cc.o
+[ 99%] Building CXX object tests/cc/CMakeFiles/test_libbcc.dir/utils.cc.o
+[100%] Building CXX object tests/cc/CMakeFiles/test_libbcc.dir/test_parse_tracepoint.cc.o
+[100%] Building CXX object tests/cc/CMakeFiles/test_libbcc.dir/test_zip.cc.o
+[100%] Linking CXX executable test_libbcc
+[100%] Built target test_libbcc
++ sudo make install
+Consolidate compiler generated dependencies of target clang_frontend-objects
+[  2%] Built target clang_frontend-objects
+[  2%] Built target clang_frontend
+Consolidate compiler generated dependencies of target bpf-static
+[ 12%] Built target bpf-static
+Consolidate compiler generated dependencies of target api-static
+[ 13%] Built target api-static
+Consolidate compiler generated dependencies of target usdt-static
+[ 14%] Built target usdt-static
+Consolidate compiler generated dependencies of target bcc-shared
+[ 20%] Built target bcc-shared
+Consolidate compiler generated dependencies of target bcc-loader-static
+[ 23%] Built target bcc-loader-static
+Consolidate compiler generated dependencies of target api-objects
+[ 23%] Built target api-objects
+Consolidate compiler generated dependencies of target bcc-static
+[ 30%] Built target bcc-static
+Consolidate compiler generated dependencies of target bpf-shared
+[ 40%] Built target bpf-shared
+[ 40%] Built target bcc_py_python3
+Consolidate compiler generated dependencies of target bps
+[ 41%] Built target bps
+[ 89%] Built target man
+Consolidate compiler generated dependencies of target test_static
+[ 90%] Built target test_static
+Consolidate compiler generated dependencies of target usdt_test_lib
+[ 91%] Built target usdt_test_lib
+Consolidate compiler generated dependencies of target debuginfo_test_lib
+[ 92%] Built target debuginfo_test_lib
+[ 93%] Built target zip_archive
+[ 93%] Built target debuginfo
+[ 93%] Built target with_gnu_debuglink
+Consolidate compiler generated dependencies of target test_libbcc
+[100%] Built target test_libbcc
+Install the project...
+-- Install configuration: "Release"
+-- Installing: /usr/lib/x86_64-linux-gnu/libbcc.so.0.29.0
+-- Installing: /usr/lib/x86_64-linux-gnu/libbcc.so.0
+-- Installing: /usr/lib/x86_64-linux-gnu/libbcc.so
+-- Installing: /usr/lib/x86_64-linux-gnu/libbcc.a
+-- Installing: /usr/lib/x86_64-linux-gnu/libbcc-loader-static.a
+-- Installing: /usr/lib/x86_64-linux-gnu/libbcc_bpf.a
+-- Installing: /usr/include/bcc/file_desc.h
+-- Installing: /usr/include/bcc/table_desc.h
+-- Installing: /usr/include/bcc/table_storage.h
+-- Installing: /usr/include/bcc/bcc_common.h
+-- Installing: /usr/include/bcc/bpf_module.h
+-- Installing: /usr/include/bcc/bcc_exception.h
+-- Installing: /usr/include/bcc/bcc_syms.h
+-- Installing: /usr/include/bcc/bcc_proc.h
+-- Installing: /usr/include/bcc/bcc_elf.h
+-- Installing: /usr/include/bcc/bcc_usdt.h
+-- Installing: /usr/include/bcc/compat/linux
+-- Installing: /usr/include/bcc/compat/linux/if_link.h
+-- Installing: /usr/include/bcc/compat/linux/netlink.h
+-- Installing: /usr/include/bcc/compat/linux/netdev.h
+-- Installing: /usr/include/bcc/compat/linux/perf_event.h
+-- Installing: /usr/include/bcc/compat/linux/fcntl.h
+-- Installing: /usr/include/bcc/compat/linux/pkt_cls.h
+-- Installing: /usr/include/bcc/compat/linux/btf.h
+-- Installing: /usr/include/bcc/compat/linux/if_xdp.h
+-- Installing: /usr/include/bcc/compat/linux/bpf.h
+-- Installing: /usr/include/bcc/compat/linux/openat2.h
+-- Installing: /usr/include/bcc/compat/linux/pkt_sched.h
+-- Installing: /usr/include/bcc/compat/linux/bpf_common.h
+-- Installing: /usr/lib/x86_64-linux-gnu/pkgconfig/libbcc.pc
+-- Installing: /usr/include/bcc/libbpf.h
+-- Installing: /usr/include/bcc/perf_reader.h
+-- Installing: /usr/include/bcc/bcc_version.h
+-- Installing: /usr/lib/x86_64-linux-gnu/libbcc_bpf.so.0.29.0
+-- Installing: /usr/lib/x86_64-linux-gnu/libbcc_bpf.so.0
+-- Installing: /usr/lib/x86_64-linux-gnu/libbcc_bpf.so
+-- Installing: /usr/include/bcc/BPF.h
+-- Installing: /usr/include/bcc/BPFTable.h
+running install
+/usr/lib/python3/dist-packages/setuptools/command/install.py:34: SetuptoolsDeprecationWarning: setup.py install is deprecated. Use build and pip and other standards-based tools.
+  warnings.warn(
+/usr/lib/python3/dist-packages/setuptools/command/easy_install.py:158: EasyInstallDeprecationWarning: easy_install command is deprecated. Use build and pip and other standards-based tools.
+  warnings.warn(
+running bdist_egg
+running egg_info
+writing bcc.egg-info/PKG-INFO
+writing dependency_links to bcc.egg-info/dependency_links.txt
+writing top-level names to bcc.egg-info/top_level.txt
+reading manifest file 'bcc.egg-info/SOURCES.txt'
+writing manifest file 'bcc.egg-info/SOURCES.txt'
+installing library code to build/bdist.linux-x86_64/egg
+running install_lib
+running build_py
+creating build
+creating build/lib
+creating build/lib/bcc
+copying bcc/__init__.py -> build/lib/bcc
+copying bcc/table.py -> build/lib/bcc
+copying bcc/containers.py -> build/lib/bcc
+copying bcc/tcp.py -> build/lib/bcc
+copying bcc/usdt.py -> build/lib/bcc
+copying bcc/version.py -> build/lib/bcc
+copying bcc/syscall.py -> build/lib/bcc
+copying bcc/libbcc.py -> build/lib/bcc
+copying bcc/perf.py -> build/lib/bcc
+copying bcc/utils.py -> build/lib/bcc
+copying bcc/disassembler.py -> build/lib/bcc
+creating build/bdist.linux-x86_64
+creating build/bdist.linux-x86_64/egg
+creating build/bdist.linux-x86_64/egg/bcc
+copying build/lib/bcc/__init__.py -> build/bdist.linux-x86_64/egg/bcc
+copying build/lib/bcc/table.py -> build/bdist.linux-x86_64/egg/bcc
+copying build/lib/bcc/containers.py -> build/bdist.linux-x86_64/egg/bcc
+copying build/lib/bcc/tcp.py -> build/bdist.linux-x86_64/egg/bcc
+copying build/lib/bcc/usdt.py -> build/bdist.linux-x86_64/egg/bcc
+copying build/lib/bcc/version.py -> build/bdist.linux-x86_64/egg/bcc
+copying build/lib/bcc/syscall.py -> build/bdist.linux-x86_64/egg/bcc
+copying build/lib/bcc/libbcc.py -> build/bdist.linux-x86_64/egg/bcc
+copying build/lib/bcc/perf.py -> build/bdist.linux-x86_64/egg/bcc
+copying build/lib/bcc/utils.py -> build/bdist.linux-x86_64/egg/bcc
+copying build/lib/bcc/disassembler.py -> build/bdist.linux-x86_64/egg/bcc
+byte-compiling build/bdist.linux-x86_64/egg/bcc/__init__.py to __init__.cpython-310.pyc
+byte-compiling build/bdist.linux-x86_64/egg/bcc/table.py to table.cpython-310.pyc
+byte-compiling build/bdist.linux-x86_64/egg/bcc/containers.py to containers.cpython-310.pyc
+byte-compiling build/bdist.linux-x86_64/egg/bcc/tcp.py to tcp.cpython-310.pyc
+byte-compiling build/bdist.linux-x86_64/egg/bcc/usdt.py to usdt.cpython-310.pyc
+byte-compiling build/bdist.linux-x86_64/egg/bcc/version.py to version.cpython-310.pyc
+byte-compiling build/bdist.linux-x86_64/egg/bcc/syscall.py to syscall.cpython-310.pyc
+byte-compiling build/bdist.linux-x86_64/egg/bcc/libbcc.py to libbcc.cpython-310.pyc
+byte-compiling build/bdist.linux-x86_64/egg/bcc/perf.py to perf.cpython-310.pyc
+byte-compiling build/bdist.linux-x86_64/egg/bcc/utils.py to utils.cpython-310.pyc
+byte-compiling build/bdist.linux-x86_64/egg/bcc/disassembler.py to disassembler.cpython-310.pyc
+creating build/bdist.linux-x86_64/egg/EGG-INFO
+copying bcc.egg-info/PKG-INFO -> build/bdist.linux-x86_64/egg/EGG-INFO
+copying bcc.egg-info/SOURCES.txt -> build/bdist.linux-x86_64/egg/EGG-INFO
+copying bcc.egg-info/dependency_links.txt -> build/bdist.linux-x86_64/egg/EGG-INFO
+copying bcc.egg-info/top_level.txt -> build/bdist.linux-x86_64/egg/EGG-INFO
+zip_safe flag not set; analyzing archive contents...
+creating 'dist/bcc-0.29.0+0f5c2648-py3.10.egg' and adding 'build/bdist.linux-x86_64/egg' to it
+removing 'build/bdist.linux-x86_64/egg' (and everything under it)
+Processing bcc-0.29.0+0f5c2648-py3.10.egg
+Copying bcc-0.29.0+0f5c2648-py3.10.egg to /usr/lib/python3/dist-packages
+Adding bcc 0.29.0+0f5c2648 to easy-install.pth file
+
+Installed /usr/lib/python3/dist-packages/bcc-0.29.0+0f5c2648-py3.10.egg
+Processing dependencies for bcc==0.29.0+0f5c2648
+Finished processing dependencies for bcc==0.29.0+0f5c2648
+writing list of installed files to '/tmp/bcc/bcc/build/install_manifest_python_bcc.txt'
+-- Installing: /usr/share/bcc/introspection/bps
+-- Installing: /usr/share/bcc/man/man8/argdist.8.gz
+-- Installing: /usr/share/bcc/man/man8/bashreadline.8.gz
+-- Installing: /usr/share/bcc/man/man8/bindsnoop.8.gz
+-- Installing: /usr/share/bcc/man/man8/biolatency.8.gz
+-- Installing: /usr/share/bcc/man/man8/biolatpcts.8.gz
+-- Installing: /usr/share/bcc/man/man8/biopattern.8.gz
+-- Installing: /usr/share/bcc/man/man8/biosnoop.8.gz
+-- Installing: /usr/share/bcc/man/man8/biotop.8.gz
+-- Installing: /usr/share/bcc/man/man8/bitesize.8.gz
+-- Installing: /usr/share/bcc/man/man8/bpflist.8.gz
+-- Installing: /usr/share/bcc/man/man8/bps.8.gz
+-- Installing: /usr/share/bcc/man/man8/btrfsdist.8.gz
+-- Installing: /usr/share/bcc/man/man8/btrfsslower.8.gz
+-- Installing: /usr/share/bcc/man/man8/cachestat.8.gz
+-- Installing: /usr/share/bcc/man/man8/cachetop.8.gz
+-- Installing: /usr/share/bcc/man/man8/capable.8.gz
+-- Installing: /usr/share/bcc/man/man8/cobjnew.8.gz
+-- Installing: /usr/share/bcc/man/man8/compactsnoop.8.gz
+-- Installing: /usr/share/bcc/man/man8/cpudist.8.gz
+-- Installing: /usr/share/bcc/man/man8/cpuunclaimed.8.gz
+-- Installing: /usr/share/bcc/man/man8/criticalstat.8.gz
+-- Installing: /usr/share/bcc/man/man8/cthreads.8.gz
+-- Installing: /usr/share/bcc/man/man8/dbslower.8.gz
+-- Installing: /usr/share/bcc/man/man8/dbstat.8.gz
+-- Installing: /usr/share/bcc/man/man8/dcsnoop.8.gz
+-- Installing: /usr/share/bcc/man/man8/dcstat.8.gz
+-- Installing: /usr/share/bcc/man/man8/deadlock.8.gz
+-- Installing: /usr/share/bcc/man/man8/dirtop.8.gz
+-- Installing: /usr/share/bcc/man/man8/drsnoop.8.gz
+-- Installing: /usr/share/bcc/man/man8/execsnoop.8.gz
+-- Installing: /usr/share/bcc/man/man8/exitsnoop.8.gz
+-- Installing: /usr/share/bcc/man/man8/ext4dist.8.gz
+-- Installing: /usr/share/bcc/man/man8/ext4slower.8.gz
+-- Installing: /usr/share/bcc/man/man8/filegone.8.gz
+-- Installing: /usr/share/bcc/man/man8/filelife.8.gz
+-- Installing: /usr/share/bcc/man/man8/fileslower.8.gz
+-- Installing: /usr/share/bcc/man/man8/filetop.8.gz
+-- Installing: /usr/share/bcc/man/man8/funccount.8.gz
+-- Installing: /usr/share/bcc/man/man8/funcinterval.8.gz
+-- Installing: /usr/share/bcc/man/man8/funclatency.8.gz
+-- Installing: /usr/share/bcc/man/man8/funcslower.8.gz
+-- Installing: /usr/share/bcc/man/man8/gethostlatency.8.gz
+-- Installing: /usr/share/bcc/man/man8/hardirqs.8.gz
+-- Installing: /usr/share/bcc/man/man8/inject.8.gz
+-- Installing: /usr/share/bcc/man/man8/javacalls.8.gz
+-- Installing: /usr/share/bcc/man/man8/javaflow.8.gz
+-- Installing: /usr/share/bcc/man/man8/javagc.8.gz
+-- Installing: /usr/share/bcc/man/man8/javaobjnew.8.gz
+-- Installing: /usr/share/bcc/man/man8/javastat.8.gz
+-- Installing: /usr/share/bcc/man/man8/javathreads.8.gz
+-- Installing: /usr/share/bcc/man/man8/killsnoop.8.gz
+-- Installing: /usr/share/bcc/man/man8/klockstat.8.gz
+-- Installing: /usr/share/bcc/man/man8/ksnoop.8.gz
+-- Installing: /usr/share/bcc/man/man8/kvmexit.8.gz
+-- Installing: /usr/share/bcc/man/man8/llcstat.8.gz
+-- Installing: /usr/share/bcc/man/man8/mdflush.8.gz
+-- Installing: /usr/share/bcc/man/man8/memleak.8.gz
+-- Installing: /usr/share/bcc/man/man8/mountsnoop.8.gz
+-- Installing: /usr/share/bcc/man/man8/mysqld_qslower.8.gz
+-- Installing: /usr/share/bcc/man/man8/netqtop.8.gz
+-- Installing: /usr/share/bcc/man/man8/nfsdist.8.gz
+-- Installing: /usr/share/bcc/man/man8/nfsslower.8.gz
+-- Installing: /usr/share/bcc/man/man8/nodegc.8.gz
+-- Installing: /usr/share/bcc/man/man8/nodestat.8.gz
+-- Installing: /usr/share/bcc/man/man8/offcputime.8.gz
+-- Installing: /usr/share/bcc/man/man8/offwaketime.8.gz
+-- Installing: /usr/share/bcc/man/man8/oomkill.8.gz
+-- Installing: /usr/share/bcc/man/man8/opensnoop.8.gz
+-- Installing: /usr/share/bcc/man/man8/perlcalls.8.gz
+-- Installing: /usr/share/bcc/man/man8/perlflow.8.gz
+-- Installing: /usr/share/bcc/man/man8/perlstat.8.gz
+-- Installing: /usr/share/bcc/man/man8/phpcalls.8.gz
+-- Installing: /usr/share/bcc/man/man8/phpflow.8.gz
+-- Installing: /usr/share/bcc/man/man8/phpstat.8.gz
+-- Installing: /usr/share/bcc/man/man8/pidpersec.8.gz
+-- Installing: /usr/share/bcc/man/man8/ppchcalls.8.gz
+-- Installing: /usr/share/bcc/man/man8/profile.8.gz
+-- Installing: /usr/share/bcc/man/man8/pythoncalls.8.gz
+-- Installing: /usr/share/bcc/man/man8/pythonflow.8.gz
+-- Installing: /usr/share/bcc/man/man8/pythongc.8.gz
+-- Installing: /usr/share/bcc/man/man8/pythonstat.8.gz
+-- Installing: /usr/share/bcc/man/man8/rdmaucma.8.gz
+-- Installing: /usr/share/bcc/man/man8/readahead.8.gz
+-- Installing: /usr/share/bcc/man/man8/reset-trace.8.gz
+-- Installing: /usr/share/bcc/man/man8/rubycalls.8.gz
+-- Installing: /usr/share/bcc/man/man8/rubyflow.8.gz
+-- Installing: /usr/share/bcc/man/man8/rubygc.8.gz
+-- Installing: /usr/share/bcc/man/man8/rubyobjnew.8.gz
+-- Installing: /usr/share/bcc/man/man8/rubystat.8.gz
+-- Installing: /usr/share/bcc/man/man8/runqlat.8.gz
+-- Installing: /usr/share/bcc/man/man8/runqlen.8.gz
+-- Installing: /usr/share/bcc/man/man8/runqslower.8.gz
+-- Installing: /usr/share/bcc/man/man8/shmsnoop.8.gz
+-- Installing: /usr/share/bcc/man/man8/slabratetop.8.gz
+-- Installing: /usr/share/bcc/man/man8/sofdsnoop.8.gz
+-- Installing: /usr/share/bcc/man/man8/softirqs.8.gz
+-- Installing: /usr/share/bcc/man/man8/solisten.8.gz
+-- Installing: /usr/share/bcc/man/man8/spfdsnoop.8.gz
+-- Installing: /usr/share/bcc/man/man8/sslsniff.8.gz
+-- Installing: /usr/share/bcc/man/man8/stackcount.8.gz
+-- Installing: /usr/share/bcc/man/man8/statsnoop.8.gz
+-- Installing: /usr/share/bcc/man/man8/swapin.8.gz
+-- Installing: /usr/share/bcc/man/man8/syncsnoop.8.gz
+-- Installing: /usr/share/bcc/man/man8/syscount.8.gz
+-- Installing: /usr/share/bcc/man/man8/tclcalls.8.gz
+-- Installing: /usr/share/bcc/man/man8/tclflow.8.gz
+-- Installing: /usr/share/bcc/man/man8/tclobjnew.8.gz
+-- Installing: /usr/share/bcc/man/man8/tclstat.8.gz
+-- Installing: /usr/share/bcc/man/man8/tcpaccept.8.gz
+-- Installing: /usr/share/bcc/man/man8/tcpcong.8.gz
+-- Installing: /usr/share/bcc/man/man8/tcpconnect.8.gz
+-- Installing: /usr/share/bcc/man/man8/tcpconnlat.8.gz
+-- Installing: /usr/share/bcc/man/man8/tcpdrop.8.gz
+-- Installing: /usr/share/bcc/man/man8/tcplife.8.gz
+-- Installing: /usr/share/bcc/man/man8/tcpretrans.8.gz
+-- Installing: /usr/share/bcc/man/man8/tcprtt.8.gz
+-- Installing: /usr/share/bcc/man/man8/tcpstates.8.gz
+-- Installing: /usr/share/bcc/man/man8/tcpsubnet.8.gz
+-- Installing: /usr/share/bcc/man/man8/tcpsynbl.8.gz
+-- Installing: /usr/share/bcc/man/man8/tcptop.8.gz
+-- Installing: /usr/share/bcc/man/man8/tcptracer.8.gz
+-- Installing: /usr/share/bcc/man/man8/threadsnoop.8.gz
+-- Installing: /usr/share/bcc/man/man8/tplist.8.gz
+-- Installing: /usr/share/bcc/man/man8/trace.8.gz
+-- Installing: /usr/share/bcc/man/man8/ttysnoop.8.gz
+-- Installing: /usr/share/bcc/man/man8/ucalls.8.gz
+-- Installing: /usr/share/bcc/man/man8/uflow.8.gz
+-- Installing: /usr/share/bcc/man/man8/ugc.8.gz
+-- Installing: /usr/share/bcc/man/man8/uobjnew.8.gz
+-- Installing: /usr/share/bcc/man/man8/ustat.8.gz
+-- Installing: /usr/share/bcc/man/man8/uthreads.8.gz
+-- Installing: /usr/share/bcc/man/man8/vfscount.8.gz
+-- Installing: /usr/share/bcc/man/man8/vfsstat.8.gz
+-- Installing: /usr/share/bcc/man/man8/virtiostat.8.gz
+-- Installing: /usr/share/bcc/man/man8/wakeuptime.8.gz
+-- Installing: /usr/share/bcc/man/man8/xfsdist.8.gz
+-- Installing: /usr/share/bcc/man/man8/xfsslower.8.gz
+-- Installing: /usr/share/bcc/man/man8/zfsdist.8.gz
+-- Installing: /usr/share/bcc/man/man8/zfsslower.8.gz
+-- Installing: /usr/share/bcc/tools/argdist
+-- Installing: /usr/share/bcc/tools/bashreadline
+-- Installing: /usr/share/bcc/tools/bindsnoop
+-- Installing: /usr/share/bcc/tools/biolatency
+-- Installing: /usr/share/bcc/tools/biolatpcts
+-- Installing: /usr/share/bcc/tools/biopattern
+-- Installing: /usr/share/bcc/tools/biosnoop
+-- Installing: /usr/share/bcc/tools/biotop
+-- Installing: /usr/share/bcc/tools/bitesize
+-- Installing: /usr/share/bcc/tools/bpflist
+-- Installing: /usr/share/bcc/tools/btrfsdist
+-- Installing: /usr/share/bcc/tools/btrfsslower
+-- Installing: /usr/share/bcc/tools/cachestat
+-- Installing: /usr/share/bcc/tools/cachetop
+-- Installing: /usr/share/bcc/tools/capable
+-- Installing: /usr/share/bcc/tools/compactsnoop
+-- Installing: /usr/share/bcc/tools/cpudist
+-- Installing: /usr/share/bcc/tools/cpuunclaimed
+-- Installing: /usr/share/bcc/tools/criticalstat
+-- Installing: /usr/share/bcc/tools/dbslower
+-- Installing: /usr/share/bcc/tools/dbstat
+-- Installing: /usr/share/bcc/tools/dcsnoop
+-- Installing: /usr/share/bcc/tools/dcstat
+-- Installing: /usr/share/bcc/tools/deadlock
+-- Installing: /usr/share/bcc/tools/dirtop
+-- Installing: /usr/share/bcc/tools/drsnoop
+-- Installing: /usr/share/bcc/tools/execsnoop
+-- Installing: /usr/share/bcc/tools/exitsnoop
+-- Installing: /usr/share/bcc/tools/ext4dist
+-- Installing: /usr/share/bcc/tools/ext4slower
+-- Installing: /usr/share/bcc/tools/filegone
+-- Installing: /usr/share/bcc/tools/filelife
+-- Installing: /usr/share/bcc/tools/fileslower
+-- Installing: /usr/share/bcc/tools/filetop
+-- Installing: /usr/share/bcc/tools/funccount
+-- Installing: /usr/share/bcc/tools/funcinterval
+-- Installing: /usr/share/bcc/tools/funclatency
+-- Installing: /usr/share/bcc/tools/funcslower
+-- Installing: /usr/share/bcc/tools/gethostlatency
+-- Installing: /usr/share/bcc/tools/hardirqs
+-- Installing: /usr/share/bcc/tools/inject
+-- Installing: /usr/share/bcc/tools/killsnoop
+-- Installing: /usr/share/bcc/tools/klockstat
+-- Installing: /usr/share/bcc/tools/kvmexit
+-- Installing: /usr/share/bcc/tools/llcstat
+-- Installing: /usr/share/bcc/tools/mdflush
+-- Installing: /usr/share/bcc/tools/memleak
+-- Installing: /usr/share/bcc/tools/mountsnoop
+-- Installing: /usr/share/bcc/tools/mysqld_qslower
+-- Installing: /usr/share/bcc/tools/netqtop
+-- Installing: /usr/share/bcc/tools/nfsdist
+-- Installing: /usr/share/bcc/tools/nfsslower
+-- Installing: /usr/share/bcc/tools/offcputime
+-- Installing: /usr/share/bcc/tools/offwaketime
+-- Installing: /usr/share/bcc/tools/oomkill
+-- Installing: /usr/share/bcc/tools/opensnoop
+-- Installing: /usr/share/bcc/tools/pidpersec
+-- Installing: /usr/share/bcc/tools/ppchcalls
+-- Installing: /usr/share/bcc/tools/profile
+-- Installing: /usr/share/bcc/tools/rdmaucma
+-- Installing: /usr/share/bcc/tools/readahead
+-- Installing: /usr/share/bcc/tools/runqlat
+-- Installing: /usr/share/bcc/tools/runqlen
+-- Installing: /usr/share/bcc/tools/runqslower
+-- Installing: /usr/share/bcc/tools/shmsnoop
+-- Installing: /usr/share/bcc/tools/slabratetop
+-- Installing: /usr/share/bcc/tools/sofdsnoop
+-- Installing: /usr/share/bcc/tools/softirqs
+-- Installing: /usr/share/bcc/tools/solisten
+-- Installing: /usr/share/bcc/tools/sslsniff
+-- Installing: /usr/share/bcc/tools/stackcount
+-- Installing: /usr/share/bcc/tools/statsnoop
+-- Installing: /usr/share/bcc/tools/swapin
+-- Installing: /usr/share/bcc/tools/syncsnoop
+-- Installing: /usr/share/bcc/tools/syscount
+-- Installing: /usr/share/bcc/tools/tcpaccept
+-- Installing: /usr/share/bcc/tools/tcpcong
+-- Installing: /usr/share/bcc/tools/tcpconnect
+-- Installing: /usr/share/bcc/tools/tcpconnlat
+-- Installing: /usr/share/bcc/tools/tcpdrop
+-- Installing: /usr/share/bcc/tools/tcplife
+-- Installing: /usr/share/bcc/tools/tcpretrans
+-- Installing: /usr/share/bcc/tools/tcprtt
+-- Installing: /usr/share/bcc/tools/tcpstates
+-- Installing: /usr/share/bcc/tools/tcpsubnet
+-- Installing: /usr/share/bcc/tools/tcpsynbl
+-- Installing: /usr/share/bcc/tools/tcptop
+-- Installing: /usr/share/bcc/tools/tcptracer
+-- Installing: /usr/share/bcc/tools/threadsnoop
+-- Installing: /usr/share/bcc/tools/tplist
+-- Installing: /usr/share/bcc/tools/trace
+-- Installing: /usr/share/bcc/tools/ttysnoop
+-- Installing: /usr/share/bcc/tools/vfscount
+-- Installing: /usr/share/bcc/tools/vfsstat
+-- Installing: /usr/share/bcc/tools/virtiostat
+-- Installing: /usr/share/bcc/tools/wakeuptime
+-- Installing: /usr/share/bcc/tools/xfsdist
+-- Installing: /usr/share/bcc/tools/xfsslower
+-- Installing: /usr/share/bcc/tools/zfsdist
+-- Installing: /usr/share/bcc/tools/zfsslower
+-- Installing: /usr/share/bcc/tools/cobjnew
+-- Installing: /usr/share/bcc/tools/javacalls
+-- Installing: /usr/share/bcc/tools/javaflow
+-- Installing: /usr/share/bcc/tools/javagc
+-- Installing: /usr/share/bcc/tools/javaobjnew
+-- Installing: /usr/share/bcc/tools/javastat
+-- Installing: /usr/share/bcc/tools/javathreads
+-- Installing: /usr/share/bcc/tools/nodegc
+-- Installing: /usr/share/bcc/tools/nodestat
+-- Installing: /usr/share/bcc/tools/perlcalls
+-- Installing: /usr/share/bcc/tools/perlflow
+-- Installing: /usr/share/bcc/tools/perlstat
+-- Installing: /usr/share/bcc/tools/phpcalls
+-- Installing: /usr/share/bcc/tools/phpflow
+-- Installing: /usr/share/bcc/tools/phpstat
+-- Installing: /usr/share/bcc/tools/pythoncalls
+-- Installing: /usr/share/bcc/tools/pythonflow
+-- Installing: /usr/share/bcc/tools/pythongc
+-- Installing: /usr/share/bcc/tools/pythonstat
+-- Installing: /usr/share/bcc/tools/reset-trace
+-- Installing: /usr/share/bcc/tools/rubycalls
+-- Installing: /usr/share/bcc/tools/rubyflow
+-- Installing: /usr/share/bcc/tools/rubygc
+-- Installing: /usr/share/bcc/tools/rubyobjnew
+-- Installing: /usr/share/bcc/tools/rubystat
+-- Installing: /usr/share/bcc/tools/tclcalls
+-- Installing: /usr/share/bcc/tools/tclflow
+-- Installing: /usr/share/bcc/tools/tclobjnew
+-- Installing: /usr/share/bcc/tools/tclstat
+-- Installing: /usr/share/bcc/tools/deadlock.c
+-- Installing: /usr/share/bcc/tools/netqtop.c
+-- Installing: /usr/share/bcc/tools/doc/argdist_example.txt
+-- Installing: /usr/share/bcc/tools/doc/bashreadline_example.txt
+-- Installing: /usr/share/bcc/tools/doc/bindsnoop_example.txt
+-- Installing: /usr/share/bcc/tools/doc/biolatency_example.txt
+-- Installing: /usr/share/bcc/tools/doc/biolatpcts_example.txt
+-- Installing: /usr/share/bcc/tools/doc/biopattern_example.txt
+-- Installing: /usr/share/bcc/tools/doc/biosnoop_example.txt
+-- Installing: /usr/share/bcc/tools/doc/biotop_example.txt
+-- Installing: /usr/share/bcc/tools/doc/bitesize_example.txt
+-- Installing: /usr/share/bcc/tools/doc/bpflist_example.txt
+-- Installing: /usr/share/bcc/tools/doc/btrfsdist_example.txt
+-- Installing: /usr/share/bcc/tools/doc/btrfsslower_example.txt
+-- Installing: /usr/share/bcc/tools/doc/cachestat_example.txt
+-- Installing: /usr/share/bcc/tools/doc/cachetop_example.txt
+-- Installing: /usr/share/bcc/tools/doc/capable_example.txt
+-- Installing: /usr/share/bcc/tools/doc/cobjnew_example.txt
+-- Installing: /usr/share/bcc/tools/doc/compactsnoop_example.txt
+-- Installing: /usr/share/bcc/tools/doc/cpudist_example.txt
+-- Installing: /usr/share/bcc/tools/doc/cpuunclaimed_example.txt
+-- Installing: /usr/share/bcc/tools/doc/criticalstat_example.txt
+-- Installing: /usr/share/bcc/tools/doc/cthreads_example.txt
+-- Installing: /usr/share/bcc/tools/doc/dbslower_example.txt
+-- Installing: /usr/share/bcc/tools/doc/dbstat_example.txt
+-- Installing: /usr/share/bcc/tools/doc/dcsnoop_example.txt
+-- Installing: /usr/share/bcc/tools/doc/dcstat_example.txt
+-- Installing: /usr/share/bcc/tools/doc/deadlock_example.txt
+-- Installing: /usr/share/bcc/tools/doc/dirtop_example.txt
+-- Installing: /usr/share/bcc/tools/doc/drsnoop_example.txt
+-- Installing: /usr/share/bcc/tools/doc/execsnoop_example.txt
+-- Installing: /usr/share/bcc/tools/doc/exitsnoop_example.txt
+-- Installing: /usr/share/bcc/tools/doc/ext4dist_example.txt
+-- Installing: /usr/share/bcc/tools/doc/ext4slower_example.txt
+-- Installing: /usr/share/bcc/tools/doc/filegone_example.txt
+-- Installing: /usr/share/bcc/tools/doc/filelife_example.txt
+-- Installing: /usr/share/bcc/tools/doc/fileslower_example.txt
+-- Installing: /usr/share/bcc/tools/doc/filetop_example.txt
+-- Installing: /usr/share/bcc/tools/doc/funccount_example.txt
+-- Installing: /usr/share/bcc/tools/doc/funcinterval_example.txt
+-- Installing: /usr/share/bcc/tools/doc/funclatency_example.txt
+-- Installing: /usr/share/bcc/tools/doc/funcslower_example.txt
+-- Installing: /usr/share/bcc/tools/doc/gethostlatency_example.txt
+-- Installing: /usr/share/bcc/tools/doc/hardirqs_example.txt
+-- Installing: /usr/share/bcc/tools/doc/inject_example.txt
+-- Installing: /usr/share/bcc/tools/doc/javacalls_example.txt
+-- Installing: /usr/share/bcc/tools/doc/javaflow_example.txt
+-- Installing: /usr/share/bcc/tools/doc/javagc_example.txt
+-- Installing: /usr/share/bcc/tools/doc/javaobjnew_example.txt
+-- Installing: /usr/share/bcc/tools/doc/javastat_example.txt
+-- Installing: /usr/share/bcc/tools/doc/javathreads_example.txt
+-- Installing: /usr/share/bcc/tools/doc/killsnoop_example.txt
+-- Installing: /usr/share/bcc/tools/doc/klockstat_example.txt
+-- Installing: /usr/share/bcc/tools/doc/kvmexit_example.txt
+-- Installing: /usr/share/bcc/tools/doc/llcstat_example.txt
+-- Installing: /usr/share/bcc/tools/doc/mdflush_example.txt
+-- Installing: /usr/share/bcc/tools/doc/memleak_example.txt
+-- Installing: /usr/share/bcc/tools/doc/mountsnoop_example.txt
+-- Installing: /usr/share/bcc/tools/doc/mysqld_qslower_example.txt
+-- Installing: /usr/share/bcc/tools/doc/netqtop_example.txt
+-- Installing: /usr/share/bcc/tools/doc/nfsdist_example.txt
+-- Installing: /usr/share/bcc/tools/doc/nfsslower_example.txt
+-- Installing: /usr/share/bcc/tools/doc/nodegc_example.txt
+-- Installing: /usr/share/bcc/tools/doc/nodestat_example.txt
+-- Installing: /usr/share/bcc/tools/doc/offcputime_example.txt
+-- Installing: /usr/share/bcc/tools/doc/offwaketime_example.txt
+-- Installing: /usr/share/bcc/tools/doc/oomkill_example.txt
+-- Installing: /usr/share/bcc/tools/doc/opensnoop_example.txt
+-- Installing: /usr/share/bcc/tools/doc/perlcalls_example.txt
+-- Installing: /usr/share/bcc/tools/doc/perlflow_example.txt
+-- Installing: /usr/share/bcc/tools/doc/perlstat_example.txt
+-- Installing: /usr/share/bcc/tools/doc/phpcalls_example.txt
+-- Installing: /usr/share/bcc/tools/doc/phpflow_example.txt
+-- Installing: /usr/share/bcc/tools/doc/phpstat_example.txt
+-- Installing: /usr/share/bcc/tools/doc/pidpersec_example.txt
+-- Installing: /usr/share/bcc/tools/doc/ppchcalls_example.txt
+-- Installing: /usr/share/bcc/tools/doc/profile_example.txt
+-- Installing: /usr/share/bcc/tools/doc/pythoncalls_example.txt
+-- Installing: /usr/share/bcc/tools/doc/pythonflow_example.txt
+-- Installing: /usr/share/bcc/tools/doc/pythongc_example.txt
+-- Installing: /usr/share/bcc/tools/doc/pythonstat_example.txt
+-- Installing: /usr/share/bcc/tools/doc/rdmaucma_example.txt
+-- Installing: /usr/share/bcc/tools/doc/readahead_example.txt
+-- Installing: /usr/share/bcc/tools/doc/reset-trace_example.txt
+-- Installing: /usr/share/bcc/tools/doc/rubycalls_example.txt
+-- Installing: /usr/share/bcc/tools/doc/rubyflow_example.txt
+-- Installing: /usr/share/bcc/tools/doc/rubygc_example.txt
+-- Installing: /usr/share/bcc/tools/doc/rubyobjnew_example.txt
+-- Installing: /usr/share/bcc/tools/doc/rubystat_example.txt
+-- Installing: /usr/share/bcc/tools/doc/runqlat_example.txt
+-- Installing: /usr/share/bcc/tools/doc/runqlen_example.txt
+-- Installing: /usr/share/bcc/tools/doc/runqslower_example.txt
+-- Installing: /usr/share/bcc/tools/doc/shmsnoop_example.txt
+-- Installing: /usr/share/bcc/tools/doc/slabratetop_example.txt
+-- Installing: /usr/share/bcc/tools/doc/sofdsnoop_example.txt
+-- Installing: /usr/share/bcc/tools/doc/softirqs_example.txt
+-- Installing: /usr/share/bcc/tools/doc/solisten_example.txt
+-- Installing: /usr/share/bcc/tools/doc/sslsniff_example.txt
+-- Installing: /usr/share/bcc/tools/doc/stackcount_example.txt
+-- Installing: /usr/share/bcc/tools/doc/statsnoop_example.txt
+-- Installing: /usr/share/bcc/tools/doc/swapin_example.txt
+-- Installing: /usr/share/bcc/tools/doc/syncsnoop_example.txt
+-- Installing: /usr/share/bcc/tools/doc/syscount_example.txt
+-- Installing: /usr/share/bcc/tools/doc/tclcalls_example.txt
+-- Installing: /usr/share/bcc/tools/doc/tclflow_example.txt
+-- Installing: /usr/share/bcc/tools/doc/tclobjnew_example.txt
+-- Installing: /usr/share/bcc/tools/doc/tclstat_example.txt
+-- Installing: /usr/share/bcc/tools/doc/tcpaccept_example.txt
+-- Installing: /usr/share/bcc/tools/doc/tcpcong_example.txt
+-- Installing: /usr/share/bcc/tools/doc/tcpconnect_example.txt
+-- Installing: /usr/share/bcc/tools/doc/tcpconnlat_example.txt
+-- Installing: /usr/share/bcc/tools/doc/tcpdrop_example.txt
+-- Installing: /usr/share/bcc/tools/doc/tcplife_example.txt
+-- Installing: /usr/share/bcc/tools/doc/tcpretrans_example.txt
+-- Installing: /usr/share/bcc/tools/doc/tcprtt_example.txt
+-- Installing: /usr/share/bcc/tools/doc/tcpstates_example.txt
+-- Installing: /usr/share/bcc/tools/doc/tcpsubnet_example.txt
+-- Installing: /usr/share/bcc/tools/doc/tcpsynbl_example.txt
+-- Installing: /usr/share/bcc/tools/doc/tcptop_example.txt
+-- Installing: /usr/share/bcc/tools/doc/tcptracer_example.txt
+-- Installing: /usr/share/bcc/tools/doc/threadsnoop_example.txt
+-- Installing: /usr/share/bcc/tools/doc/tplist_example.txt
+-- Installing: /usr/share/bcc/tools/doc/trace_example.txt
+-- Installing: /usr/share/bcc/tools/doc/ttysnoop_example.txt
+-- Installing: /usr/share/bcc/tools/doc/vfscount_example.txt
+-- Installing: /usr/share/bcc/tools/doc/vfsstat_example.txt
+-- Installing: /usr/share/bcc/tools/doc/virtiostat_example.txt
+-- Installing: /usr/share/bcc/tools/doc/wakeuptime_example.txt
+-- Installing: /usr/share/bcc/tools/doc/xfsdist_example.txt
+-- Installing: /usr/share/bcc/tools/doc/xfsslower_example.txt
+-- Installing: /usr/share/bcc/tools/doc/zfsdist_example.txt
+-- Installing: /usr/share/bcc/tools/doc/zfsslower_example.txt
+-- Installing: /usr/share/bcc/tools/lib/ucalls
+-- Installing: /usr/share/bcc/tools/lib/uflow
+-- Installing: /usr/share/bcc/tools/lib/ugc
+-- Installing: /usr/share/bcc/tools/lib/uobjnew
+-- Installing: /usr/share/bcc/tools/lib/ustat
+-- Installing: /usr/share/bcc/tools/lib/uthreads
+-- Installing: /usr/share/bcc/tools/doc/lib/ucalls_example.txt
+-- Installing: /usr/share/bcc/tools/doc/lib/uflow_example.txt
+-- Installing: /usr/share/bcc/tools/doc/lib/ugc_example.txt
+-- Installing: /usr/share/bcc/tools/doc/lib/uobjnew_example.txt
+-- Installing: /usr/share/bcc/tools/doc/lib/ustat_example.txt
+-- Installing: /usr/share/bcc/tools/doc/lib/uthreads_example.txt
+-- Installing: /usr/share/bcc/tools/old/bashreadline
+-- Installing: /usr/share/bcc/tools/old/biosnoop
+-- Installing: /usr/share/bcc/tools/old/compactsnoop
+-- Installing: /usr/share/bcc/tools/old/filegone
+-- Installing: /usr/share/bcc/tools/old/filelife
+-- Installing: /usr/share/bcc/tools/old/gethostlatency
+-- Installing: /usr/share/bcc/tools/old/hardirqs
+-- Installing: /usr/share/bcc/tools/old/killsnoop
+-- Installing: /usr/share/bcc/tools/old/memleak
+-- Installing: /usr/share/bcc/tools/old/offcputime
+-- Installing: /usr/share/bcc/tools/old/offwaketime
+-- Installing: /usr/share/bcc/tools/old/oomkill
+-- Installing: /usr/share/bcc/tools/old/opensnoop
+-- Installing: /usr/share/bcc/tools/old/profile
+-- Installing: /usr/share/bcc/tools/old/softirqs
+-- Installing: /usr/share/bcc/tools/old/stackcount
+-- Installing: /usr/share/bcc/tools/old/stacksnoop
+-- Installing: /usr/share/bcc/tools/old/statsnoop
+-- Installing: /usr/share/bcc/tools/old/syncsnoop
+-- Installing: /usr/share/bcc/tools/old/tcpaccept
+-- Installing: /usr/share/bcc/tools/old/tcpconnect
+-- Installing: /usr/share/bcc/tools/old/wakeuptime
++ cmake -DPYTHON_CMD=python3 ..
+-- Latest recognized Git tag is v0.29.0
+-- Git HEAD is 0f5c26489d2aaf72c8890d27791efda40028c132
+-- Revision is 0.29.0+0f5c2648 (major 0, minor 29, patch 0)
+-- Kernel release: 5.15.0-1098-azure
+-- Kernel headers: /usr/src/linux-headers-5.15.0-1098-azure
+-- Found LLVM: /usr/lib/llvm-14/include 14.0.0 (Use LLVM_ROOT envronment variable for another version of LLVM)
+-- Could NOT find LibDebuginfod (missing: LIBDEBUGINFOD_LIBRARIES LIBDEBUGINFOD_INCLUDE_DIRS) 
+-- Could NOT find LibLzma (missing: LIBLZMA_LIBRARIES LIBLZMA_INCLUDE_DIRS) 
+-- Using static-libstdc++
+-- Could NOT find LuaJIT (missing: LUAJIT_LIBRARIES LUAJIT_INCLUDE_DIR) 
+CMake Warning at tests/python/CMakeLists.txt:6 (message):
+  Recommended test program 'arping' not found
+
+
+CMake Warning at tests/python/CMakeLists.txt:10 (message):
+  Recommended test program 'netperf' not found
+
+
+CMake Warning at tests/python/CMakeLists.txt:16 (message):
+  Recommended test program 'iperf' or 'iperf3' not found
+
+
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /tmp/bcc/bcc/build
++ pushd src/python/
+/tmp/bcc/bcc/build/src/python /tmp/bcc/bcc/build /home/packer
++ make
+Built target bcc_py_python3
++ sudo make install
+Built target bcc_py_python3
+Install the project...
+-- Install configuration: "Release"
+running install
+/usr/lib/python3/dist-packages/setuptools/command/install.py:34: SetuptoolsDeprecationWarning: setup.py install is deprecated. Use build and pip and other standards-based tools.
+  warnings.warn(
+/usr/lib/python3/dist-packages/setuptools/command/easy_install.py:158: EasyInstallDeprecationWarning: easy_install command is deprecated. Use build and pip and other standards-based tools.
+  warnings.warn(
+running bdist_egg
+running egg_info
+writing bcc.egg-info/PKG-INFO
+writing dependency_links to bcc.egg-info/dependency_links.txt
+writing top-level names to bcc.egg-info/top_level.txt
+reading manifest file 'bcc.egg-info/SOURCES.txt'
+writing manifest file 'bcc.egg-info/SOURCES.txt'
+installing library code to build/bdist.linux-x86_64/egg
+running install_lib
+running build_py
+creating build/bdist.linux-x86_64/egg
+creating build/bdist.linux-x86_64/egg/bcc
+copying build/lib/bcc/__init__.py -> build/bdist.linux-x86_64/egg/bcc
+copying build/lib/bcc/table.py -> build/bdist.linux-x86_64/egg/bcc
+copying build/lib/bcc/containers.py -> build/bdist.linux-x86_64/egg/bcc
+copying build/lib/bcc/tcp.py -> build/bdist.linux-x86_64/egg/bcc
+copying build/lib/bcc/usdt.py -> build/bdist.linux-x86_64/egg/bcc
+copying build/lib/bcc/version.py -> build/bdist.linux-x86_64/egg/bcc
+copying build/lib/bcc/syscall.py -> build/bdist.linux-x86_64/egg/bcc
+copying build/lib/bcc/libbcc.py -> build/bdist.linux-x86_64/egg/bcc
+copying build/lib/bcc/perf.py -> build/bdist.linux-x86_64/egg/bcc
+copying build/lib/bcc/utils.py -> build/bdist.linux-x86_64/egg/bcc
+copying build/lib/bcc/disassembler.py -> build/bdist.linux-x86_64/egg/bcc
+byte-compiling build/bdist.linux-x86_64/egg/bcc/__init__.py to __init__.cpython-310.pyc
+byte-compiling build/bdist.linux-x86_64/egg/bcc/table.py to table.cpython-310.pyc
+byte-compiling build/bdist.linux-x86_64/egg/bcc/containers.py to containers.cpython-310.pyc
+byte-compiling build/bdist.linux-x86_64/egg/bcc/tcp.py to tcp.cpython-310.pyc
+byte-compiling build/bdist.linux-x86_64/egg/bcc/usdt.py to usdt.cpython-310.pyc
+byte-compiling build/bdist.linux-x86_64/egg/bcc/version.py to version.cpython-310.pyc
+byte-compiling build/bdist.linux-x86_64/egg/bcc/syscall.py to syscall.cpython-310.pyc
+byte-compiling build/bdist.linux-x86_64/egg/bcc/libbcc.py to libbcc.cpython-310.pyc
+byte-compiling build/bdist.linux-x86_64/egg/bcc/perf.py to perf.cpython-310.pyc
+byte-compiling build/bdist.linux-x86_64/egg/bcc/utils.py to utils.cpython-310.pyc
+byte-compiling build/bdist.linux-x86_64/egg/bcc/disassembler.py to disassembler.cpython-310.pyc
+creating build/bdist.linux-x86_64/egg/EGG-INFO
+copying bcc.egg-info/PKG-INFO -> build/bdist.linux-x86_64/egg/EGG-INFO
+copying bcc.egg-info/SOURCES.txt -> build/bdist.linux-x86_64/egg/EGG-INFO
+copying bcc.egg-info/dependency_links.txt -> build/bdist.linux-x86_64/egg/EGG-INFO
+copying bcc.egg-info/top_level.txt -> build/bdist.linux-x86_64/egg/EGG-INFO
+zip_safe flag not set; analyzing archive contents...
+creating 'dist/bcc-0.29.0+0f5c2648-py3.10.egg' and adding 'build/bdist.linux-x86_64/egg' to it
+removing 'build/bdist.linux-x86_64/egg' (and everything under it)
+Processing bcc-0.29.0+0f5c2648-py3.10.egg
+Removing /usr/lib/python3/dist-packages/bcc-0.29.0+0f5c2648-py3.10.egg
+Copying bcc-0.29.0+0f5c2648-py3.10.egg to /usr/lib/python3/dist-packages
+bcc 0.29.0+0f5c2648 is already the active version in easy-install.pth
+
+Installed /usr/lib/python3/dist-packages/bcc-0.29.0+0f5c2648-py3.10.egg
+Processing dependencies for bcc==0.29.0+0f5c2648
+Finished processing dependencies for bcc==0.29.0+0f5c2648
+writing list of installed files to '/tmp/bcc/bcc/build/install_manifest_python_bcc.txt'
++ popd
+/tmp/bcc/bcc/build /home/packer
++ popd
+/home/packer
++ '[' 22.04 = 22.04 ']'
++ apt_get_purge 120 5 300 bison cmake flex libedit-dev libllvm14 llvm-14-dev libclang-14-dev zlib1g-dev libelf-dev libfl-dev
++ retries=120
++ wait_sleep=5
++ timeout=300
++ shift
++ shift
++ shift
+++ seq 1 120
++ for i in $(seq 1 $retries)
++ wait_for_apt_locks
++ fuser /var/lib/dpkg/lock /var/lib/apt/lists/lock /var/cache/apt/archives/lock /var/lib/dpkg/lock-frontend
++ export DEBIAN_FRONTEND=noninteractive
++ DEBIAN_FRONTEND=noninteractive
++ dpkg --configure -a --force-confdef
++ timeout 300 apt-get purge -o Dpkg::Options::=--force-confold -y bison cmake flex libedit-dev libllvm14 llvm-14-dev libclang-14-dev zlib1g-dev libelf-dev libfl-dev
+Reading package lists...
+Building dependency tree...
+Reading state information...
+The following packages were automatically installed and are no longer required:
+  cmake-data dh-elpa-helper emacsen-common icu-devtools lib32gcc-s1
+  lib32stdc++6 libbsd-dev libc6-i386 libffi-dev libfl2 libgc1 libicu-dev
+  libjsoncpp25 libmd-dev libncurses-dev libobjc-11-dev libobjc4 libpfm4
+  librhash0 libtraceevent1 libxml2-dev libz3-4 libz3-dev m4 python3-pygments
+Use 'sudo apt autoremove' to remove them.
+The following packages will be REMOVED:
+  bison* cmake* flex* libclang-14-dev* libclang-common-14-dev* libclang-cpp14*
+  libclang1-14* libedit-dev* libelf-dev* libfl-dev* libllvm14* llvm-14*
+  llvm-14-dev* llvm-14-linker-tools* llvm-14-runtime* llvm-14-tools*
+  zlib1g-dev*
+0 upgraded, 0 newly installed, 17 to remove and 5 not upgraded.
+After this operation, 882 MB disk space will be freed.
+(Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 77574 files and directories currently installed.)
+Removing bison (2:3.8.2+dfsg-1build1) ...
+Removing cmake (3.22.1-1ubuntu1.22.04.2) ...
+Removing libfl-dev:amd64 (2.6.4-8build2) ...
+Removing flex (2.6.4-8build2) ...
+Removing libclang-14-dev (1:14.0.0-1ubuntu1.1) ...
+Removing libclang-common-14-dev (1:14.0.0-1ubuntu1.1) ...
+Removing llvm-14-dev (1:14.0.0-1ubuntu1.1) ...
+Removing libclang-cpp14 (1:14.0.0-1ubuntu1.1) ...
+Removing libclang1-14 (1:14.0.0-1ubuntu1.1) ...
+Removing libedit-dev:amd64 (3.1-20210910-1build1) ...
+Removing libelf-dev:amd64 (0.186-1ubuntu0.1) ...
+Removing llvm-14-tools (1:14.0.0-1ubuntu1.1) ...
+Removing llvm-14 (1:14.0.0-1ubuntu1.1) ...
+Removing llvm-14-runtime (1:14.0.0-1ubuntu1.1) ...
+Removing llvm-14-linker-tools (1:14.0.0-1ubuntu1.1) ...
+Removing zlib1g-dev:amd64 (1:1.2.11.dfsg-2ubuntu9.2) ...
+Removing libllvm14:amd64 (1:14.0.0-1ubuntu1.1) ...
+Processing triggers for man-db (2.10.2-1) ...
+Processing triggers for install-info (6.8-4build1) ...
+Processing triggers for libc-bin (2.35-0ubuntu3.11) ...
++ break
++ echo Executed apt-get purge -y '"bison' cmake flex libedit-dev libllvm14 llvm-14-dev libclang-14-dev zlib1g-dev libelf-dev 'libfl-dev"' 1 times
+Executed apt-get purge -y "bison cmake flex libedit-dev libllvm14 llvm-14-dev libclang-14-dev zlib1g-dev libelf-dev libfl-dev" 1 times
++ wait_for_apt_locks
++ fuser /var/lib/dpkg/lock /var/lib/apt/lists/lock /var/cache/apt/archives/lock /var/lib/dpkg/lock-frontend
++ '[' 22.04 = 24.04 ']'
++ rm -rf /tmp/bcc
++ exit 0

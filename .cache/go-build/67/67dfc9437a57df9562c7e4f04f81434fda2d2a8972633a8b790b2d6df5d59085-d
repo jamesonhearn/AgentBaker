@@ -1,0 +1,4 @@
+./diff.pb.go
+./diff_grpc.pb.go
+./diff_ttrpc.pb.go
+./doc.go

@@ -1,0 +1,4 @@
+./doc.go
+./streaming.pb.go
+./streaming_grpc.pb.go
+./streaming_ttrpc.pb.go

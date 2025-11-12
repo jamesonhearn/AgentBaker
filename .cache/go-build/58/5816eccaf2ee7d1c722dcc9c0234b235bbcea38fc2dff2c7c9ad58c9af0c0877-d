@@ -1,0 +1,5 @@
+./config.go
+./helpers.go
+./interfaces.go
+./parsingErrors.go
+./reflection.go

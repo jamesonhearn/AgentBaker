@@ -1,0 +1,12 @@
+./attach.go
+./cmd.go
+./cp.go
+./discover.go
+./file.go
+./login.go
+./logout.go
+./pull.go
+./push.go
+./resolve.go
+./tag.go
+./version.go

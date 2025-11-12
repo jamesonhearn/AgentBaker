@@ -1,0 +1,13 @@
+./authorizer.go
+./converter.go
+./errcode.go
+./errdesc.go
+./fetcher.go
+./handler.go
+./httpreadseeker.go
+./pusher.go
+./registry.go
+./resolver.go
+./resolver_unix.go
+./scope.go
+./status.go

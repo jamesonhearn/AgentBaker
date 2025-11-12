@@ -1,0 +1,7 @@
+./delta.go
+./delta_tracker.go
+./dependencies.go
+./package_hash.go
+./package_hashes.go
+./suite.go
+./watch_command.go

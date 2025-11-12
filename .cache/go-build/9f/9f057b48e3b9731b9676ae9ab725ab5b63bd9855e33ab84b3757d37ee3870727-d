@@ -1,0 +1,9 @@
+./apic.go
+./decode.go
+./parserc.go
+./readerc.go
+./resolve.go
+./scannerc.go
+./yaml.go
+./yamlh.go
+./yamlprivateh.go

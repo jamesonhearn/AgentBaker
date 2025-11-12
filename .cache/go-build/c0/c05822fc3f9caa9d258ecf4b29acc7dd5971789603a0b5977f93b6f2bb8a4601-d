@@ -1,0 +1,7 @@
+./match.go
+./os.go
+./path.go
+./path_nix.go
+./path_p9.go
+./path_win.go
+./pkg.go

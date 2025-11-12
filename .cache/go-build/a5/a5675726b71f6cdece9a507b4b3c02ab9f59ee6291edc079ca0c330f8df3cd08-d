@@ -1,0 +1,12 @@
+./config.go
+./doc.go
+./errors.go
+./fs.go
+./import.go
+./loader.go
+./match.go
+./package.go
+./read.go
+./search.go
+./source.go
+./tags.go

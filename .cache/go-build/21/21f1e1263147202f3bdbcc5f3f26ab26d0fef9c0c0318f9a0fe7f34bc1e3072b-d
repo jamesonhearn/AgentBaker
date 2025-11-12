@@ -1,0 +1,3 @@
+./detect.go
+./encoder.go
+./encoding.go

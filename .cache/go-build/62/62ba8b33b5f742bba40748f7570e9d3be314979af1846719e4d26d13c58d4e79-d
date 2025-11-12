@@ -1,0 +1,7 @@
+./env_override.go
+./go.go
+./main.go
+./main_osarch.go
+./platform.go
+./platform_flag.go
+./toolchain.go

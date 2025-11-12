@@ -1,0 +1,4 @@
+./doc.go
+./snapshots.pb.go
+./snapshots_grpc.pb.go
+./snapshots_ttrpc.pb.go

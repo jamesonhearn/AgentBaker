@@ -1,0 +1,4 @@
+./content.pb.go
+./content_grpc.pb.go
+./content_ttrpc.pb.go
+./doc.go

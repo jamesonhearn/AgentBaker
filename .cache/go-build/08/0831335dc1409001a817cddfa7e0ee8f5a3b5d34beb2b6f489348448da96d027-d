@@ -1,0 +1,16 @@
+./build.go
+./client.go
+./client_factory.go
+./constants.go
+./deploymentoperations_client.go
+./deployments_client.go
+./models.go
+./models_serde.go
+./operations_client.go
+./options.go
+./providerresourcetypes_client.go
+./providers_client.go
+./resourcegroups_client.go
+./response_types.go
+./tags_client.go
+./time_rfc3339.go

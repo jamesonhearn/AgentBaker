@@ -1,0 +1,10 @@
+./build.go
+./client_factory.go
+./constants.go
+./models.go
+./models_serde.go
+./options.go
+./privatezones_client.go
+./recordsets_client.go
+./responses.go
+./virtualnetworklinks_client.go

@@ -1,0 +1,4 @@
+./containers.pb.go
+./containers_grpc.pb.go
+./containers_ttrpc.pb.go
+./doc.go

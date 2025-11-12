@@ -1,0 +1,171 @@
+exit code: 0
+----------------------------------- begin stderr -----------------------------------
++ echo 'sudo cat /var/log/azure/cluster-provision-cse-output.log'
++ chmod 0755 script_file_7475ce84-b227-4f29-840f-2f55f7aab647.sh
++ scp -i sshkey1022407 -o PasswordAuthentication=no -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -o ConnectTimeout=5 script_file_7475ce84-b227-4f29-840f-2f55f7aab647.sh azureuser@10.224.0.7:script_file_7475ce84-b227-4f29-840f-2f55f7aab647.sh
+Warning: Permanently added '10.224.0.7' (ED25519) to the list of known hosts.
+
+Authorized uses only. All activity may be monitored and reported.
++ ssh -i sshkey1022407 -o PasswordAuthentication=no -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -o ConnectTimeout=5 azureuser@10.224.0.7 bash script_file_7475ce84-b227-4f29-840f-2f55f7aab647.sh
+Warning: Permanently added '10.224.0.7' (ED25519) to the list of known hosts.
+
+Authorized uses only. All activity may be monitored and reported.
+
+------------------------------------ end stderr ------------------------------------
+----------------------------------- begin stdout -----------------------------------,
+Wed Nov 12 21:55:08 UTC 2025,88t8-2025-11-12-ubuntu2204000000
+INFO: cloud-init succeeded
+Cloud init status check exit code: 0
++ _retrycmd_internal 60 1 5 true curl -v --insecure --proxy-insecure https://mcr.microsoft.com/v2/
++ local retries=60
++ shift
++ local waitSleep=1
++ shift
++ local timeoutVal=5
++ shift
++ local shouldLog=true
++ shift
++ cmdToRun=('curl' '-v' '--insecure' '--proxy-insecure' 'https://mcr.microsoft.com/v2/')
++ local cmdToRun
++ local exitStatus=0
+++ seq 1 60
++ for i in $(seq 1 "$retries")
++ timeout 5 curl -v --insecure --proxy-insecure https://mcr.microsoft.com/v2/
+* Uses proxy env variable NO_PROXY == 'localhost,127.0.0.1,168.63.129.16,169.254.169.254,10.0.0.0/16,agentbaker-agentbaker-e2e-t-8ecadf-c82d8251.hcp.eastus.azmk8s.io'
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0*   Trying 150.171.70.10:443...
+* Connected to mcr.microsoft.com (150.171.70.10) port 443 (#0)
+* ALPN, offering h2
+* ALPN, offering http/1.1
+* TLSv1.0 (OUT), TLS header, Certificate Status (22):
+} [5 bytes data]
+* TLSv1.3 (OUT), TLS handshake, Client hello (1):
+} [512 bytes data]
+* TLSv1.2 (IN), TLS header, Certificate Status (22):
+{ [5 bytes data]
+* TLSv1.3 (IN), TLS handshake, Server hello (2):
+{ [88 bytes data]
+* TLSv1.2 (OUT), TLS header, Finished (20):
+} [5 bytes data]
+* TLSv1.3 (OUT), TLS change cipher, Change cipher spec (1):
+} [1 bytes data]
+* TLSv1.2 (OUT), TLS header, Certificate Status (22):
+} [5 bytes data]
+* TLSv1.3 (OUT), TLS handshake, Client hello (1):
+} [512 bytes data]
+* TLSv1.2 (IN), TLS header, Finished (20):
+{ [5 bytes data]
+* TLSv1.2 (IN), TLS header, Certificate Status (22):
+{ [5 bytes data]
+* TLSv1.3 (IN), TLS handshake, Server hello (2):
+{ [223 bytes data]
+* TLSv1.2 (IN), TLS header, Supplemental data (23):
+{ [5 bytes data]
+* TLSv1.3 (IN), TLS handshake, Encrypted Extensions (8):
+{ [19 bytes data]
+* TLSv1.3 (IN), TLS handshake, Certificate (11):
+{ [3628 bytes data]
+* TLSv1.3 (IN), TLS handshake, CERT verify (15):
+{ [264 bytes data]
+* TLSv1.3 (IN), TLS handshake, Finished (20):
+{ [52 bytes data]
+* TLSv1.2 (OUT), TLS header, Supplemental data (23):
+} [5 bytes data]
+* TLSv1.3 (OUT), TLS handshake, Finished (20):
+} [52 bytes data]
+* SSL connection using TLSv1.3 / TLS_AES_256_GCM_SHA384
+* ALPN, server accepted to use h2
+* Server certificate:
+*  subject: C=US; ST=WA; L=Redmond; O=Microsoft Corporation; CN=mcr.microsoft.com
+*  start date: Aug 23 17:41:17 2025 GMT
+*  expire date: Feb 19 17:41:17 2026 GMT
+*  issuer: C=US; O=Microsoft Corporation; CN=Microsoft Azure RSA TLS Issuing CA 07
+*  SSL certificate verify result: unable to get local issuer certificate (20), continuing anyway.
+* Using HTTP2, server supports multiplexing
+* Connection state changed (HTTP/2 confirmed)
+* Copying HTTP/2 data in stream buffer to connection buffer after upgrade: len=0
+* TLSv1.2 (OUT), TLS header, Supplemental data (23):
+} [5 bytes data]
+* TLSv1.2 (OUT), TLS header, Supplemental data (23):
+} [5 bytes data]
+* TLSv1.2 (OUT), TLS header, Supplemental data (23):
+} [5 bytes data]
+* Using Stream ID: 1 (easy handle 0x55f19e36c9f0)
+* TLSv1.2 (OUT), TLS header, Supplemental data (23):
+} [5 bytes data]
+> GET /v2/ HTTP/2
+> Host: mcr.microsoft.com
+> user-agent: curl/7.81.0
+> accept: */*
+> 
+* TLSv1.2 (IN), TLS header, Supplemental data (23):
+{ [5 bytes data]
+* TLSv1.3 (IN), TLS handshake, Newsession Ticket (4):
+{ [437 bytes data]
+* TLSv1.2 (IN), TLS header, Supplemental data (23):
+{ [5 bytes data]
+* TLSv1.2 (OUT), TLS header, Supplemental data (23):
+} [5 bytes data]
+* TLSv1.2 (IN), TLS header, Supplemental data (23):
+{ [5 bytes data]
+* TLSv1.2 (IN), TLS header, Supplemental data (23):
+{ [5 bytes data]
+< HTTP/2 200 
+< content-length: 2
+< content-type: application/json; charset=utf-8
+< access-control-expose-headers: Docker-Content-Digest
+< access-control-expose-headers: WWW-Authenticate
+< access-control-expose-headers: Link
+< access-control-expose-headers: X-Ms-Correlation-Request-Id
+< docker-distribution-api-version: registry/2.0
+< strict-transport-security: max-age=31536000; includeSubDomains
+< x-content-type-options: nosniff
+< x-ms-correlation-request-id: e9a21b3e-9ea3-4e7e-bd50-f89b2d8274f6
+< strict-transport-security: max-age=31536000; includeSubDomains
+< x-cache: CONFIG_NOCACHE
+< x-mcr-env: prod
+< x-mcr-privacy: https://privacy.microsoft.com/en-us/privacystatement
+< x-msedge-ref: Ref A: 34FFF5CD4BEF439789901B05349CB01F Ref B: CO6AA3150220019 Ref C: 2025-11-12T21:55:27Z
+< date: Wed, 12 Nov 2025 21:55:27 GMT
+< 
+{ [2 bytes data]
+* TLSv1.2 (IN), TLS header, Supplemental data (23):
+{ [5 bytes data]
+100     2  100     2    0     0     79      0 --:--:-- --:--:-- --:--:--    80
+* Connection #0 to host mcr.microsoft.com left intact
+{}+ exitStatus=0
++ '[' 0 -eq 0 ']'
++ break
++ '[' true = true ']'
++ '[' 0 -eq 0 ']'
++ echo 'Executed "curl -v --insecure --proxy-insecure https://mcr.microsoft.com/v2/" 1 times.'
+Executed "curl -v --insecure --proxy-insecure https://mcr.microsoft.com/v2/" 1 times.
++ RETRYCMD_INTERNAL_LAST_EXIT_STATUS=0
++ return 0
+● kubelet.service - Kubelet
+     Loaded: loaded (/etc/systemd/system/kubelet.service; enabled; vendor preset: enabled)
+    Drop-In: /etc/systemd/system/kubelet.service.d
+             └─10-cgroupv2.conf, 10-containerd-base-flag.conf, 10-credential-validation.conf, 10-ensure-imds-restriction.conf, 10-tlsbootstrap.conf, 10-watchdog.conf
+     Active: activating (start-pre) since Wed 2025-11-12 21:55:29 UTC; 456ms ago
+    Process: 3801 ExecStartPre=/bin/bash /opt/azure/containers/kubelet.sh (code=exited, status=0/SUCCESS)
+    Process: 3834 ExecStartPre=/bin/bash /opt/azure/containers/ensure_imds_restriction.sh (code=exited, status=0/SUCCESS)
+    Process: 3841 ExecStartPre=/bin/mkdir -p /var/lib/kubelet (code=exited, status=0/SUCCESS)
+    Process: 3843 ExecStartPre=/bin/mkdir -p /var/lib/cni (code=exited, status=0/SUCCESS)
+Cntrl PID: 3844
+      Tasks: 2 (limit: 9516)
+     Memory: 840.0K
+        CPU: 25ms
+     CGroup: /system.slice/kubelet.service
+             └─3861 /bin/mount --make-shared /var/lib/kubelet
+
+Nov 12 21:55:29 88t8-2025-11-12-ubuntu2204000000 systemd[1]: Starting Kubelet...
+Nov 12 21:55:30 88t8-2025-11-12-ubuntu2204000000 bash[3834]: Primary NIC IP: 10.224.0.7
+Nov 12 21:55:30 88t8-2025-11-12-ubuntu2204000000 bash[3834]: Insert IMDS restriction rule to mangle table: false
+Nov 12 21:55:30 88t8-2025-11-12-ubuntu2204000000 bash[3834]: Enable IMDS restriction: false
+Nov 12 21:55:30 88t8-2025-11-12-ubuntu2204000000 bash[3834]: Checking whether IMDS restriction rule exists in mangle table...
+Nov 12 21:55:30 88t8-2025-11-12-ubuntu2204000000 bash[3834]: IMDS restriction rule does not exist in mangle table, no need to delete
+Nov 12 21:55:30 88t8-2025-11-12-ubuntu2204000000 bash[3834]: Checking whether IMDS restriction rule exists in filter table...
+Nov 12 21:55:30 88t8-2025-11-12-ubuntu2204000000 bash[3834]: IMDS restriction rule does not exist in filter table, no need to delete
+
+----------------------------------- end stdout ------------------------------------

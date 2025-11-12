@@ -1,0 +1,4 @@
+./cmd.go
+./delete.go
+./fetch.go
+./push.go

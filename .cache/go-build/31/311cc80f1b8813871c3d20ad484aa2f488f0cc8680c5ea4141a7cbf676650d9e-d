@@ -1,0 +1,4 @@
+./structural.go
+./subsume.go
+./value.go
+./vertex.go

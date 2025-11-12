@@ -1,0 +1,13 @@
+./applier.go
+./cache.go
+./common.go
+./confirmation.go
+./descriptor.go
+./format.go
+./packer.go
+./parser.go
+./platform.go
+./pretty.go
+./remote.go
+./spec.go
+./target.go
