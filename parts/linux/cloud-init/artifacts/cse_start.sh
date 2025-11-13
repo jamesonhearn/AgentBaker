@@ -6,12 +6,27 @@ export CSE_STARTTIME_SECONDS=$(date -d "$CSE_STARTTIME_FORMATTED" +%s) # Export 
 
 EVENTS_LOGGING_DIR=/var/log/azure/Microsoft.Azure.Extensions.CustomScript/events/
 OUTBOUND_COMMAND_ERROR_MESSAGE_FILE=/var/log/azure/aks/outbound-command-error-message
+CLUSTER_PROVISION_LOG=/var/log/azure/cluster-provision.log
 ERR_OUTBOUND_CONN_FAIL=50
 mkdir -p $EVENTS_LOGGING_DIR
 # this is the "global" CSE execution timeout - we allow CSE to run for 15 minutes before timeout will attempt to kill the script. We exit early from some of the retry loops using `check_cse_timeout` in `cse_helpers.sh`.`
 timeout -k5s 15m /bin/bash /opt/azure/containers/provision.sh >> /var/log/azure/cluster-provision.log 2>&1
 EXIT_CODE=$?
 systemctl --no-pager -l status kubelet >> /var/log/azure/cluster-provision-cse-output.log 2>&1
+OUTPUT=$(tail -c 3000 "$CLUSTER_PROVISION_LOG")
+ERROR_OUTPUT=""
+if [ "$EXIT_CODE" -eq "$ERR_OUTBOUND_CONN_FAIL" ]; then
+    OUTBOUND_FAILURE_MESSAGE=""
+    if [ -s "$OUTBOUND_COMMAND_ERROR_MESSAGE_FILE" ]; then
+        OUTBOUND_FAILURE_MESSAGE=$(cat "$OUTBOUND_COMMAND_ERROR_MESSAGE_FILE")
+    else
+        OUTBOUND_FAILURE_MESSAGE=$(grep -F "Outbound connectivity check failed" "$CLUSTER_PROVISION_LOG" | tail -n 2 || true)
+    fi
+
+    if [ -n "$OUTBOUND_FAILURE_MESSAGE" ]; then
+        OUTPUT=$(printf "%s\n%s" "$OUTBOUND_FAILURE_MESSAGE" "$OUTPUT")
+        ERROR_OUTPUT="$OUTBOUND_FAILURE_MESSAGE"
+    fi
 fi
 rm -f "$OUTBOUND_COMMAND_ERROR_MESSAGE_FILE"
 KERNEL_STARTTIME=$(systemctl show -p KernelTimestamp | sed -e  "s/KernelTimestamp=//g" || true)
@@ -37,7 +52,7 @@ EXECUTION_DURATION=$(($(date +%s) - $(date -d "$CSE_STARTTIME" +%s)))
 JSON_STRING=$( jq -n \
                   --arg ec "$EXIT_CODE" \
                   --arg op "$OUTPUT" \
-                  --arg er "" \
+                  --arg er "$ERROR_OUTPUT" \
                   --arg ed "$EXECUTION_DURATION" \
                   --arg ks "$KERNEL_STARTTIME" \
                   --arg cinitl "$CLOUDINITLOCAL_STARTTIME" \

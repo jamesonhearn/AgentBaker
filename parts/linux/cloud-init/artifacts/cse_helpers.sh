@@ -188,6 +188,7 @@ CURL_OUTPUT=/tmp/curl_verbose.out
 ORAS_OUTPUT=/tmp/oras_verbose.out
 ORAS_REGISTRY_CONFIG_FILE=/etc/oras/config.yaml # oras registry auth config file, not used, but have to define to avoid error "Error: failed to get user home directory: $HOME is not defined"
 OUTBOUND_COMMAND_ERROR_MESSAGE_FILE=/var/log/azure/aks/outbound-command-error-message
+CLUSTER_PROVISION_LOG=/var/log/azure/cluster-provision.log
 
 # used by secure TLS bootstrapping to request AAD tokens - uniquely identifies AKS's Entra ID application.
 # more details: https://learn.microsoft.com/en-us/azure/aks/kubelogin-authentication#how-to-use-kubelogin-with-aks
@@ -690,6 +691,18 @@ persist_outbound_command_error_message() {
     echo "${outbound_message}" > "${OUTBOUND_COMMAND_ERROR_MESSAGE_FILE}"
 }
 
+append_outbound_command_failure_to_main_log() {
+    local outbound_message="$1"
+
+    if [ -z "${outbound_message}" ]; then
+        return
+    fi
+
+    if [ -w "${CLUSTER_PROVISION_LOG}" ]; then
+        printf "%s\n" "${outbound_message}" >> "${CLUSTER_PROVISION_LOG}"
+    fi
+}
+
 record_outbound_command_failure() {
     local outbound_status="$1"
     local outbound_log="$2"
@@ -725,6 +738,7 @@ record_outbound_command_failure() {
     fi
 
     persist_outbound_command_error_message "${outbound_message}"
+    append_outbound_command_failure_to_main_log "${outbound_message}"
     logs_to_events "AKS.CSE.outboundConnectivity" echo "${outbound_message}"
 }
 
