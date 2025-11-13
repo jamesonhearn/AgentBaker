@@ -187,6 +187,7 @@ EVENTS_LOGGING_DIR=/var/log/azure/Microsoft.Azure.Extensions.CustomScript/events
 CURL_OUTPUT=/tmp/curl_verbose.out
 ORAS_OUTPUT=/tmp/oras_verbose.out
 ORAS_REGISTRY_CONFIG_FILE=/etc/oras/config.yaml # oras registry auth config file, not used, but have to define to avoid error "Error: failed to get user home directory: $HOME is not defined"
+OUTBOUND_COMMAND_ERROR_MESSAGE_FILE=/var/log/azure/aks/outbound-command-error-message
 
 # used by secure TLS bootstrapping to request AAD tokens - uniquely identifies AKS's Entra ID application.
 # more details: https://learn.microsoft.com/en-us/azure/aks/kubelogin-authentication#how-to-use-kubelogin-with-aks
@@ -267,6 +268,9 @@ describe_curl_exit_code() {
     local exitCode=$1
 
     case "$exitCode" in
+    5)
+        echo "The required proxy could not be resolved"
+        ;;
     6)
         echo "DNS resolution failed while contacting the required endpoint"
         ;;
@@ -278,6 +282,12 @@ describe_curl_exit_code() {
         ;;
     35)
         echo "TLS handshake failed while contacting the required endpoint"
+        ;;
+    51)
+        echo "The peer's SSL certificate or SSH fingerprint could not be verified"
+        ;;
+    56)
+        echo "The TLS connection was unexpectedly closed while sending or receiving data"
         ;;
     *)
         echo ""
@@ -667,6 +677,55 @@ logs_to_events() {
     if [ "$ret" -ne 0 ]; then
       return $ret
     fi
+}
+
+persist_outbound_command_error_message() {
+    local outbound_message="$1"
+
+    if [ -z "${outbound_message}" ]; then
+        return
+    fi
+
+    mkdir -p "/var/log/azure/aks"
+    echo "${outbound_message}" > "${OUTBOUND_COMMAND_ERROR_MESSAGE_FILE}"
+}
+
+record_outbound_command_failure() {
+    local outbound_status="$1"
+    local outbound_log="$2"
+
+    local outbound_reason=""
+    if [ -n "${outbound_status}" ]; then
+        outbound_reason=$(describe_curl_exit_code "${outbound_status}")
+    fi
+
+    local outbound_message="Outbound connectivity check failed"
+    if [ -n "${outbound_status}" ]; then
+        outbound_message="${outbound_message} with exit code ${outbound_status}"
+    fi
+
+    local detail_line=""
+    if [ -n "${outbound_reason}" ]; then
+        detail_line="Detailed error: ${outbound_reason}"
+    fi
+
+    if [ -n "${outbound_log}" ]; then
+        echo "${outbound_message}" | tee -a "${outbound_log}"
+    else
+        echo "${outbound_message}"
+    fi
+
+    if [ -n "${detail_line}" ]; then
+        if [ -n "${outbound_log}" ]; then
+            echo "${detail_line}" | tee -a "${outbound_log}"
+        else
+            echo "${detail_line}"
+        fi
+        outbound_message=$(printf "%s\n%s" "${outbound_message}" "${detail_line}")
+    fi
+
+    persist_outbound_command_error_message "${outbound_message}"
+    logs_to_events "AKS.CSE.outboundConnectivity" echo "${outbound_message}"
 }
 
 should_skip_nvidia_drivers() {
