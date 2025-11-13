@@ -12,10 +12,6 @@ mkdir -p $EVENTS_LOGGING_DIR
 timeout -k5s 15m /bin/bash /opt/azure/containers/provision.sh >> /var/log/azure/cluster-provision.log 2>&1
 EXIT_CODE=$?
 systemctl --no-pager -l status kubelet >> /var/log/azure/cluster-provision-cse-output.log 2>&1
-OUTPUT=$(tail -c 3000 "/var/log/azure/cluster-provision.log")
-if [ "$EXIT_CODE" -eq "$ERR_OUTBOUND_CONN_FAIL" ] && [ -s "$OUTBOUND_COMMAND_ERROR_MESSAGE_FILE" ]; then
-    OUTBOUND_FAILURE_MESSAGE=$(cat "$OUTBOUND_COMMAND_ERROR_MESSAGE_FILE")
-    OUTPUT=$(printf "%s\n%s" "$OUTBOUND_FAILURE_MESSAGE" "$OUTPUT")
 fi
 rm -f "$OUTBOUND_COMMAND_ERROR_MESSAGE_FILE"
 KERNEL_STARTTIME=$(systemctl show -p KernelTimestamp | sed -e  "s/KernelTimestamp=//g" || true)
