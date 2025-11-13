@@ -1,0 +1,11 @@
+{
+  "grid_compatibility_check": {
+    "timestamp": "2025-11-10T21:02:43Z",
+    "os": "UBUNTU",
+    "os_version": "22.04",
+    "cpu_architecture": "amd64",
+    "feature_flags": "",
+    "compatibility_status": "data_collected",
+    "kusto_query_placeholder": "SELECT * FROM GridCompatibility WHERE timestamp > ago(1d)"
+  }
+}
