@@ -24,6 +24,7 @@ source "${CSE_DISTRO_HELPERS_FILEPATH}"
 # Setup logs for upload to host
 LOG_DIR=/var/log/azure/aks
 mkdir -p ${LOG_DIR}
+rm -f "${OUTBOUND_COMMAND_ERROR_MESSAGE_FILE}"
 ln -s /var/log/azure/cluster-provision.log \
       /var/log/azure/cluster-provision-cse-output.log \
       /opt/azure/*.json \
@@ -329,16 +330,7 @@ function nodePrep {
         fi
         if ! retrycmd_if_failure 60 1 5 $OUTBOUND_COMMAND >> "${outbound_log}" 2>&1; then
             local outbound_status="${RETRYCMD_INTERNAL_LAST_EXIT_STATUS:-1}"
-            local outbound_reason=""
-            if [ -n "${outbound_status}" ]; then
-                outbound_reason=$(describe_curl_exit_code "${outbound_status}")
-            fi
-            local outbound_message="Outbound connectivity check failed with exit code ${outbound_status}"
-            if [ -n "${outbound_reason}" ]; then
-                outbound_message="${outbound_message} (${outbound_reason})"
-            fi
-            echo "${outbound_message}" | tee -a "${outbound_log}"
-            logs_to_events "AKS.CSE.outboundConnectivity" echo "${outbound_message}"
+            record_outbound_command_failure "${outbound_status}" "${outbound_log}"
             exit $ERR_OUTBOUND_CONN_FAIL
         fi
     fi
