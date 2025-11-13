@@ -51,3 +51,4 @@ vhdbuilder/packer/prefetch.sh
 
 # Ignore AI related configs
 .claude
+pkg/agent/testdata/**/CustomData
