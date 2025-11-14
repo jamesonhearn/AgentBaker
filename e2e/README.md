@@ -97,6 +97,11 @@ included in each scenario's log bundle. When using this flag, please ensure to r
 VMs will not be
 deleted after the test run.
 
+Need to force a particular failure mode? See
+[`doc/e2e-outbound-failure-sample.md`](../doc/e2e-outbound-failure-sample.md)
+for a concrete example that blocks outbound HTTPS before `vmssCSE` runs so you can validate the enriched provisioning
+logs.
+
 ### Running Tests Manually
 
 Run tests with custom arguments after setting required environment variables:

@@ -3,6 +3,7 @@ package main
 import (
 	"bytes"
 	"context"
+	"encoding/json"
 	"errors"
 	"flag"
 	"fmt"
@@ -11,6 +12,8 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"strconv"
+	"strings"
 
 	"github.com/Azure/agentbaker/aks-node-controller/parser"
 	"github.com/Azure/agentbaker/aks-node-controller/pkg/nodeconfigutils"
@@ -162,6 +165,16 @@ func (a *App) ProvisionWait(ctx context.Context, filepaths ProvisionStatusFiles)
 		if err != nil {
 			return "", fmt.Errorf("failed to read provision.json: %w. One reason could be that AKSNodeConfig is not properly set", err)
 		}
+		enriched, enrichErr := enrichOutboundFailureDetails(data)
+		if enrichErr != nil {
+			slog.Error("failed to enrich outbound connectivity failure details", "error", enrichErr)
+		} else if !bytes.Equal(enriched, data) {
+			if writeErr := os.WriteFile(filepaths.ProvisionJSONFile, enriched, 0600); writeErr != nil {
+				slog.Error("failed to persist enriched provision.json", "error", writeErr)
+			} else {
+				data = enriched
+			}
+		}
 		return string(data), nil
 	}
 
@@ -214,4 +227,87 @@ func errToExitCode(err error) int {
 		return exitErr.ExitCode()
 	}
 	return 1
+}
+
+func enrichOutboundFailureDetails(data []byte) ([]byte, error) {
+	var status map[string]interface{}
+	if err := json.Unmarshal(data, &status); err != nil {
+		return data, fmt.Errorf("unmarshal provision status: %w", err)
+	}
+	exitCode := normalizeJSONValue(status["ExitCode"])
+	if exitCode != outboundConnectivityErrorExitCode {
+		return data, nil
+	}
+	if detail := strings.TrimSpace(normalizeJSONValue(status["Error"])); detail != "" {
+		return data, nil
+	}
+	message, err := readOutboundFailureMessage()
+	if err != nil {
+		return data, err
+	}
+	if message == "" {
+		return data, nil
+	}
+	status["Error"] = message
+	currentOutput := normalizeJSONValue(status["Output"])
+	if currentOutput == "" {
+		status["Output"] = message
+	} else if !strings.Contains(currentOutput, message) {
+		status["Output"] = fmt.Sprintf("%s\n%s", message, currentOutput)
+	}
+	updated, err := json.Marshal(status)
+	if err != nil {
+		return data, fmt.Errorf("marshal provision status: %w", err)
+	}
+	return updated, nil
+}
+
+func readOutboundFailureMessage() (string, error) {
+	if message, err := os.ReadFile(outboundCommandErrorMessagePath); err == nil {
+		if trimmed := strings.TrimSpace(string(message)); trimmed != "" {
+			return trimmed, nil
+		}
+	} else if !errors.Is(err, os.ErrNotExist) {
+		return "", fmt.Errorf("read outbound failure cache: %w", err)
+	}
+	logBytes, err := os.ReadFile(clusterProvisionLogPath)
+	if err != nil {
+		if errors.Is(err, os.ErrNotExist) {
+			return "", nil
+		}
+		return "", fmt.Errorf("read cluster provision log: %w", err)
+	}
+	lines := strings.Split(string(logBytes), "\n")
+	for i := len(lines) - 1; i >= 0; i-- {
+		line := strings.TrimSpace(lines[i])
+		if line == "" {
+			continue
+		}
+		if strings.HasPrefix(line, "Outbound connectivity check failed") {
+			message := line
+			if i+1 < len(lines) {
+				next := strings.TrimSpace(lines[i+1])
+				if strings.HasPrefix(next, "Detailed error:") {
+					message = message + "\n" + next
+				}
+			}
+			return message, nil
+		}
+	}
+	return "", nil
+}
+
+func normalizeJSONValue(value interface{}) string {
+	switch v := value.(type) {
+	case string:
+		return v
+	case json.Number:
+		return v.String()
+	case float64:
+		return strconv.FormatInt(int64(v), 10)
+	case fmt.Stringer:
+		return v.String()
+	default:
+		return ""
+	}
 }

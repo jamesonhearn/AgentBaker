@@ -17,6 +17,61 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
+func Test_UbuntuOutboundBlocked(t *testing.T) {
+    RunScenario(t, &Scenario{
+        Description: "Ubuntu 22.04 node with outbound HTTPS blocked before CSE starts",
+        Tags: Tags{
+            Name: "Test_UbuntuOutboundBlocked",
+            OS:   "ubuntu",
+            Arch: "amd64",
+        },
+        Config: Config{
+            Cluster: ClusterKubenet,
+            VHD:     config.VHDUbuntu2204Gen2Containerd,
+            VMConfigMutator: func(vmss *armcompute.VirtualMachineScaleSet) {
+                const blockerName = "DropOutbound443"
+
+                blocker := &armcompute.VirtualMachineScaleSetExtension{
+                    Name: to.Ptr(blockerName),
+                    Properties: &armcompute.VirtualMachineScaleSetExtensionProperties{
+                        Publisher:              to.Ptr("Microsoft.Azure.Extensions"),
+                        Type:                   to.Ptr("CustomScript"),
+                        TypeHandlerVersion:     to.Ptr("2.1"),
+                        AutoUpgradeMinorVersion: to.Ptr(true),
+                        Settings:               map[string]any{},
+                        ProtectedSettings: map[string]any{
+                            "commandToExecute": fmt.Sprintf(`/bin/bash -c 'set -euxo pipefail
+cat >/var/lib/%s.sh <<EOF
+#!/bin/bash
+set -euxo pipefail
+iptables -I OUTPUT -p tcp --dport 443 -j REJECT
+printf "ab-outbound-blocker installed\n" >/var/log/ab-outbound-blocker.log
+EOF
+chmod +x /var/lib/%s.sh
+/var/lib/%s.sh'`, blockerName, blockerName, blockerName),
+                        },
+                    },
+                }
+
+                vmss.Properties = addVMExtensionToVMSS(vmss.Properties, blocker)
+
+                // Ensure vmssCSE runs after the blocker finished so iptables rules are in place
+                for _, ext := range vmss.Properties.VirtualMachineProfile.ExtensionProfile.Extensions {
+                    if ext != nil && ext.Name != nil && *ext.Name == "vmssCSE" {
+                        ext.Properties.ProvisionAfterExtensions = append(
+                            ext.Properties.ProvisionAfterExtensions,
+                            to.Ptr(blockerName),
+                        )
+                    }
+                }
+            },
+            Validator: func(ctx context.Context, s *Scenario) {
+                ValidateFileHasContent(ctx, s, "/var/log/azure/aks/provision.json", "Outbound connectivity check failed")
+            },
+        },
+    })
+}
+
 func Test_AzureLinux3OSGuard(t *testing.T) {
 	RunScenario(t, &Scenario{
 		Description: "Tests that a node using an Azure Linux V3 OS Guard VHD can be properly bootstrapped",
