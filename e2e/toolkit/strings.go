@@ -3,6 +3,7 @@ package toolkit
 import (
 	"context"
 	"strconv"
+	"fmt"
 	"strings"
 	"time"
 
@@ -40,4 +41,21 @@ func LogDuration(ctx context.Context, duration time.Duration, warningDuration ti
 
 func FormatDuration(length time.Duration) string {
 	return duration.ShortHumanDuration(length)
+}
+
+func ToStringSlice(value any) []string {
+	switch v := value.(type) {
+	case nil:
+		return nil
+	case []string:
+		return v
+	case []any:
+		converted := make([]string, len(v))
+		for i := range v {
+			converted[i] = fmt.Sprint(v[i])
+		}
+		return converted
+	default:
+		return []string{fmt.Sprint(value)}
+	}
 }
