@@ -176,6 +176,9 @@ func copyScenario(s *Scenario) *Scenario {
 	// This is a placeholder; you may need to copy nested structs and slices
 	copied := *s
 	copied.Config = s.Config // If Config is a struct, deep copy its fields as well
+	if s.AllowedCSEExitCodes != nil {
+		copied.AllowedCSEExitCodes = append([]string(nil), s.AllowedCSEExitCodes...)
+	}
 	return &copied
 }
 
@@ -392,9 +395,20 @@ func getCustomScriptExtensionStatus(s *Scenario, vmssVM *armcompute.VirtualMachi
 				if err != nil {
 					return fmt.Errorf("parse CSE message with error, error %w", err)
 				}
-				if resp.ExitCode != "0" {
+<<<<<<< ours
+				if !s.isCSEExitCodeAllowed(resp.ExitCode) {	
+=======
+				if !s.isCSEExitCodeAllowed(resp.ExitCode) {
+>>>>>>> theirs
 					return fmt.Errorf("vmssCSE %s, output=%s, error=%s, cse output: %s", resp.ExitCode, resp.Output, resp.Error, *status.Message)
 				}
+				if resp.ExitCode != "0" {
+					s.T.Logf("vmssCSE exit code %s allowed for scenario %q", resp.ExitCode, s.Description)
+<<<<<<< ours
+				}		
+=======
+				}
+>>>>>>> theirs
 				return nil
 			}
 		}

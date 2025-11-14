@@ -17,15 +17,21 @@ var ScenarioOutboundBlocker = Scenario{
         Arch: "amd64",
     },
     Config: Config{
-        Cluster: ClusterKubenet,
-        VHD:     config.ImageUbuntu2204Gen2AMD64,
+        Cluster:                       ClusterKubenet,
+        VHD:                           config.ImageUbuntu2204Gen2AMD64,
+        SkipDefaultValidation:         true,
+        SkipSSHConnectivityValidation: true,
         VMConfigMutator: func(vmss *armcompute.VirtualMachineScaleSet) {
             const blockerName = "DropOutbound443"
 
             blockerScript := base64.StdEncoding.EncodeToString([]byte(`#!/bin/bash
 set -euxo pipefail
-# Drop all HTTPS egress so the outbound probe fails immediately.
-iptables -I OUTPUT -p tcp --dport 443 -j REJECT
+# Override mcr.microsoft.com so curl never leaves the VM.
+target_host="mcr.microsoft.com"
+tmp_hosts="/etc/hosts.ab-outbound-blocker"
+grep -v "${target_host}" /etc/hosts >"${tmp_hosts}" || true
+printf "127.0.0.1 %s\\n" "${target_host}" >>"${tmp_hosts}"
+mv "${tmp_hosts}" /etc/hosts
 # Leave a breadcrumb for post-mortem validation.
 printf 'ab-outbound-blocker installed\n' >/var/log/ab-outbound-blocker.log
 `))
@@ -66,14 +72,16 @@ printf 'ab-outbound-blocker installed\n' >/var/log/ab-outbound-blocker.log
             require.Contains(s.T, raw, "Outbound connectivity check failed", "provision.json missing enriched text")
         },
     },
+    AllowedCSEExitCodes: []string{"50"},
 }
 ```
 
 Key points:
 
-1. **`VMConfigMutator` injects a short-lived Custom Script extension** that inserts an iptables `DROP` rule for outbound TCP/443 before `vmssCSE` runs. The script is Base64 encoded so we can safely embed it inside the extension payload.
+1. **`VMConfigMutator` injects a short-lived Custom Script extension** that rewrites `/etc/hosts` so `mcr.microsoft.com` resolves to `127.0.0.1`, guaranteeing the outbound probe fails without touching the rest of the iptables configuration. The script is Base64 encoded so we can safely embed it inside the extension payload.
 2. **`ProvisionAfterExtensions` on the stock `vmssCSE` extension** guarantees the blocker completes before the actual AgentBaker Custom Script starts.
-3. **The validator fetches `/var/log/azure/aks/provision.json`** directly from the VMSS instance using `RunCommand` and asserts that the outbound failure text was propagated.
+3. **`SkipDefaultValidation`, `SkipSSHConnectivityValidation`, and `AllowedCSEExitCodes`** allow the scenario to keep running even though `vmssCSE` exits with code 50, so follow-up validators can still fetch logs.
+4. **The validator fetches `/var/log/azure/aks/provision.json`** directly from the VMSS instance using `RunCommand` and asserts that the outbound failure text was propagated.
 
 ## Shell script reference
 
@@ -82,7 +90,11 @@ The script embedded above is intentionally minimal:
 ```bash
 #!/bin/bash
 set -euxo pipefail
-iptables -I OUTPUT -p tcp --dport 443 -j REJECT
+target_host="mcr.microsoft.com"
+tmp_hosts="/etc/hosts.ab-outbound-blocker"
+grep -v "${target_host}" /etc/hosts >"${tmp_hosts}" || true
+printf "127.0.0.1 %s\\n" "${target_host}" >>"${tmp_hosts}"
+mv "${tmp_hosts}" /etc/hosts
 printf 'ab-outbound-blocker installed\n' >/var/log/ab-outbound-blocker.log
 ```
 
@@ -99,6 +111,6 @@ You can tailor it to block only MCR’s current VIP ranges or to tear down the f
 
 2. From the repo root, run `./e2e/e2e-local.sh` or `go test -run Test_UbuntuOutboundBlocked -v ./e2e`.
 
-3. Once the VM hits exit code 50, download the scenario’s log bundle (or SSH into the VM) and inspect `/var/log/azure/aks/provision.json` to confirm the additional outbound failure line appears ahead of the `cluster-provision.log` tail.
+3. Once the VM hits exit code 50, download the scenario’s log bundle (or call `RunCommand`) and inspect `/var/log/azure/aks/provision.json` to confirm the additional outbound failure line appears ahead of the `cluster-provision.log` tail.
 
 This sample isolates the exact plumbing we added (scratch file → provision.json) without modifying upstream AgentBaker code or requiring fake registry endpoints.

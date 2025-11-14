@@ -128,6 +128,25 @@ type Scenario struct {
 	// Runtime contains the runtime state of the scenario. It's populated in the beginning of the test run
 	Runtime *ScenarioRuntime
 	T       testing.TB
+
+	// AllowedCSEExitCodes enumerates non-zero vmssCSE exit codes that this scenario considers
+	// expected. Code "0" is always treated as allowed.
+	AllowedCSEExitCodes []string
+}
+
+func (s *Scenario) isCSEExitCodeAllowed(code string) bool {
+	if code == "0" {
+		return true
+	}
+	if s == nil {
+		return false
+	}
+	for _, allowed := range s.AllowedCSEExitCodes {
+		if allowed == code {
+			return true
+		}
+	}
+	return false
 }
 
 type ScenarioRuntime struct {
