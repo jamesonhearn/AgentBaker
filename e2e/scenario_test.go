@@ -21,55 +21,6 @@ import (
 
 
 func Test_UbuntuOutboundBlocked(t *testing.T) {
-<<<<<<< ours
-    RunScenario(t, &Scenario{
-        Description: "Ubuntu 22.04 node with outbound HTTPS blocked before CSE starts",
-        Tags: Tags{
-            Name: "Test_UbuntuOutboundBlocked",
-            OS:   "ubuntu",
-            Arch: "amd64",
-        },
-        Config: Config{
-            Cluster: ClusterKubenet,
-            VHD:     config.VHDUbuntu2204Gen2Containerd,
-            BootstrapConfigMutator: func(nbc *datamodel.NodeBootstrappingConfiguration) {
-                // Required: every scenario must use exactly one of the mutators.
-                // This one leaves the stock Ubuntu bootstrap config untouched.
-            },
-            VMConfigMutator: func(vmss *armcompute.VirtualMachineScaleSet) {
-                const blockerName = "DropOutbound443"
-
-                blocker := &armcompute.VirtualMachineScaleSetExtension{
-                    Name: to.Ptr(blockerName),
-                    Properties: &armcompute.VirtualMachineScaleSetExtensionProperties{
-                        Publisher:              to.Ptr("Microsoft.CPlat.Core"),
-                        Type:                   to.Ptr("RunCommandLinux"),
-                        TypeHandlerVersion:     to.Ptr("1.0"),
-                        AutoUpgradeMinorVersion: to.Ptr(true),
-                        Settings: map[string]any{
-                            "script": "#!/bin/bash\nset -euxo pipefail\niptables -I OUTPUT -p tcp --dport 443 -j REJECT\nprintf 'ab-outbound-blocker installed\\n' >/var/log/ab-outbound-blocker.log\n",
-                        },
-                    },
-                }
-
-                vmss.Properties = addVMExtensionToVMSS(vmss.Properties, blocker)
-
-                // Ensure vmssCSE runs after the blocker finished so iptables rules are in place
-                for _, ext := range vmss.Properties.VirtualMachineProfile.ExtensionProfile.Extensions {
-                    if ext != nil && ext.Name != nil && *ext.Name == "vmssCSE" {
-                        ext.Properties.ProvisionAfterExtensions = append(
-                            ext.Properties.ProvisionAfterExtensions,
-                            to.Ptr(blockerName),
-                        )
-                    }
-                }
-            },
-            Validator: func(ctx context.Context, s *Scenario) {
-                ValidateFileHasContent(ctx, s, "/var/log/azure/aks/provision.json", "Outbound connectivity check failed")
-            },
-        },
-    })
-=======
 	RunScenario(t, &Scenario{
 		Description: "Ubuntu 22.04 node with outbound HTTPS blocked before CSE starts",
 		Tags: Tags{
@@ -140,7 +91,6 @@ printf 'ab-outbound-blocker installed\n' >/var/log/ab-outbound-blocker.log
 		},
 		AllowedCSEExitCodes: []string{"50"},
 	})
->>>>>>> theirs
 }
 
 func Test_AzureLinux3OSGuard(t *testing.T) {

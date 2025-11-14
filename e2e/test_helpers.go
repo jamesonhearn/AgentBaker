@@ -395,20 +395,12 @@ func getCustomScriptExtensionStatus(s *Scenario, vmssVM *armcompute.VirtualMachi
 				if err != nil {
 					return fmt.Errorf("parse CSE message with error, error %w", err)
 				}
-<<<<<<< ours
-				if !s.isCSEExitCodeAllowed(resp.ExitCode) {	
-=======
 				if !s.isCSEExitCodeAllowed(resp.ExitCode) {
->>>>>>> theirs
 					return fmt.Errorf("vmssCSE %s, output=%s, error=%s, cse output: %s", resp.ExitCode, resp.Output, resp.Error, *status.Message)
 				}
 				if resp.ExitCode != "0" {
 					s.T.Logf("vmssCSE exit code %s allowed for scenario %q", resp.ExitCode, s.Description)
-<<<<<<< ours
-				}		
-=======
 				}
->>>>>>> theirs
 				return nil
 			}
 		}
