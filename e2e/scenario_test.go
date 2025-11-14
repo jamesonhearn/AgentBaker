@@ -28,6 +28,10 @@ func Test_UbuntuOutboundBlocked(t *testing.T) {
         Config: Config{
             Cluster: ClusterKubenet,
             VHD:     config.VHDUbuntu2204Gen2Containerd,
+            BootstrapConfigMutator: func(nbc *datamodel.NodeBootstrappingConfiguration) {
+                // Required: every scenario must use exactly one of the mutators.
+                // This one leaves the stock Ubuntu bootstrap config untouched.
+            },
             VMConfigMutator: func(vmss *armcompute.VirtualMachineScaleSet) {
                 const blockerName = "DropOutbound443"
 
